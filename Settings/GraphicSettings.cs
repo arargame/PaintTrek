@@ -45,6 +45,7 @@ namespace PaintTrek
             Globals.MenuFont = Globals.Content.Load<SpriteFont>("Fonts/MenuFont_2");
             Globals.GameFont = Globals.Content.Load<SpriteFont>("Fonts/GameFont_2");
 
+            Globals.Graphics.HardwareModeSwitch = false; // Use Borderless Window
             Globals.Graphics.IsFullScreen = true;
             Globals.GameSize = new Vector2(1280, 800);
             Globals.Graphics.PreferredBackBufferWidth = (int)Globals.GameSize.X;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace PaintTrek
 {
@@ -14,6 +15,8 @@ namespace PaintTrek
         List<SampleEnemy> enemies;
 
         BackButton backButton;
+        TextButton previousButton;
+        TextButton nextButton;
 
         public EnemyScreen() 
         {
@@ -26,6 +29,18 @@ namespace PaintTrek
             enemies = ListCreator();
             counter = 0;
             backButton = new BackButton("Back",this,true);
+            
+            float fontHeight = Globals.GameFont.MeasureString("Previous").Y;
+            
+            previousButton = new TextButton("Previous", Vector2.Zero);
+            previousButton.SetAnchor(Anchor.BottomLeft, new Vector2(50, fontHeight * 2));
+
+            nextButton = new TextButton("Next", Vector2.Zero);
+            float prevWidth = Globals.GameFont.MeasureString("Previous").X;
+            nextButton.SetAnchor(Anchor.BottomLeft, new Vector2(50 + prevWidth + 50, fontHeight * 2));
+
+            previousButton.Click += new EventHandler(previousButton_Click);
+            nextButton.Click += new EventHandler(nextButton_Click);
         }
 
         public override void Load()
@@ -42,6 +57,8 @@ namespace PaintTrek
         {
             base.Update();
             backButton.Update();
+            previousButton.Update();
+            nextButton.Update();
             for (int i = 0; i < enemies.Count; i++)
             {
                 enemies[i].Update();
@@ -54,6 +71,8 @@ namespace PaintTrek
             base.Draw();
 
             backButton.Draw();
+            previousButton.Draw();
+            nextButton.Draw();
 
             Vector2 position = new Vector2(Globals.GameSize.X * 0.6f, Globals.GameSize.Y / 3);
             //     Vector2 size=new Vector2(enemyList[counter].animation.Width, enemyList[counter].animation.Height);
@@ -76,11 +95,44 @@ namespace PaintTrek
                 Globals.SpriteBatch.DrawString(Globals.GameFont, "Sorry,there is no enemy to show.", infoPosition, Color.White);
                 Globals.SpriteBatch.End();
             }
+            
+            // Debug visualization
+            if (Globals.DebugMode && inputState != null)
+            {
+                Globals.SpriteBatch.Begin();
+                
+                // Draw red rectangle for mouse cursor (10x10)
+                Texture2D pixel = new Texture2D(Globals.Graphics.GraphicsDevice, 1, 1);
+                pixel.SetData(new[] { Color.White });
+                Rectangle mouseRect = new Rectangle((int)inputState.cursorPosition.X - 5, (int)inputState.cursorPosition.Y - 5, 10, 10);
+                Globals.SpriteBatch.Draw(pixel, mouseRect, Color.Red * 0.7f);
+                
+                // Draw debug info (top-left corner)
+                var viewport = Globals.Graphics.GraphicsDevice.Viewport;
+                string debugText = $"Mouse: {(int)inputState.cursorPosition.X}, {(int)inputState.cursorPosition.Y}\n";
+                debugText += $"Raw Mouse: {Mouse.GetState().X}, {Mouse.GetState().Y}\n";
+                debugText += $"Resolution: {(int)Globals.GameSize.X}x{(int)Globals.GameSize.Y}\n";
+                debugText += $"Viewport: {viewport.X},{viewport.Y} {viewport.Width}x{viewport.Height}\n";
+                debugText += $"Fullscreen: {Globals.Graphics.IsFullScreen}";
+                Globals.SpriteBatch.DrawString(Globals.GameFont, debugText, new Vector2(10, 10), Color.Lime);
+                
+                Globals.SpriteBatch.End();
+            }
         }
 
         public override void HandleInput()
         {
             base.HandleInput();
+        }
+        
+        void previousButton_Click(object sender, EventArgs e)
+        {
+            MenuLeft(0);
+        }
+
+        void nextButton_Click(object sender, EventArgs e)
+        {
+            MenuRight(0);
         }
 
         public override void ExitScreen()

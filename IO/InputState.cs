@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace PaintTrek
 {
@@ -80,7 +81,36 @@ namespace PaintTrek
             lastMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
 
-            cursorPosition = new Vector2(currentMouseState.X, currentMouseState.Y);
+            // Robust mouse coordinate transformation for Fullscreen/Letterbox
+            float screenW, screenH;
+            
+            if (Globals.Graphics.IsFullScreen)
+            {
+                // In Borderless Window (HardwareModeSwitch=false), we use the Desktop resolution
+                screenW = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                screenH = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            }
+            else
+            {
+                var viewport = Globals.Graphics.GraphicsDevice.Viewport;
+                screenW = viewport.Width;
+                screenH = viewport.Height;
+            }
+
+            // Game world resolution
+            float baseW = Globals.GameSize.X;
+            float baseH = Globals.GameSize.Y;
+
+            // Calculate scale (Stretch mode - independent X/Y scaling)
+            float scaleX = screenW / baseW;
+            float scaleY = screenH / baseH;
+
+            // Transform mouse coordinates to game space
+            // No margins needed because we are stretching to fill the screen
+            float gameMouseX = currentMouseState.X / scaleX;
+            float gameMouseY = currentMouseState.Y / scaleY;
+
+            cursorPosition = new Vector2(gameMouseX, gameMouseY);
             cursorRect = new Rectangle((int)cursorPosition.X, (int)cursorPosition.Y, 10, 10);
 
             for (int i = 0; i < ClickableAreaSystem.clickableAreas.Count; i++)

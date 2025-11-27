@@ -47,6 +47,9 @@ namespace PaintTrek
         }
 
 
+        RenderTarget2D renderTarget;
+        Rectangle renderRect;
+
         protected override void LoadContent()
         {
 
@@ -54,6 +57,10 @@ namespace PaintTrek
             Globals.Content = Content;
             Globals.Window.Title = "Paint Trek";
             graphicSettings = new GraphicSettings();
+            
+            // Initialize RenderTarget with GameSize (1280x800)
+            renderTarget = new RenderTarget2D(GraphicsDevice, (int)Globals.GameSize.X, (int)Globals.GameSize.Y);
+            
             Loader.Load();
             timeKeeper = new TimeKeeper();
 
@@ -89,6 +96,9 @@ namespace PaintTrek
             Globals.GameRect = new Rectangle(0, 0, (int)Globals.GameSize.X, (int)Globals.GameSize.Y);
             Globals.IsActive = IsActive;
 
+            // Manage mouse visibility: Hide system cursor in fullscreen (we draw a custom one)
+            IsMouseVisible = !Globals.Graphics.IsFullScreen;
+
             // Alt+Enter to toggle fullscreen (for debugging)
             KeyboardState keyState = Keyboard.GetState();
             if (keyState.IsKeyDown(Keys.LeftAlt) && keyState.IsKeyDown(Keys.Enter))
@@ -118,12 +128,42 @@ namespace PaintTrek
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            if (Globals.Graphics.IsFullScreen)
+            {
+                // FULLSCREEN MODE: Draw to RenderTarget and Scale Up
+                
+                // 1. Draw game to RenderTarget (1280x800)
+                GraphicsDevice.SetRenderTarget(renderTarget);
+                GraphicsDevice.Clear(Color.CornflowerBlue);
 
+                screenManager.Draw();
+                //clickableAreaSystem.Draw();
 
-            screenManager.Draw();
+                // 2. Switch back to BackBuffer (Screen)
+                GraphicsDevice.SetRenderTarget(null);
+                GraphicsDevice.Clear(Color.Black);
 
-           //clickableAreaSystem.Draw();
+                // 3. Calculate destination rectangle (Stretch to fit screen)
+                var viewport = GraphicsDevice.Viewport;
+                
+                // Stretch scaling (fills screen, ignores aspect ratio)
+                int width = viewport.Width;
+                int height = viewport.Height;
+                renderRect = new Rectangle(0, 0, width, height);
+
+                // 4. Draw RenderTarget to Screen
+                // Use LinearClamp for smoother upscaling (reduces pixelation)
+                Globals.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp);
+                Globals.SpriteBatch.Draw(renderTarget, renderRect, Color.White);
+                Globals.SpriteBatch.End();
+            }
+            else
+            {
+                // WINDOWED MODE: Draw directly to BackBuffer (No Scaling)
+                GraphicsDevice.Clear(Color.CornflowerBlue);
+                screenManager.Draw();
+                //clickableAreaSystem.Draw();
+            }
 
             base.Draw(gameTime);
         }
