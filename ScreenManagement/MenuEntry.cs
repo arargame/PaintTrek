@@ -74,5 +74,12 @@ namespace PaintTrek
             clickableArea.SetRect(entryRect);
         }
 
+        public void Dispose()
+        {
+            if (clickableArea != null)
+            {
+                clickableArea.RemoveFromSystem();
+            }
+        }
     }
 }

@@ -66,9 +66,13 @@ namespace PaintTrek
             {
                 // timer = 0;
                 openingKeyForLevel = true;
+                Globals.Game.IsMouseVisible = true;
             }
             else
+            {
+                Globals.Game.IsMouseVisible = false;
                 transitionTimer += Globals.GameTime.ElapsedGameTime.TotalSeconds * 16;
+            }
 
             //InputState inputState = new InputState();
 

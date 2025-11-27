@@ -10,6 +10,7 @@ namespace PaintTrek
     class CreditsScreen:GameScreen
     {
         List<string> credits = new List<string>();
+        List<string> keyLabels = new List<string>();
 
         public CreditsScreen() 
         {
@@ -24,23 +25,11 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
-
+            
             screenTitle = "Credits Screen";
             Globals.Window.Title = screenTitle;
-
-            string str = "Programming and Graphics :\n";
-            str += "\n    Koray Arar\n";
-            str += "\n";
-            str += "Musics :\n";
-            str += "\n    Sahin Meric\n";
-
-            credits.Add(str);
+            
             backButton = new BackButton("Back", this, true);
-        }
-
-        public override void Load()
-        {
-            base.Load();
         }
 
         public override void UnloadContent()
@@ -57,17 +46,26 @@ namespace PaintTrek
         {
             Vector2 position = new Vector2(100, 200);
             Vector2 origin = new Vector2(0, Globals.GameFont.LineSpacing / 2);
-            Color buttonColor = Color.White, descriptionColor = Color.White;
 
             Globals.Graphics.GraphicsDevice.Clear(Color.Black);
 
             Globals.SpriteBatch.Begin();
-            for (int i = 0; i < credits.Count; i++)
-            {
-                Globals.SpriteBatch.DrawString(Globals.GameFont, credits[i], position, buttonColor, 0, origin, 1f, SpriteEffects.None, 0);
-
-                position.Y += Globals.GameFont.LineSpacing;
-            }
+            
+            // Draw "Programming and Graphics :" in Beige
+            Globals.SpriteBatch.DrawString(Globals.GameFont, "Programming and Graphics :", position, Color.Beige, 0, origin, 1f, SpriteEffects.None, 0);
+            position.Y += Globals.GameFont.LineSpacing;
+            
+            // Draw "    Koray Arar" in White
+            Globals.SpriteBatch.DrawString(Globals.GameFont, "    Koray Arar", position, Color.White, 0, origin, 1f, SpriteEffects.None, 0);
+            position.Y += Globals.GameFont.LineSpacing * 2;
+            
+            // Draw "Musics :" in Beige
+            Globals.SpriteBatch.DrawString(Globals.GameFont, "Musics :", position, Color.Beige, 0, origin, 1f, SpriteEffects.None, 0);
+            position.Y += Globals.GameFont.LineSpacing;
+            
+            // Draw "    Sahin Meric" in White
+            Globals.SpriteBatch.DrawString(Globals.GameFont, "    Sahin Meric", position, Color.White, 0, origin, 1f, SpriteEffects.None, 0);
+            
             Globals.SpriteBatch.End();
 
             base.Draw();

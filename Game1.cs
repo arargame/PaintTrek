@@ -37,6 +37,7 @@ namespace PaintTrek
             loader = new Loader();
 
             Globals.Window = Window;
+            Globals.Game = this;
             // Globals.Window.AllowUserResizing = true;
             Globals.Random = new Random();
             Globals.PreviousSpawnTime = TimeSpan.Zero;

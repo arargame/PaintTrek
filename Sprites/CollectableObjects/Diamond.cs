@@ -95,6 +95,29 @@ namespace PaintTrek
 
         public override void Draw()
         {
+            if (alive && visible && !texture.IsDisposed)
+            {
+                // Glow effect calculation
+                float time = (float)Globals.GameTime.TotalGameTime.TotalSeconds;
+                float glowScale = scale * 1.4f; // %40 daha büyük
+                float alpha = (float)(Math.Sin(time * 10) + 1) / 2.0f * 0.5f; // Hızlı yanıp sönme, max 0.5 alpha
+
+                Globals.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+
+                // Draw glow (arkaya çizilir)
+                Globals.SpriteBatch.Draw(texture,
+                    position,
+                    sourceRectangle,
+                    color * alpha, // Transparent color
+                    rotation,
+                    origin,
+                    glowScale,
+                    spriteEffect,
+                    layerDepth);
+
+                Globals.SpriteBatch.End();
+            }
+
             base.Draw();
         }
 

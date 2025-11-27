@@ -29,6 +29,8 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
+            Globals.Game.IsMouseVisible = false;
+            // ...
             screenTitle = "Paint Trek";
             Globals.Window.Title = screenTitle;
         }

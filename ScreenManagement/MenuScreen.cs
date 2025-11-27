@@ -39,6 +39,7 @@ namespace PaintTrek
 
             screenTitle = "Menu Screen";
             Globals.Window.Title = screenTitle;
+            Globals.Game.IsMouseVisible = true;
 
             screenState = ScreenState.Active;
 
@@ -59,7 +60,10 @@ namespace PaintTrek
 
         public override void UnloadContent()
         {
-         
+            foreach (var entry in menuEntries)
+            {
+                entry.Dispose();
+            }
         }
 
         public override void Update()
@@ -113,14 +117,16 @@ namespace PaintTrek
 
             inputState.Update();
 
-            if (inputState.MenuSelect) 
-            {
-                MenuSelect(SelectedEntry);
-            }
+
 
             if(inputState.Cancel)
             {
                 MenuCancel(SelectedEntry);
+            }
+
+            if (inputState.MenuSelect)
+            {
+                MenuSelect(SelectedEntry);
             }
 
             if (inputState.MenuLeft) 
@@ -158,7 +164,7 @@ namespace PaintTrek
                 {
                     if(menuEntries[i].clickableArea.IsClicked)
                     {
-                        MenuSelect(selectedEntry);
+                        MenuSelect(menuEntries[i].entryNumber);
                     }
 
                     if (menuEntries[i].clickableArea.IsOverlapped)

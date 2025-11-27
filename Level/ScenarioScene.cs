@@ -27,6 +27,7 @@ namespace PaintTrek
         public ScenarioScene()
         {
             isKeyForStarting = false;
+            Globals.Game.IsMouseVisible = false;
             time = 0;
             charCounter = 0;
 
@@ -98,7 +99,11 @@ namespace PaintTrek
                     }
                 }
                 else
-                { s = str; isKeyForStarting = true; }
+                { 
+                    s = str; 
+                    isKeyForStarting = true;
+                    Globals.Game.IsMouseVisible = true;
+                }
 
                 Vector2 p = new Vector2(Globals.GameSize.X/2-Globals.GameFont.MeasureString(s).X/2, textPosition.Y + 10);
                 Globals.SpriteBatch.DrawString(Globals.GameFont, s, p, Color.White);

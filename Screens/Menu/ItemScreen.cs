@@ -18,7 +18,9 @@ namespace PaintTrek
 
         List<Item> items;
         int counter;
+
         BackButton backButton;
+        TextButton previousButton, nextButton;
 
         public ItemScreen() 
         {
@@ -31,23 +33,63 @@ namespace PaintTrek
 
             items = ListCreator();
             counter = 0;
+
             backButton = new BackButton("Back",this,true);
+
+            float fontHeight = Globals.GameFont.MeasureString("Previous").Y;
+            // float yPos = Globals.GameSize.Y - (fontHeight * 2);
+
+            previousButton = new TextButton("Previous", Vector2.Zero);
+            previousButton.SetAnchor(Anchor.BottomLeft, new Vector2(50, fontHeight * 2));
+
+            nextButton = new TextButton("Next", Vector2.Zero);
+            // Next button X offset depends on Previous button width + 50 + 50 (margin)
+            float prevWidth = Globals.GameFont.MeasureString("Previous").X;
+            nextButton.SetAnchor(Anchor.BottomLeft, new Vector2(50 + prevWidth + 50, fontHeight * 2));
+
+            previousButton.Click += new EventHandler(previousButton_Click);
+            nextButton.Click += new EventHandler(nextButton_Click);
         }
 
         public override void Load()
         {
             base.Load();
+            
+            // Recreate buttons with current resolution
+            // This ensures buttons are positioned correctly after resolution changes
+            if (backButton != null) backButton.Dispose();
+            if (previousButton != null) previousButton.Dispose();
+            if (nextButton != null) nextButton.Dispose();
+            
+            backButton = new BackButton("Back", this, true);
+
+            float fontHeight = Globals.GameFont.MeasureString("Previous").Y;
+            
+            previousButton = new TextButton("Previous", Vector2.Zero);
+            previousButton.SetAnchor(Anchor.BottomLeft, new Vector2(50, fontHeight * 2));
+
+            nextButton = new TextButton("Next", Vector2.Zero);
+            float prevWidth = Globals.GameFont.MeasureString("Previous").X;
+            nextButton.SetAnchor(Anchor.BottomLeft, new Vector2(50 + prevWidth + 50, fontHeight * 2));
+
+            previousButton.Click += new EventHandler(previousButton_Click);
+            nextButton.Click += new EventHandler(nextButton_Click);
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
+            if (previousButton != null) previousButton.Dispose();
+            if (nextButton != null) nextButton.Dispose();
         }
 
         public override void Update()
         {
             base.Update();
+            base.Update();
             backButton.Update();
+            previousButton.Update();
+            nextButton.Update();
         }
 
         public override void Draw()
@@ -57,12 +99,19 @@ namespace PaintTrek
 
             backButton.Draw();
 
+            previousButton.Draw();
+            nextButton.Draw();
+
             Vector2 position = new Vector2(Globals.GameSize.X / 2 - items[counter].texture.Width / 2, Globals.GameSize.Y * 0.1f);
 
             Globals.SpriteBatch.Begin();
             Vector2 infoPosition = new Vector2(Globals.GameSize.X * 0.1f, Globals.GameSize.Y * 0.35f);
-            Globals.SpriteBatch.DrawString(Globals.MenuFont, "Name :    " + items[counter].name, infoPosition, Color.White);
-            Globals.SpriteBatch.DrawString(Globals.MenuFont, "Info :    " + items[counter].info, new Vector2(infoPosition.X, infoPosition.Y + 50), Color.White);
+            Globals.SpriteBatch.DrawString(Globals.MenuFont, "Name :    ", infoPosition, Color.Beige);
+            Globals.SpriteBatch.DrawString(Globals.MenuFont, items[counter].name, new Vector2(infoPosition.X + Globals.MenuFont.MeasureString("Name :    ").X, infoPosition.Y), Color.White);
+            
+            Globals.SpriteBatch.DrawString(Globals.MenuFont, "Info :    ", new Vector2(infoPosition.X, infoPosition.Y + 50), Color.Beige);
+            Globals.SpriteBatch.DrawString(Globals.MenuFont, items[counter].info, new Vector2(infoPosition.X + Globals.MenuFont.MeasureString("Info :    ").X, infoPosition.Y + 50), Color.White);
+            
             Globals.SpriteBatch.Draw(items[counter].texture, position, Color.White);
             Globals.SpriteBatch.End();
            
@@ -70,7 +119,36 @@ namespace PaintTrek
 
         public override void HandleInput()
         {
-            base.HandleInput();
+            // Do NOT call base.HandleInput() to avoid unwanted sounds
+            // base.HandleInput(); 
+
+            if (inputState == null) return;
+            inputState.Update();
+
+            if (inputState.Cancel || backButton.IsClicked)
+            {
+                MenuCancel(0);
+            }
+
+            if (inputState.MenuLeft || previousButton.IsClicked)
+            {
+                MenuLeft(0);
+            }
+
+            if (inputState.MenuRight || nextButton.IsClicked)
+            {
+                MenuRight(0);
+            }
+        }
+
+        void previousButton_Click(object sender, EventArgs e)
+        {
+            MenuLeft(0);
+        }
+
+        void nextButton_Click(object sender, EventArgs e)
+        {
+            MenuRight(0);
         }
 
         public override void ExitScreen()

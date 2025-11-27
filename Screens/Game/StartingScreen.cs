@@ -20,6 +20,7 @@ namespace PaintTrek
 
         public StartingScreen() 
         {
+            Globals.Game.IsMouseVisible = false;
             Initialize();
         }
 

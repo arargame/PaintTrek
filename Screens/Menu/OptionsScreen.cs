@@ -82,35 +82,18 @@ namespace PaintTrek
                     break;
 
                 case 1:
-
-                    #if WINDOWS_PHONE
-                        Globals.GameSoundsActivated = !Globals.GameSoundsActivated;     
-                        LoadMenuEntries();
-                    #elif WINDOWS
-                    #endif
+                    Globals.GameSoundsActivated = !Globals.GameSoundsActivated;
                     LoadMenuEntries();
                     break;
 
                 case 2:
-
-                    #if WINDOWS_PHONE
-                        Globals.Graphics.IsFullScreen = !Globals.Graphics.IsFullScreen;
-                        LoadMenuEntries();
-                    #elif WINDOWS
-                    
-                    #endif
+                    Globals.Graphics.IsFullScreen = !Globals.Graphics.IsFullScreen;
                     LoadMenuEntries();
                     break;
 
                 case 3:
-
-                    #if WINDOWS_PHONE
-                         Globals.AutoAttack = !Globals.AutoAttack   
-                        LoadMenuEntries();
-                    #elif WINDOWS
-                        
-                    #endif
-                        LoadMenuEntries();
+                    Globals.AutoAttack = !Globals.AutoAttack;
+                    LoadMenuEntries();
                     break;
 
                 case 4:

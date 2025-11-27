@@ -75,9 +75,13 @@ namespace PaintTrek
 
         public void Draw() 
         {
-            Globals.SpriteBatch.Begin();
-         //   Globals.SpriteBatch.Draw(texture, rectangle, Color.Yellow);
-            Globals.SpriteBatch.End();
+            if (Globals.DebugMode)
+            {
+                // Draw yellow rectangle for debug
+                Globals.SpriteBatch.Begin();
+                Globals.SpriteBatch.Draw(texture, rectangle, Color.Yellow * 0.3f);
+                Globals.SpriteBatch.End();
+            }
         }
 
         public void SetRect(Rectangle rect)
@@ -89,6 +93,11 @@ namespace PaintTrek
         public Rectangle GetRect()
         {
             return rectangle;
+        }
+
+        public void RemoveFromSystem()
+        {
+            ClickableAreaSystem.Remove(this);
         }
 
     }

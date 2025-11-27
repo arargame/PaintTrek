@@ -30,7 +30,7 @@ namespace PaintTrek
         }
         public bool MenuLeft
         {
-            get { return IsNewKeyPress(Keys.Left); }
+            get { return IsNewKeyPress(Keys.Left) ; }
         }
         public bool MenuRight
         {

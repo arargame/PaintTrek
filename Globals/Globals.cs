@@ -21,6 +21,7 @@ namespace PaintTrek
         public static Rectangle GameRect;
         public static bool GameSoundsActivated;
         public static GameWindow Window;
+        public static Game Game;
         public static bool exitGame;
         public static bool firstTimeYouPlay;
 
@@ -32,5 +33,7 @@ namespace PaintTrek
         public static bool IsActive;
 
         public static double XX;
+        
+        public static bool DebugMode = true; // Enable debug visualization
     }
 }

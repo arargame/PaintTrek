@@ -36,6 +36,7 @@ namespace PaintTrek
             foreColor = Color.Blue;
             position = new Vector2(Globals.GameSize.X / 3, Globals.GameSize.Y * 0.1f);
             mobileController = new MobileController();
+            backButton = new BackButton("Back", this, false);
         }
 
         ~ControllersScreen() 
@@ -66,6 +67,7 @@ namespace PaintTrek
             base.Update();
             droppingLightSystem.Update();
             spriteSystem.Update();
+            backButton.Update();
             mobileController.Update(this.testPlayer);
         }
 
@@ -74,6 +76,8 @@ namespace PaintTrek
             Globals.Graphics.GraphicsDevice.Clear(Color.Black);
 
             base.Draw();
+
+            backButton.Draw();
 
             droppingLightSystem.Draw();
 
@@ -124,7 +128,7 @@ namespace PaintTrek
 
             #elif WINDOWS
 
-            str1 = "Press 'Space' or 'K' To ";
+            str1 = "Press 'Space' or 'K' or Click Left To ";
             str2 = "Fire";
             Globals.SpriteBatch.DrawString(font, str1, position, Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y), Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.K), str2);
