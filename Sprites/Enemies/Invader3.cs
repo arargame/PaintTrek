@@ -36,8 +36,7 @@ namespace PaintTrek
         public override void Load()
         {
           //  SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/invader3SpriteSheet"));
-            SetTextures(GlobalTexture.Invader3Texture);
-            animation = new Animation(texture, 7, 1, 5, true);
+            SetTexture(GlobalTexture.Invader3Texture, 7, 1, 5, true);
         }
 
         public override void Update()

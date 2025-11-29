@@ -58,9 +58,9 @@ namespace PaintTrek
             }
         }
 
-        public override void SetTextures(Texture2D newTexture)
+        public override void SetTexture(Texture2D texture, int tilesX, int tilesY, int frameCount, bool looping)
         {
-            base.SetTextures(newTexture);
+            base.SetTexture(texture, tilesX, tilesY, frameCount, looping);
             damageTexture = MakeDamageTexture(normalTexture);
         }
 

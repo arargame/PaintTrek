@@ -7,10 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace PaintTrek
 {
-    abstract class Sprite
+    public abstract class Sprite
     {
         float rotationAngle;
-        string name;
+        String name;
         public Texture2D texture;
         //public Texture2D damageTexture;
         public Texture2D normalTexture;
@@ -27,13 +27,33 @@ namespace PaintTrek
         public SpriteEffects spriteEffect;
         public float layerDepth;
         public Vector2 size;
-        public Color[,] textureData2D;
-        public Color[] textureData;
-        public Color[] specificTextureData;
+        //public Color[,] textureData2D;
+        //public Color[] textureData;
+        public Color[] specificTextureData
+        {
+            get
+            {
+                return animation?.GetSpecificAreaColorArray();
+            }
+        }
 
         public Animation animation;
 
         public Matrix transformMatrix;
+
+        // Performance optimization: Bounding box cache
+        private Rectangle cachedBoundingBox;
+        private Matrix lastTransformMatrix;
+        private bool boundingBoxDirty = true;
+
+        // Optimization: Dirty check fields for Transform Matrix
+        private Vector2 lastPosition;
+        private float lastRotation;
+        private float lastScale;
+        private Vector2 lastOrigin;
+
+        // Debug: Collision toggle for performance testing
+        public static bool CollisionEnabled = true;
 
         double health;
         double damage;
@@ -45,7 +65,9 @@ namespace PaintTrek
         double takingDamageTime = 0;
         public bool isTakingDamage = false;
 
-        SoundSystem deathSound = new SoundSystem("Sounds/SoundEffects/explosion", 1f, 0f, 0f, false, "Unknown", "Unknown");
+        // SoundSystem deathSound = new SoundSystem("Sounds/SoundEffects/explosion", 1f, 0f, 0f, false, "Unknown", "Unknown");
+        
+        // Optimization: TextureData for collision
 
 
         public virtual void Initialize()
@@ -59,7 +81,7 @@ namespace PaintTrek
 
             position = new Vector2(800, 200);
             size = new Vector2(50, 50);
-            scale = 1f;
+                scale = 1f;
             Vector2 origin = new Vector2(position.X, position.Y);
             spriteEffect = SpriteEffects.None;
             layerDepth = 0f;
@@ -80,18 +102,36 @@ namespace PaintTrek
             rotationAngle = 0f;
             IsKilled = false;
             originChanged = false;
+
+            // Initialize optimization fields and calculate initial matrix
+            CalculateTransformMatrix();
+            lastPosition = position;
+            lastRotation = rotation;
+            lastScale = scale;
+            lastOrigin = origin;
+            
+            // Pre-load explosion sound
+            SoundManager.Load("explosion", "Sounds/SoundEffects/explosion");
+
+
+   
+
         }
 
         public virtual void Load()
         {
             normalTexture = Globals.Content.Load<Texture2D>("Sprites/Default/SmilemanTexture");
-            //damageTexture = MakeDamageTexture(normalTexture);
             texture = normalTexture;
             animation = new Animation(texture, 1, 1, 1, false);
-            SetTextureData();
+
+            SetSize();
+            SetOrigin();
+            SetRectangle();
+            
+            //SetTextureData();
         }
 
-        public virtual void UnloadContent() 
+        public virtual void UnloadContent()
         {
 
         }
@@ -100,13 +140,23 @@ namespace PaintTrek
         {
             if (alive)
             {
+                // Her frame boyut ve pozisyon güncelle (basit ve güvenli)
                 SetSize();
                 SetOrigin();
                 SetRectangle();
-                SetSpecificTextureData();
+                
                 animation.Update();
-                CalculateTransformMatrix();
+                
                 Rotation();
+
+                if (position != lastPosition || rotation != lastRotation || scale != lastScale || origin != lastOrigin)
+                {
+                    CalculateTransformMatrix();
+                    lastPosition = position;
+                    lastRotation = rotation;
+                    lastScale = scale;
+                    lastOrigin = origin;
+                }
 
                 if (isTakingDamage)
                     takingDamageTime += Globals.GameTime.ElapsedGameTime.TotalSeconds;
@@ -121,7 +171,6 @@ namespace PaintTrek
 
             CheckHealth();
         }
-
         public virtual void Draw()
         {
             Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.NonPremultiplied);
@@ -149,7 +198,7 @@ namespace PaintTrek
 
             if (this.health <= 0)
                 IsKilled = true;
-        }
+            }
 
         public double GetDamage()
         {
@@ -169,7 +218,7 @@ namespace PaintTrek
                 Level.AddScore(GetPoint() * Level.LevelCounter);
                 alive = false;
                 ExplosionSystem.AddExplosion(this);
-                deathSound.Play();
+                SoundManager.Play("explosion");
             }
 
             if (!alive)
@@ -216,8 +265,8 @@ namespace PaintTrek
 
         private void SetOrigin()
         {
-            if(!originChanged)
-            origin = new Vector2(size.X / 2, size.Y / 2);
+            if (!originChanged)
+                origin = new Vector2(size.X / 2, size.Y / 2);
         }
 
         public void Rotate(float degree)
@@ -248,7 +297,7 @@ namespace PaintTrek
             else rotation = 0;
         }
 
-        public void SetName(string newName)
+        public void SetName(String newName)
         {
             name = newName;
         }
@@ -257,110 +306,159 @@ namespace PaintTrek
             return name;
         }
 
-        private void SetTextureData()
-        {
-            int pixelCount = texture.Width * texture.Height;
+        // Static cache for texture data to avoid expensive GetData calls
+        private static Dictionary<Texture2D, Color[]> textureDataCache = new Dictionary<Texture2D, Color[]>();
+        private static Dictionary<Texture2D, Color[,]> textureData2DCache = new Dictionary<Texture2D, Color[,]>();
 
-            if (pixelCount <= 0)
-            {
-                textureData = new Color[1];
-                textureData2D = new Color[1, 1];
-            }
-            else
-            {
-                textureData = new Color[pixelCount];
-                texture.GetData(textureData);
-                textureData2D = TextureTo2DArray(texture);
-            }
+        //public virtual void SetTextureData()
+        //{
+        //    if (texture == null) return;
 
-        }
+        //    // Check cache first
+        //    if (textureDataCache.ContainsKey(texture))
+        //    {
+        //        textureData = textureDataCache[texture];
+        //        if (textureData2DCache.ContainsKey(texture))
+        //            textureData2D = textureData2DCache[texture];
+        //        else
+        //        {
+        //            // Should not happen if logic is consistent, but handle just in case
+        //            textureData2D = TextureTo2DArray(texture);
+        //            textureData2DCache[texture] = textureData2D;
+        //        }
+        //        return;
+        //    }
 
+        //    int pixelCount = texture.Width * texture.Height;
+
+        //    if (pixelCount <= 0)
+        //    {
+        //        textureData = new Color[1];
+        //        textureData2D = new Color[1, 1];
+        //    }
+        //    else
+        //    {
+        //        textureData = new Color[pixelCount];
+        //        texture.GetData(textureData);
+        //        textureData2D = TextureTo2DArray(texture);
+                
+        //        // Add to cache
+        //        textureDataCache[texture] = textureData;
+        //        textureData2DCache[texture] = textureData2D;
+        //    }
+
+        //}
+
+        // Deprecated: Use TextureData class instead
         private void SetSpecificTextureData()
         {
-            specificTextureData = GetSpecificAreaColorArray();
+            // specificTextureData = GetSpecificAreaColorArray();
         }
 
         private void CalculateTransformMatrix()
         {
-            //Vector3 scale = new Vector3(Globals.GameSize.X/800,Globals.GameSize.Y/600,1f);
-
-
             transformMatrix = Matrix.CreateTranslation(new Vector3(-origin, 0.0f)) *
                 Matrix.CreateRotationZ(rotation) *
                 Matrix.CreateScale(scale) *
                 Matrix.CreateTranslation(new Vector3(position, 0.0f));
         }
 
-
-
-        public virtual void SetTextures(Texture2D newTexture)
+        public virtual void SetTexture(Texture2D texture, int tilesX, int tilesY,int frameCount, bool looping)
         {
-            texture = newTexture;
-            normalTexture = texture;
-            //damageTexture = MakeDamageTexture(newTexture);
-            SetTextureData();
+            this.texture = texture;
+            this.normalTexture = texture; // normalTexture'ı da güncelle
+
+            animation = new Animation(texture,tilesX,tilesY,frameCount,looping);
+            //SetTextureData();
+            
+            //// Animation varsa, ondan TextureData oluştur
+            //if (animation != null)
+            //{
+            //    textureDataObj = animation.CreateTextureData();
+            //}
+            //else
+            //{
+            //    // Animation yoksa varsayılan 1x1 oluştur
+            //    textureDataObj = new PaintTrek.TextureData(texture, 1, 1);
+            //}
         }
 
 
         public virtual void TakeDamage(Sprite another)
         {
-            //texture = damageTexture;
+          //  texture = damageTexture;
             isTakingDamage = true;
             SetHealth(another.GetDamage());
         }
 
 
+        // Cache for damage textures
+        private static Dictionary<Texture2D, Texture2D> damageTextureCache = new Dictionary<Texture2D, Texture2D>();
+
         public Texture2D MakeDamageTexture(Texture2D texture)
         {
-            this.scale = this.scale+0.0f;
+            if (texture == null) return null;
+
+            // Check cache
+            if (damageTextureCache.ContainsKey(texture))
+                return damageTextureCache[texture];
+
             int pixelCount = texture.Width * texture.Height;
             Color[] pixels = new Color[pixelCount];
             texture.GetData<Color>(pixels);
             for (int i = 0; i < pixels.Length; i++)
             {
-                byte offset = 200;
-                byte r = (byte)Math.Min(pixels[i].R + offset, 255);
-                byte g = (byte)Math.Min(pixels[i].R + offset, 255);
-                byte b = (byte)Math.Min(pixels[i].R + offset, 255);
-                pixels[i] = new Color(r, g, b, pixels[i].A);
+                // Only modify non-transparent pixels
+                if (pixels[i].A > 0)
+                {
+                    byte offset = 200;
+                    byte r = (byte)Math.Min(pixels[i].R + offset, 255);
+                    byte g = (byte)Math.Min(pixels[i].G + offset, 255);
+                    byte b = (byte)Math.Min(pixels[i].B + offset, 255);
+                    pixels[i] = new Color(r, g, b, pixels[i].A);
+                }
             }
 
             Texture2D outTexture = new Texture2D(Globals.Graphics.GraphicsDevice, texture.Width, texture.Height, false, SurfaceFormat.Color);
             outTexture.SetData<Color>(pixels);
+            
+            // Add to cache
+            damageTextureCache[texture] = outTexture;
+
             return outTexture;
         }
 
-        private Color GetColorAt(int x, int y)
-        {
-            // we need to take the source rectangle into account
-            var transformedX = x + animation.FrameBounds.X;
-            var transformedY = y + animation.FrameBounds.Y;
+        //private Color GetColorAt(int x, int y)
+        //{
+        //    // we need to take the source rectangle into account
+        //    var transformedX = x + animation.FrameBounds.X;
+        //    var transformedY = y + animation.FrameBounds.Y;
 
-            // calculate the offset and return the color from
-            // the one-dimensional texture data returned by the "GetData" method
-            return textureData[transformedX + transformedY * texture.Width];
-        }
+        //    // calculate the offset and return the color from
+        //    // the one-dimensional texture data returned by the "GetData" method
+        //    return textureData[transformedX + transformedY * texture.Width];
+        //}
 
 
-        private Color[] GetSpecificAreaColorArray()
-        {
-            int width = (int)size.X;
-            int height = (int)size.Y;
+        //private Color[] GetSpecificAreaColorArray()
+        //{
+        //    int width = (int)size.X;
+        //    int height = (int)size.Y;
 
-            Color[] specificAreaColorArray = new Color[width * height];
+        //    Color[] specificAreaColorArray = new Color[width * height];
 
-            int counter = 0;
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    specificAreaColorArray[counter] = textureData2D[j, i];
-                    counter++;
-                }
-            }
+        //    int counter = 0;
+        //    for (int i = 0; i < height; i++)
+        //    {
+        //        for (int j = 0; j < width; j++)
+        //        {
+        //            specificAreaColorArray[counter] = textureData2D[j, i];
+        //            counter++;
+        //        }
+        //    }
 
-            return specificAreaColorArray;
-        }
+        //    return specificAreaColorArray;
+        //}
 
         public static Color[,] TextureTo2DArray(Texture2D Texture)
         {
@@ -417,11 +515,20 @@ namespace PaintTrek
 
         #region Collision Detection
 
-        //Per Pixel Collision Detection with Transform Matrix on Scaled,Rotated,Animated Object
         public static bool CollisionDetection(
                            Matrix transformA, int widthA, int heightA, Color[] dataA,
                            Matrix transformB, int widthB, int heightB, Color[] dataB)
         {
+            if (!CollisionEnabled) return false;
+            
+            // Null check ekle
+            if (dataA == null || dataB == null) return false;
+            if (dataA.Length == 0 || dataB.Length == 0) return false;
+            
+            // Array boyutunu doğrula
+            if (dataA.Length < widthA * heightA || dataB.Length < widthB * heightB)
+                return false;
+
             // Calculate a matrix which transforms from A's local space into
             // world space and then into B's local space
             Matrix transformAToB = transformA * Matrix.Invert(transformB);
@@ -478,49 +585,77 @@ namespace PaintTrek
             return false;
         }
         //Per Pixel Collision Detection on Animated Object
-        public static bool CollisionDetection(Sprite spriteA, Sprite spriteB)
-        {
-            // get the bounds in screen coordinates
-            var rectangleA = spriteA.destinationRectangle;
-            var rectangleB = spriteB.destinationRectangle;
+        //public static bool CollisionDetection(Sprite spriteA, Sprite spriteB)
+        //{
+        //    if (!CollisionEnabled) return false;
 
-            // find the bounds of the rectangle intersection in screen space
-            var intersection = GetOverlappingRectangle(rectangleA, rectangleB);
-            if (intersection == Rectangle.Empty)
-            {
-                return false;
-            }
+        //    // get the bounds in screen coordinates
+        //    var rectangleA = spriteA.destinationRectangle;
+        //    var rectangleB = spriteB.destinationRectangle;
 
-            // Check every point within the intersection bounds
-            for (int y = intersection.Top; y < intersection.Bottom; y++)
-            {
-                for (int x = intersection.Left; x < intersection.Right; x++)
-                {
-                    // to retrieve the color of a pixel
-                    // we need to transform the coordinates back
-                    // to the sprite's local space
-                    int xA = x - rectangleA.Left;
-                    int yA = y - rectangleA.Top;
-                    Color colorA = spriteA.GetColorAt(xA, yA);
+        //    // find the bounds of the rectangle intersection in screen space
+        //    var intersection = GetOverlappingRectangle(rectangleA, rectangleB);
+        //    if (intersection == Rectangle.Empty)
+        //    {
+        //        return false;
+        //    }
 
-                    int xB = x - rectangleB.Left;
-                    int yB = y - rectangleB.Top;
-                    Color colorB = spriteB.GetColorAt(xB, yB);
+        //    // Check every point within the intersection bounds
+        //    for (int y = intersection.Top; y < intersection.Bottom; y++)
+        //    {
+        //        for (int x = intersection.Left; x < intersection.Right; x++)
+        //        {
+        //            // to retrieve the color of a pixel
+        //            // we need to transform the coordinates back
+        //            // to the sprite's local space
+        //            int xA = x - rectangleA.Left;
+        //            int yA = y - rectangleA.Top;
+        //            Color colorA = spriteA.GetColorAt(xA, yA);
 
-                    // If both pixels are not completely transparent,
-                    if (colorA.A != 0 && colorB.A != 0)
-                    {
-                        // then an intersection has been found
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
+        //            int xB = x - rectangleB.Left;
+        //            int yB = y - rectangleB.Top;
+        //            Color colorB = spriteB.GetColorAt(xB, yB);
+
+        //            // If both pixels are not completely transparent,
+        //            if (colorA.A != 0 && colorB.A != 0)
+        //            {
+        //                // then an intersection has been found
+        //                return true;
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
 
         public static bool SimpleCollisionDetection(Sprite spriteA, Sprite spriteB)
         {
             return spriteA.destinationRectangle.Intersects(spriteB.destinationRectangle);
+        }
+
+        /// <summary>
+        /// Get cached bounding box for performance. Only recalculates when transform changes.
+        /// </summary>
+        public Rectangle GetBoundingBox()
+        {
+            // Check if we need to recalculate
+            if (boundingBoxDirty || transformMatrix != lastTransformMatrix)
+            {
+                cachedBoundingBox = CalculateBoundingRectangle(
+                    new Rectangle(0, 0, (int)size.X, (int)size.Y),
+                    transformMatrix
+                );
+                lastTransformMatrix = transformMatrix;
+                boundingBoxDirty = false;
+            }
+            return cachedBoundingBox;
+        }
+
+        /// <summary>
+        /// Mark bounding box as dirty when position/rotation/scale changes
+        /// </summary>
+        public void InvalidateBoundingBox()
+        {
+            boundingBoxDirty = true;
         }
 
         #endregion

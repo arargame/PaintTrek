@@ -24,8 +24,7 @@ namespace PaintTrek
         public override void Load()
         {
             //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/snakeStone"));
-            SetTextures(GlobalTexture.snakeStoneTexture);
-            animation = new Animation(texture, 1, 1, 1, true);
+            SetTexture(GlobalTexture.snakeStoneTexture, 1, 1, 1, true);
         }
 
         public override void Update()

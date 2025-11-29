@@ -159,8 +159,7 @@ namespace PaintTrek
         {
             Bullet b = player.GetGun();
          //   b.color = Color.Blue;
-            b.SetTextures(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/speedyBullet")); 
-            b.animation = new Animation(b.texture,1,1,1,true);
+            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/speedyBullet"), 1, 1, 1, true);
             (b as Laser).SetVelocity(new Vector2(25, 0));
             b.SetDamage(Globals.Random.Next(10, 25));
         }
@@ -169,8 +168,7 @@ namespace PaintTrek
         {
             Bullet b = player.GetGun();
            // b.color = Color.Red;
-            b.SetTextures(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/powerBullet"));
-            b.animation = new Animation(b.texture,1,1,1,true);
+            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/powerBullet"), 1, 1, 1, true);
             b.SetDamage(Globals.Random.Next(25, 40));
         }
 
@@ -178,16 +176,14 @@ namespace PaintTrek
         {
             Bullet b = player.GetGun();
            // b.color = Color.Green;
-            b.SetTextures(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/poisonBullet")); 
-            b.animation = new Animation(b.texture, 1, 1, 1, true);
+            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/poisonBullet"), 1, 1, 1, true);
         }
 
         private void CriticalAttack()
         {
             Bullet b = player.GetGun();
             //b.color = Color.Black;
-            b.SetTextures(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/criticalBullet"));
-            b.animation = new Animation(b.texture, 1, 1, 1, true);
+            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/criticalBullet"), 1, 1, 1, true);
             (b as Laser).SetVelocity(new Vector2(20, 0));
             b.SetDamage(Globals.Random.Next(50, 100));
         }
@@ -196,8 +192,7 @@ namespace PaintTrek
         {
             Bullet b = player.GetGun();
             b.color = Color.White;
-            b.SetTextures(Globals.Content.Load<Texture2D>("Guns/laser"));
-            b.animation = new Animation(b.texture,1,1,1,true);
+            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/laser"), 1, 1, 1, true);
         }
 
         public void SelectSkill(Style style)

@@ -32,9 +32,7 @@ namespace PaintTrek
         public override void Load()
         {
             base.Load();
-            //SetTextures(Globals.Content.Load<Texture2D>("Guns/rocketSpriteSheet"));
-            SetTextures(GlobalTexture.rocketTexture);
-            animation = new Animation(texture, 1, 5, 5, true);
+            SetTexture(GlobalTexture.rocketTexture, 1, 5, 5, true);
         }
 
         public override void Update()

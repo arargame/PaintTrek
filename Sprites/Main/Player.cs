@@ -45,8 +45,6 @@ namespace PaintTrek
             get { return invincibilityTime > 0f; }
         }
 
-        SoundSystem collectCoin;
-
         public bool Flicker
         {
             set
@@ -74,13 +72,14 @@ namespace PaintTrek
             secondGun = new SecondGun(this);
             pixelatedMode = false;
             pixelatedModeTime = 0;
+            
+            // Pre-load sound
+            SoundManager.Load("collectCoin", "Sounds/SoundEffects/collectCoin");
         }
 
         public override void Load()
         {
-            SetTextures(Globals.Content.Load<Texture2D>("Sprites/Ship/ShipSpriteSheet"));
-            this.animation = new Animation(this.texture, 8, 1, 8, true);
-            collectCoin = new SoundSystem("Sounds/SoundEffects/collectCoin", 0.2f, 0f, 0f, false, "", "");
+            SetTexture(Globals.Content.Load<Texture2D>("Sprites/Ship/ShipSpriteSheet"), 8, 1, 8, true);
         }
 
         public override void Update()
@@ -115,6 +114,9 @@ namespace PaintTrek
             mouseCursorRectangle = input.cursorRect;
             Isclicked = input.IsMouseLeftPressed();
         }
+
+
+
 
         private void Controller(InputState input)
         {
@@ -161,16 +163,13 @@ namespace PaintTrek
 
             if (pixelatedMode)
             {
-                laser.SetTextures(Globals.Content.Load<Texture2D>("Guns/pixelatedGun"));
-                laser.animation = new Animation(laser.texture, 1, 1, 1, true);
+                laser.SetTexture(Globals.Content.Load<Texture2D>("Guns/pixelatedGun"), 1, 1, 1, true);
             }
 
             if (pixelatedMode && pixelatedModeTime <= 0)
             {
-                SetTextures(Globals.Content.Load<Texture2D>("Sprites/Ship/ShipSpriteSheet"));
-                this.animation = new Animation(this.texture, 8, 1, 8, true);
-                laser.SetTextures(GlobalTexture.laserTexture);
-                laser.animation = new Animation(laser.texture, 1, 1, 1, true);
+                SetTexture(Globals.Content.Load<Texture2D>("Sprites/Ship/ShipSpriteSheet"), 8, 1, 8, true);
+                laser.SetTexture(GlobalTexture.laserTexture, 1, 1, 1, true);
                 pixelatedMode = false;
             }
         }
@@ -273,9 +272,9 @@ namespace PaintTrek
             base.SetHealth(health);
         }
 
-        public override void SetTextures(Texture2D newTexture)
+        public override void SetTexture(Texture2D texture, int tilesX, int tilesY, int frameCount, bool looping)
         {
-            base.SetTextures(newTexture);
+            base.SetTexture(texture, tilesX, tilesY, frameCount, looping);
             damageTexture = MakeDamageTexture(normalTexture);
         }
 
@@ -418,8 +417,7 @@ namespace PaintTrek
                                 {
                                     (co as PixelSupply).ChangePlayer(this);
 
-                                    SetTextures(Globals.Content.Load<Texture2D>("Sprites/Ship/pixelShipSpriteSheet"));
-                                    this.animation = new Animation(this.texture, 4, 2, 8, true);
+                                    SetTexture(Globals.Content.Load<Texture2D>("Sprites/Ship/pixelShipSpriteSheet"), 4, 2, 8, true);
 
                                 }
                                 else if (co is Wrench)
@@ -458,7 +456,7 @@ namespace PaintTrek
                                 TakeDamage(co);
                             }
                             co.alive = false;
-                            collectCoin.Play();
+                            SoundManager.Play("collectCoin");
                         }
 
                     }

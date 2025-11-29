@@ -7,6 +7,7 @@
 /config:
 /profile:Reach
 /compress:False
+/incremental:True
 
 #-------------------------------- References --------------------------------#
 
@@ -877,6 +878,16 @@
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Textures/xnaTexture.png
+
+#begin cursorTexture.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:cursorTexture.png
+
+#begin monogameTexture.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:monogameTexture.png
 
 
 #begin bin/Windows/Content/Sounds/Musics/music11.wma

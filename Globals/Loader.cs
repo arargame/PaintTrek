@@ -95,12 +95,14 @@ namespace PaintTrek
                 {
                     Globals.AutoAttack = Convert.ToBoolean(str[0]);
                     Globals.GameSoundsActivated = Convert.ToBoolean(str[1]);
-                    Globals.Graphics.IsFullScreen = Convert.ToBoolean(str[2]);
+                    // Always use fullscreen (1280x800) - low resolution option removed
+                    Globals.Graphics.IsFullScreen = true;
                 }
                 else
                 {
                     Globals.AutoAttack = false;
                     Globals.GameSoundsActivated = true;
+                    // Always use fullscreen (1280x800) - low resolution option removed
                     Globals.Graphics.IsFullScreen = true;
                 }
             }

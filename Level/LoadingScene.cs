@@ -66,11 +66,11 @@ namespace PaintTrek
             {
                 // timer = 0;
                 openingKeyForLevel = true;
-                Globals.Game.IsMouseVisible = true;
+                Globals.ShowCursor = true;
             }
             else
             {
-                Globals.Game.IsMouseVisible = false;
+                Globals.ShowCursor = false;
                 transitionTimer += Globals.GameTime.ElapsedGameTime.TotalSeconds * 16;
             }
 

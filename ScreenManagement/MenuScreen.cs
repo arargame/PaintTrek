@@ -39,6 +39,7 @@ namespace PaintTrek
 
             screenTitle = "Menu Screen";
             Globals.Window.Title = screenTitle;
+            Globals.ShowCursor = true;
             Globals.Game.IsMouseVisible = true;
 
             screenState = ScreenState.Active;
@@ -181,6 +182,10 @@ namespace PaintTrek
         public override void ExitScreen()
         {
             screenState = ScreenState.Inactive;
+            
+            // Clean up this screen's clickable areas
+            CleanupClickableAreas();
+            
             GC.ReRegisterForFinalize(this);
         }
 
@@ -188,6 +193,13 @@ namespace PaintTrek
         {
             menuEntries.Add(menuEntry);
             position.Add(new Vector2());
+            
+            // Register clickable area with this screen
+            if (menuEntry.clickableArea != null)
+            {
+                menuEntry.clickableArea.OwnerScreen = this;
+                RegisterClickableArea(menuEntry.clickableArea);
+            }
         }
 
         public virtual void MenuSelect(int selectedEntry) {}

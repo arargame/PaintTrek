@@ -160,7 +160,6 @@ namespace PaintTrek
             base.MenuCancel(selectedEntry);
             ExitScreen();
             ScreenManager.AddScreen(new ExtraScreen());
-            ExitScreen();
         }
 
         public override void MenuLeft(int selectedEntry)

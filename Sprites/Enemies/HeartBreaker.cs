@@ -38,8 +38,7 @@ namespace PaintTrek
         public override void Load()
         {
             //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/heartBreakerSpriteSheet"));
-            SetTextures(GlobalTexture.hearthBreakerTexture);
-            animation = new Animation(texture, 6, 1, 6, true);
+            SetTexture(GlobalTexture.hearthBreakerTexture, 6, 1, 6, true);
         }
 
         public override void Update()

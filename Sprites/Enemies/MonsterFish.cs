@@ -25,8 +25,7 @@ namespace PaintTrek
         {
             base.Load();
            // SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/monsterFishSpriteSheet"));
-            SetTextures(GlobalTexture.monsterFishTexture);
-            animation = new Animation(texture, 3, 1, 6, true);
+            SetTexture(GlobalTexture.monsterFishTexture, 3, 1, 6, true);
         }
 
         public override void Update()

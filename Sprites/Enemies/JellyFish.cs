@@ -24,8 +24,7 @@ namespace PaintTrek
         public override void Load()
         {
             //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/squidSpriteSheet"));
-            SetTextures(GlobalTexture.jellyFishTexture);
-            animation = new Animation(texture, 3, 2, 5, true);
+            SetTexture(GlobalTexture.jellyFishTexture, 3, 2, 5, true);
         }
 
         public override void Update()

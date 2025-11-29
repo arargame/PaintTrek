@@ -9,16 +9,65 @@ namespace PaintTrek
 {
     class GameBoard : GameScreen
     {
+        // Singleton instance
+        private static GameBoard instance = null;
+        private static readonly object lockObject = new object();
+        
         Level level;
         InfoSystem infoSystem;
         bool isGameActive;
 
-        public GameBoard()
+        private GameBoard()
         {
             Initialize();
             level = new Level();
             infoSystem = new InfoSystem(new Vector2(400, 100));
             isGameActive = true;
+        }
+        
+        // Singleton accessor
+        public static GameBoard GetInstance()
+        {
+            lock (lockObject)
+            {
+                // If instance exists and is not inactive, return it
+                if (instance != null && instance.screenState != ScreenState.Inactive)
+                {
+                    return instance;
+                }
+                
+                // Create new instance
+                instance = new GameBoard();
+                return instance;
+            }
+        }
+        
+        // Factory method for creating new game
+        public static GameBoard CreateNewGame()
+        {
+            lock (lockObject)
+            {
+                // Dispose old instance if exists
+                if (instance != null)
+                {
+                    instance.ForceDispose();
+                }
+                
+                // Create new instance
+                instance = new GameBoard();
+                return instance;
+            }
+        }
+        
+        // Force dispose for cleanup
+        private void ForceDispose()
+        {
+            if (level != null)
+            {
+                level.Dispose();
+            }
+            UnloadContent();
+            screenState = ScreenState.Inactive;
         }
 
         ~GameBoard() 
@@ -29,7 +78,7 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
-            Globals.Game.IsMouseVisible = false;
+            Globals.ShowCursor = false;
             // ...
             screenTitle = "Paint Trek";
             Globals.Window.Title = screenTitle;
@@ -59,6 +108,7 @@ namespace PaintTrek
                     this.screenState = ScreenState.Frozen;
                     ScreenManager.AddScreen(new PauseScreen(this));
                     isGameActive = false;
+                    Globals.ShowCursor = true;
                 }
                 else
                 {
@@ -82,7 +132,11 @@ namespace PaintTrek
                     infoSystem.Update();
                     base.Update();
 
-                    isGameActive = true;
+                    isGameActive = level.GetGameState() == GameState.Active;
+                    if (isGameActive)
+                    {
+                        Globals.ShowCursor = false;
+                    }
                 }
             }
         }
@@ -120,13 +174,27 @@ namespace PaintTrek
             }
 
             ExitScreen();
-            ScreenManager.AddScreen(new GameBoard());
+            ScreenManager.AddScreen(GameBoard.CreateNewGame());
         }
         public override void ExitScreen()
         {
             screenState = ScreenState.Inactive;
+            
+            // Dispose level and clear all resources
+            if (level != null)
+            {
+                level.Dispose();
+            }
+            
+            UnloadContent();
+            
+            // Clear singleton instance
+            lock (lockObject)
+            {
+                instance = null;
+            }
+            
             GC.ReRegisterForFinalize(this);
-            level.Dispose();
         }
 
         public override void HandleInput()
@@ -141,6 +209,7 @@ namespace PaintTrek
                 level.Pause();
                 this.screenState = ScreenState.Frozen;
                 ScreenManager.AddScreen(new PauseScreen(this));
+                Globals.ShowCursor = true;
             }
             
 

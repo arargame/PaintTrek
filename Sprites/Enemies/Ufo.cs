@@ -40,8 +40,7 @@ namespace PaintTrek
         public override void Load()
         {
           //  SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/ufoSpriteSheet"));
-            SetTextures(GlobalTexture.ufo1Texture);
-            animation = new Animation(texture, 7, 1, 10, true);
+            SetTexture(GlobalTexture.ufo1Texture, 7, 1, 10, true);
         }
 
         public override void Update()

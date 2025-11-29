@@ -189,13 +189,13 @@ namespace PaintTrek
             InputState input = i;
             if (gameState == GameState.Scenario && scenarioScene.GetKeyForStarting())
             {
-                if (input.MenuSelect || scenarioScene.ClickableArea.IsClicked)
+                if (input.MenuSelect || scenarioScene.ClickableArea.IsClicked || input.IsLeftClicked())
                     gameState = GameState.Loading;
             }
 
             if (gameState == GameState.Loading && loadingScene.GetKeyForStarting())
             {
-                if (input.MenuSelect || loadingScene.ClickableArea.IsClicked)
+                if (input.MenuSelect || loadingScene.ClickableArea.IsClicked || input.IsLeftClicked())
                     gameState = GameState.Active;
             }
 
@@ -235,7 +235,18 @@ namespace PaintTrek
 
         public void Dispose() 
         {
+            // Dispose soundtrack
             levelSoundtrack.Dispose();
+            
+            // Clear all sprite lists to prevent memory leaks
+            SpriteSystem.ClearList();
+            EnemySystem.ClearList();
+            GunSystem.ClearList();
+            BossSystem.ClearList();
+            CollectableObjectSystem.ClearList();
+            
+            // Clear drawable system
+            DrawableSystem.Clear();
         }
 
 

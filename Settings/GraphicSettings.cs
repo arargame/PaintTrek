@@ -16,9 +16,8 @@ namespace PaintTrek
 
         public GraphicSettings()
         {
-            if (Globals.Graphics.IsFullScreen)
-                MakeFullScreen();
-            else ExecuteScreenSize(800, 600);
+            // Always start with fullscreen (1280x800) - low resolution option removed
+            MakeFullScreen();
         }
 
         public static Vector2 GetScreenSize()
@@ -53,6 +52,11 @@ namespace PaintTrek
             Globals.Graphics.ApplyChanges();
 
             ExecuteAllRect();
+        }
+        
+        public static void MakeWindowed()
+        {
+            ExecuteScreenSize(800, 600);
         }
 
         public static void ExecuteAllRect()

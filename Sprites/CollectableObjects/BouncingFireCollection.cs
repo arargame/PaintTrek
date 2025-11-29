@@ -27,14 +27,41 @@ namespace PaintTrek
         public override void Load()
         {
            // SetTextures(Globals.Content.Load<Texture2D>("CollectableObjects/bouncingBallSupply"));
-            SetTextures(GlobalTexture.bouncingFireCollectionTexture);
-            animation = new Animation(texture, 1, 1, 1, true);
+            SetTexture(GlobalTexture.bouncingFireCollectionTexture, 1, 1, 1, true);
         }
 
         public override void Update()
         {
-
             SimpleMovement(velocity);
+
+            // Bouncing logic - check boundaries and reverse velocity
+            // Left boundary
+            if (position.X - size.X / 2 <= 0)
+            {
+                velocity.X *= -1;
+                position.X = size.X / 2; // Prevent sticking to edge
+            }
+
+            // Right boundary
+            if (position.X + size.X / 2 >= Globals.GameSize.X)
+            {
+                velocity.X *= -1;
+                position.X = Globals.GameSize.X - size.X / 2;
+            }
+
+            // Top boundary
+            if (position.Y - size.Y / 2 <= 0)
+            {
+                velocity.Y *= -1;
+                position.Y = size.Y / 2;
+            }
+
+            // Bottom boundary - THIS WAS THE BUG!
+            if (position.Y + size.Y / 2 >= Globals.GameSize.Y)
+            {
+                velocity.Y *= -1;
+                position.Y = Globals.GameSize.Y - size.Y / 2; // Prevent sticking to bottom
+            }
 
            // time -= Globals.GameTime.ElapsedGameTime.TotalSeconds;
            // if (time <= 0) alive = false;
@@ -52,7 +79,8 @@ namespace PaintTrek
         }
         public override void SetVelocity()
         {
-            velocity = new Vector2(-Globals.Random.Next(1,3),0);
+            // Add random Y velocity for bouncing effect
+            velocity = new Vector2(-Globals.Random.Next(1,3), Globals.Random.Next(-2, 3));
             if (Globals.Graphics.IsFullScreen)
             {
                 velocity = new Vector2((velocity.X * 1280) / 800, (velocity.Y * 800) / 600);

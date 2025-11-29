@@ -24,6 +24,12 @@ namespace PaintTrek
             screenState = ScreenState.Active;
             inputState = new InputState();
             backButton = new BackButton("Back",this,false);
+            
+            // Register back button's clickable area
+            if (backButton != null && backButton.clickableArea != null)
+            {
+                RegisterClickableArea(backButton.clickableArea);
+            }
         }
 
         public override void Load()
@@ -76,6 +82,10 @@ namespace PaintTrek
         public override void ExitScreen()
         {
             screenState = ScreenState.Inactive;
+            
+            // Clean up this screen's clickable areas
+            CleanupClickableAreas();
+            
             GC.ReRegisterForFinalize(this);
             menuSelectSound.Play();
         }

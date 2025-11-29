@@ -24,8 +24,7 @@ namespace PaintTrek
         public override void Load()
         {
             //SetTextures(Globals.Content.Load<Texture2D>("Guns/starFireSpriteSheet"));
-            SetTextures(GlobalTexture.starFireTexture);
-            animation = new Animation(texture, 4, 2, 16, true);
+            SetTexture(GlobalTexture.starFireTexture, 4, 2, 16, true);
         }
 
         public override void Update()

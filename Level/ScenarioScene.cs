@@ -27,7 +27,7 @@ namespace PaintTrek
         public ScenarioScene()
         {
             isKeyForStarting = false;
-            Globals.Game.IsMouseVisible = false;
+            Globals.ShowCursor = false;
             time = 0;
             charCounter = 0;
 
@@ -99,10 +99,10 @@ namespace PaintTrek
                     }
                 }
                 else
-                { 
+                {
                     s = str; 
                     isKeyForStarting = true;
-                    Globals.Game.IsMouseVisible = true;
+                    Globals.ShowCursor = true;
                 }
 
                 Vector2 p = new Vector2(Globals.GameSize.X/2-Globals.GameFont.MeasureString(s).X/2, textPosition.Y + 10);
@@ -111,8 +111,13 @@ namespace PaintTrek
 
             if (isKeyForStarting)
             {
-                Globals.SpriteBatch.DrawString(Globals.GameFont, "Skip>>", new Vector2(Globals.GameSize.X - Globals.GameFont.MeasureString("Skip>>").X - 10, Globals.GameSize.Y - Globals.GameFont.MeasureString("Skip>>").Y), Color.White);
-                Rectangle enterRect = new Rectangle((int)(Globals.GameSize.X - Globals.GameFont.MeasureString("Skip>>").X - 10), (int)(Globals.GameSize.Y - Globals.GameFont.MeasureString("Skip>>").Y), (int)Globals.GameFont.MeasureString("Skip>>").X, (int)Globals.GameFont.MeasureString("Skip>>").Y);
+                // Position Skip button like BackButton - bottom right with margin
+                float skipWidth = Globals.GameFont.MeasureString("Skip>>").X;
+                float skipHeight = Globals.GameFont.MeasureString("Skip>>").Y;
+                Vector2 skipPosition = new Vector2(Globals.GameSize.X - (skipWidth + 20), Globals.GameSize.Y - (skipHeight * 2));
+                
+                Globals.SpriteBatch.DrawString(Globals.GameFont, "Skip>>", skipPosition, Color.White);
+                Rectangle enterRect = new Rectangle((int)skipPosition.X, (int)skipPosition.Y, (int)skipWidth, (int)skipHeight);
                 clickableArea.SetRect(enterRect);
             }
 

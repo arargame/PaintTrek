@@ -16,6 +16,9 @@ namespace PaintTrek
 
         public bool IsOverlapped;
         public bool IsClicked;
+        
+        // Track which screen owns this clickable area
+        public Screen OwnerScreen { get; set; }
 
         public ClickableArea(Rectangle rect) 
         {

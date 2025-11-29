@@ -25,18 +25,9 @@ namespace PaintTrek
         public override void Load()
         {
             base.Load();
-            SetTextures(GlobalTexture.laserTexture);
-            animation = new Animation(texture, 1, 1, 1, true);
+            SetTexture(GlobalTexture.laserTexture, 1, 1, 1, true);
         }
 
-        public override void SetTextures(Texture2D newTexture)
-        {
-            texture = newTexture;
-            normalTexture = texture;
-            //damageTexture = texture;
-            //damageTexture = MakeDamageTexture(newTexture);
-            //SetTextureData();
-        }
         public override void Update()
         {
             base.Update();

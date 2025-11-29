@@ -37,8 +37,7 @@ namespace PaintTrek
         public override void Load()
         {
             //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/bristleSpriteSheet"));
-            SetTextures(GlobalTexture.bristleTexture);
-            animation = new Animation(texture, 3, 1, 6, true);
+            SetTexture(GlobalTexture.bristleTexture, 3, 1, 6, true);
         }
 
         public override void Update()

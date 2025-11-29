@@ -117,13 +117,17 @@ namespace PaintTrek
             {
                 ClickableArea CA = ClickableAreaSystem.clickableAreas[i];
                 CA.Update();
-                if (CA.GetRect().Intersects(cursorRect))
+                
+                // Only process clickable areas that belong to active screens or have no owner
+                bool shouldProcess = CA.OwnerScreen == null || CA.OwnerScreen.GetScreenState() == ScreenState.Active;
+                
+                if (shouldProcess && CA.GetRect().Intersects(cursorRect))
                 {
                     CA.IsOverlapped = true;
                 }
                 else CA.IsOverlapped = false;
 
-                if (CA.GetRect().Intersects(cursorRect) && IsLeftClicked())
+                if (shouldProcess && CA.GetRect().Intersects(cursorRect) && IsLeftClicked())
                 {
                     CA.IsClicked = true;
                 }

@@ -25,6 +25,7 @@ namespace PaintTrek
             base.Initialize();
             screenTitle = "Pause Screen";
             Globals.Window.Title = screenTitle;
+            Globals.ShowCursor = true;
         }
         public override void Load()
         {
@@ -38,6 +39,7 @@ namespace PaintTrek
 
         public override void Update()
         {
+            Globals.ShowCursor = true;
             base.Update();
         }
         public void LoadMenuEntries()
@@ -70,14 +72,14 @@ namespace PaintTrek
                     {
                         Level.Score = 0;
                         gameBoard.ExitScreen();
-                        ScreenManager.AddScreen(new GameBoard());
+                        ScreenManager.AddScreen(GameBoard.CreateNewGame());
                     }
                     else if (fs.LoadFile() != null)
                     {
                         Level.LevelCounter = Convert.ToInt32(fs.LoadFile()[1]);
                         Level.Score = Convert.ToInt32(fs.LoadFile()[0]);
                         gameBoard.ExitScreen();
-                        ScreenManager.AddScreen(new GameBoard());
+                        ScreenManager.AddScreen(GameBoard.CreateNewGame());
                     }
                     ExitScreen();
                     break;

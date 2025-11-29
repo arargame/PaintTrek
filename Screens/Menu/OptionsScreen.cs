@@ -31,9 +31,11 @@ namespace PaintTrek
             AddEntry(new MenuEntry("Sounds : On", true, 1));
             else AddEntry(new MenuEntry("Sounds : Off", true, 1));
 
+            // Resolution selection enabled
             if(Globals.Graphics.IsFullScreen)
-            AddEntry(new MenuEntry("Full Screen : On(1280,800)", true, 2));
-            else AddEntry(new MenuEntry("Full Screen : Off(800,600)", true, 2));
+                AddEntry(new MenuEntry("Resolution : 1280x800", true, 2));
+            else
+                AddEntry(new MenuEntry("Resolution : 800x600", true, 2));
 
             if(Globals.AutoAttack)
             AddEntry(new MenuEntry("Auto-Attack : On", true, 3));
@@ -87,7 +89,15 @@ namespace PaintTrek
                     break;
 
                 case 2:
-                    Globals.Graphics.IsFullScreen = !Globals.Graphics.IsFullScreen;
+                    // Toggle resolution between 1280x800 and 800x600
+                    if (Globals.Graphics.IsFullScreen)
+                    {
+                        GraphicSettings.MakeWindowed();
+                    }
+                    else
+                    {
+                        GraphicSettings.MakeFullScreen();
+                    }
                     LoadMenuEntries();
                     break;
 
@@ -125,7 +135,15 @@ namespace PaintTrek
             }
             else if(selectedEntry==2)
             {
-                Globals.Graphics.IsFullScreen = !Globals.Graphics.IsFullScreen;
+                // Toggle resolution with left arrow
+                if (Globals.Graphics.IsFullScreen)
+                {
+                    GraphicSettings.MakeWindowed();
+                }
+                else
+                {
+                    GraphicSettings.MakeFullScreen();
+                }
                 LoadMenuEntries();
             }
             else if(selectedEntry==3)
@@ -146,7 +164,15 @@ namespace PaintTrek
             }
             else if (selectedEntry == 2)
             {
-                Globals.Graphics.IsFullScreen = !Globals.Graphics.IsFullScreen;
+                // Toggle resolution with right arrow
+                if (Globals.Graphics.IsFullScreen)
+                {
+                    GraphicSettings.MakeWindowed();
+                }
+                else
+                {
+                    GraphicSettings.MakeFullScreen();
+                }
                 LoadMenuEntries();
             }
             else if (selectedEntry == 3)
@@ -159,26 +185,12 @@ namespace PaintTrek
         public override void MenuCancel(int selectedEntry)
         {
             base.MenuCancel(selectedEntry);
-            ScreenManager.AddScreen(new MainMenuScreen());
             ExitScreen();
+            ScreenManager.AddScreen(new MainMenuScreen());
         }
         public override void ExitScreen()
         {
-            // Only apply graphics changes if the fullscreen mode actually changed
-            bool fullScreenChanged = wasFullScreenOnEntry != Globals.Graphics.IsFullScreen;
-            
-            if (fullScreenChanged)
-            {
-                if (Globals.Graphics.IsFullScreen)
-                {
-                    GraphicSettings.MakeFullScreen();
-                }
-                else 
-                {
-                    GraphicSettings.ExecuteScreenSize(800, 600);
-                }
-            }
-
+            // Save settings including resolution
             bool b = false;
             do
             {

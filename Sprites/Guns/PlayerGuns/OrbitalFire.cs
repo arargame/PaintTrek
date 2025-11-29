@@ -26,9 +26,7 @@ namespace PaintTrek
         public override void Load()
         {
             base.Load();
-           //SetTextures(Globals.Content.Load<Texture2D>("Guns/orbitalFireSpriteSheet"));
-            SetTextures(GlobalTexture.orbitalFireTexture);
-            animation = new Animation(texture, 1, 1, 1, true);
+            SetTexture(GlobalTexture.orbitalFireTexture, 1, 1, 1, true);
         }
 
         public override void Update()

@@ -38,8 +38,7 @@ namespace PaintTrek
             //   SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/trilobitChildSpriteSheet"));
             //  animation = new Animation(texture, 1, 4, 4, true);
            // SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/childTrilobitEggSpriteSheet"));
-            SetTextures(GlobalTexture.childTrilobitEggTexture);
-            animation = new Animation(texture, 3, 1, 3, true);
+            SetTexture(GlobalTexture.childTrilobitEggTexture, 3, 1, 3, true);
         }
 
         public override void Update()
@@ -53,8 +52,7 @@ namespace PaintTrek
             {
                 movementStyle = MovementStyle.chasing;
                 //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/trilobitChildSpriteSheet"));
-                SetTextures(GlobalTexture.childTrilobitTexture);
-                animation = new Animation(texture, 1, 4, 4, true);
+                SetTexture(GlobalTexture.childTrilobitTexture, 1, 4, 4, true);
                 SetCharacterInfo("Child Trilobit", 30, 10, 10);
             }
 

@@ -24,8 +24,7 @@ namespace PaintTrek
 
         public override void Load()
         {
-            SetTextures(GlobalTexture.eyeTexture);
-            animation = new Animation(texture, 4, 1, 5, true);
+            SetTexture(GlobalTexture.eyeTexture, 4, 1, 5, true);
         }
 
         public override void Update()

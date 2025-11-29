@@ -39,23 +39,22 @@ namespace PaintTrek
             switch (style)
             {
                 case BoneStyle.headBone1:
-                   // SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/headBone1"));
-                    SetTextures(GlobalTexture.headBone1Texture);
+                    // SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/headBone1"));
+                    SetTexture(GlobalTexture.headBone1Texture, 1, 1, 1, true);
                     break;
                 case BoneStyle.headBone2:
                     //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/headBone2"));
-                    SetTextures(GlobalTexture.headBone2Texture);
+                    SetTexture(GlobalTexture.headBone2Texture, 1, 1, 1, true);
                     break;
                 case BoneStyle.longBone:
                     //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/longBone"));
-                    SetTextures(GlobalTexture.longBoneTexture);
+                    SetTexture(GlobalTexture.longBoneTexture, 1, 1, 1, true);
                     break;
                 default:
                     //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/longBone"));
-                    SetTextures(GlobalTexture.longBoneTexture);
+                    SetTexture(GlobalTexture.longBoneTexture, 1, 1, 1, true);
                     break;
             }
-            animation = new Animation(texture, 1, 1, 1, true);
         }
 
         public override void Update()

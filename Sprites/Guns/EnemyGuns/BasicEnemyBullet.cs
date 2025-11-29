@@ -23,8 +23,7 @@ namespace PaintTrek
 
         public override void Load()
         {
-            SetTextures(GlobalTexture.basicEnemyBulletTexture);
-            animation = new Animation(texture, 1, 1, 1, true);
+            SetTexture(GlobalTexture.basicEnemyBulletTexture, 1, 1, 1, true);
         }
 
         public override void Update()

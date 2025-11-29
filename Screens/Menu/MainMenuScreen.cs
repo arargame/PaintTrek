@@ -11,6 +11,7 @@ namespace PaintTrek
     class MainMenuScreen:MenuScreen
     {
         FileSystem fileSystem;
+        
         public MainMenuScreen()
         {
             Initialize();
@@ -84,7 +85,8 @@ namespace PaintTrek
                     ExitScreen();
                     Level.LevelCounter = 1;
                     Level.Score = 0;
-                    ScreenManager.AddScreen(new GameBoard());
+                    // Create new game with singleton pattern
+                    ScreenManager.AddScreen(GameBoard.CreateNewGame());
                     break;
                 case 1:
                     if (MenuEntries[selectedEntry].Enabled) 
@@ -92,7 +94,8 @@ namespace PaintTrek
                         Level.LevelCounter = Convert.ToInt32(fileSystem.LoadFile()[1]);
                         Level.Score = Convert.ToInt32(fileSystem.LoadFile()[0]);
                         ExitScreen();
-                        ScreenManager.AddScreen(new GameBoard());
+                        // Create new game with singleton pattern
+                        ScreenManager.AddScreen(GameBoard.CreateNewGame());
                     }
                     break;
                 case 2:

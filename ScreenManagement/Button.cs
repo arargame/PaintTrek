@@ -21,7 +21,7 @@ namespace PaintTrek
         protected string text;
         protected Vector2 position;
         protected Rectangle rect;
-        protected ClickableArea clickableArea;
+        public ClickableArea clickableArea; // Made public for owner screen registration
         protected SpriteFont font;
         protected Color color;
         protected Color hoverColor = Color.Yellow;

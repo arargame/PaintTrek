@@ -51,24 +51,23 @@ namespace PaintTrek
             if (diamondStyle == Style.Black)
             {
                 //SetTextures(Globals.Content.Load<Texture2D>("CollectableObjects/blackDiamond")); 
-                SetTextures(GlobalTexture.blackDiamondTexture);
+                SetTexture(GlobalTexture.blackDiamondTexture, 1, 1, 1, true);
             }
             if (diamondStyle == Style.Blue)
             {
                 //SetTextures(Globals.Content.Load<Texture2D>("CollectableObjects/blueDiamond"));
-                SetTextures(GlobalTexture.blueDiamondTexture);
+                SetTexture(GlobalTexture.blueDiamondTexture, 1, 1, 1, true);
             }
             if (diamondStyle == Style.Green)
             {
                 //SetTextures(Globals.Content.Load<Texture2D>("CollectableObjects/greenDiamond"));
-                SetTextures(GlobalTexture.greenDiamondTexture);
+                SetTexture(GlobalTexture.greenDiamondTexture, 1, 1, 1, true);
             }
             if (diamondStyle == Style.Red)
             {
                 //SetTextures(Globals.Content.Load<Texture2D>("CollectableObjects/redDiamond"));
-                SetTextures(GlobalTexture.redDiamondTexture);
+                SetTexture(GlobalTexture.redDiamondTexture, 1, 1, 1, true);
             }
-            animation = new Animation(texture, 1, 1, 1, true);
         }
 
         public override void Update()

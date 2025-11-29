@@ -25,8 +25,7 @@ namespace PaintTrek
         public override void Load()
         {
             //SetTextures(GlobalTexture.sharpCubeTexture);
-            SetTextures(GlobalTexture.sharpCubeTexture);
-            animation = new Animation(texture, 5, 1, 5, true);
+            SetTexture(GlobalTexture.sharpCubeTexture, 5, 1, 5, true);
         }
 
         public override void Update()

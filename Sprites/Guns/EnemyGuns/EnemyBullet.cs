@@ -123,7 +123,7 @@ namespace PaintTrek
                             TakeDamage(playerBullet);
                             playerBullet.TakeDamage(this);
 
-                            playerBullet.GetHitSound().Play();
+                            SoundManager.Play("hit");
 
                             if (GetHealth() <= 0)
                                 alive = false;

@@ -34,6 +34,7 @@ namespace PaintTrek
 
         public static double XX;
         
-        public static bool DebugMode = true; // Enable debug visualization
+        public static bool DebugMode = false; // Enable debug visualization
+        public static bool ShowCursor = true;
     }
 }

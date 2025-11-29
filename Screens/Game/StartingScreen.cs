@@ -15,7 +15,7 @@ namespace PaintTrek
         Texture2D logoTexture;
         bool isAlive;
         double lifeSpan;
-        Texture2D xnaTexture;
+        Texture2D monogameTexture;
         double time;
 
         public StartingScreen() 
@@ -32,6 +32,7 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
+            Globals.ShowCursor = false;
 
             screenTitle = "Paint Trek";
             Globals.Window.Title = screenTitle;
@@ -50,7 +51,7 @@ namespace PaintTrek
         {
             base.Load();
             logoTexture = Globals.Content.Load<Texture2D>(@"Textures/smilemanLogo");
-            xnaTexture = Globals.Content.Load<Texture2D>(@"Textures/xnaTexture");
+            monogameTexture = Globals.Content.Load<Texture2D>("monogameTexture");
         }
 
         public override void UnloadContent()
@@ -108,7 +109,7 @@ namespace PaintTrek
             }
             else 
             {
-                Globals.SpriteBatch.Draw(xnaTexture, new Rectangle((int)Globals.GameSize.X / 2 - xnaTexture.Width / 2, (int)Globals.GameSize.Y / 2 - xnaTexture.Height / 2, xnaTexture.Width, xnaTexture.Height), Color.White);
+                Globals.SpriteBatch.Draw(monogameTexture, new Rectangle((int)Globals.GameSize.X / 2 - monogameTexture.Width / 2, (int)Globals.GameSize.Y / 2 - monogameTexture.Height / 2, monogameTexture.Width, monogameTexture.Height), Color.White);
             }
 
             Globals.SpriteBatch.End();

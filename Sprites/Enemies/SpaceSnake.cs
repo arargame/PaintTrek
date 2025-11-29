@@ -24,8 +24,7 @@ namespace PaintTrek
         public override void Load()
         {
            // SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/spaceSnakeSpriteSheet"));
-            SetTextures(GlobalTexture.spaceSnakeTexture);
-            animation = new Animation(texture, 6, 1, 12, true);
+            SetTexture(GlobalTexture.spaceSnakeTexture, 6, 1, 12, true);
         }
 
         public override void Update()

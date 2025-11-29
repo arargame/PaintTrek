@@ -25,8 +25,7 @@ namespace PaintTrek
         public override void Load()
         {
            //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/asteroidSpriteSheet"));
-            SetTextures(GlobalTexture.astreoidTexture);
-            animation = new Animation(texture, 1, 1, 1, false);
+            SetTexture(GlobalTexture.astreoidTexture, 1, 1, 1, false);
         }
         public override void Update()
         {

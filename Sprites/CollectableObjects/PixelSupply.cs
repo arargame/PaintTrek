@@ -25,8 +25,7 @@ namespace PaintTrek
         public override void Load()
         {
             //SetTextures(Globals.Content.Load<Texture2D>("CollectableObjects/pixelSupply"));
-            SetTextures(GlobalTexture.pixelSupplyTexture);
-            animation = new Animation(texture, 1, 1, 1, true);
+            SetTexture(GlobalTexture.pixelSupplyTexture, 1, 1, 1, true);
         }
 
         public override void Update()

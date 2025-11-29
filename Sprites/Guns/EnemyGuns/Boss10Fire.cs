@@ -25,8 +25,7 @@ namespace PaintTrek
         public override void Load()
         {
             //SetTextures(Globals.Content.Load<Texture2D>("Guns/boss10Fire"));
-            SetTextures(GlobalTexture.boss10FireTexture);
-            animation = new Animation(texture, 1, 2, 2, true);
+            SetTexture(GlobalTexture.boss10FireTexture, 1, 2, 2, true);
         }
 
 

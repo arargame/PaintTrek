@@ -38,8 +38,7 @@ namespace PaintTrek
         public override void Load()
         {
            // SetTextures(Globals.Content.Load<Texture2D>("Sprites/Target/mrBrainSpriteSheet"));
-            SetTextures(GlobalTexture.mrBrainTexture);
-            animation = new Animation(texture, 3, 1, 3, true);
+            SetTexture(GlobalTexture.mrBrainTexture, 3, 1, 3, true);
         }
 
         public override void Update()

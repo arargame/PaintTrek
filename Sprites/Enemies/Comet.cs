@@ -43,8 +43,7 @@ namespace PaintTrek
         public override void Load()
         {
 
-            SetTextures(GlobalTexture.cometTexture);
-            animation = new Animation(texture, 4, 2, 16, true);
+            SetTexture(GlobalTexture.cometTexture, 4, 2, 16, true);
         }
 
         public override void Update()

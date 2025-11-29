@@ -31,9 +31,7 @@ namespace PaintTrek
         public override void Load()
         {
             base.Load();
-            //SetTextures(Globals.Content.Load<Texture2D>("Guns/laser"));
-            SetTextures(GlobalTexture.laserTexture);
-            animation = new Animation(texture, 1, 1, 1, true);
+            SetTexture(GlobalTexture.laserTexture, 1, 1, 1, true);
         }
 
         public override void Update()

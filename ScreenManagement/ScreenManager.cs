@@ -19,42 +19,13 @@ namespace PaintTrek
         {
             screens = new List<Screen>();
             inputState = new InputState();
-            
-            // Create cursor texture programmatically (Arrow shape)
-            int width = 12;
-            int height = 20;
-            cursorTexture = new Texture2D(Globals.Graphics.GraphicsDevice, width, height);
-            Color[] data = new Color[width * height];
-            
-            // Simple arrow shape logic
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    // Draw outline (Black) and fill (White)
-                    // This is a simplified arrow shape
-                    if (x == 0 || x == y || x == width - 1 && y > width/2) 
-                        data[y * width + x] = Color.Black; // Outline (rough)
-                    else if (x < y)
-                        data[y * width + x] = Color.White; // Fill
-                    else
-                        data[y * width + x] = Color.Transparent;
-                }
-            }
-            // Better manual pixel art for arrow
-            // Clear all to transparent first
-            for(int i=0; i<data.Length; i++) data[i] = Color.Transparent;
-            
-            // Draw arrow pixels (White with Black border)
-            // Tip is at 0,0
-            // Left edge
-            for(int y=0; y<16; y++) { data[y*width] = Color.Black; data[y*width+1] = Color.White; }
-            // Diagonal edge
-            for(int i=0; i<12; i++) { data[i*width+i] = Color.Black; if(i>0) data[i*width+(i-1)] = Color.White; }
-            // Bottom
-            for(int x=0; x<8; x++) { data[11*width+x] = Color.Black; }
-            
-            cursorTexture.SetData(data);
+        }
+
+        // Load cursor texture from content
+        public void LoadContent()
+        {
+            // Load cursor texture from content pipeline
+            cursorTexture = Globals.Content.Load<Texture2D>("cursorTexture");
         }
 
         public void Update() 
@@ -77,15 +48,34 @@ namespace PaintTrek
             }
 
             Globals.SpriteBatch.Begin();
-            if (cursorTexture != null && Globals.Graphics.IsFullScreen)
+            if (cursorTexture != null && Globals.ShowCursor)
             {
-                Globals.SpriteBatch.Draw(cursorTexture, inputState.cursorPosition, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                // Calculate scale to make cursor appear at mouse cursor size (typically 16-32 pixels)
+                // Target size is 32 pixels, so scale based on texture size
+                float targetSize = 32f; // Target cursor size in pixels
+                float scaleX = targetSize / cursorTexture.Width;
+                float scaleY = targetSize / cursorTexture.Height;
+                float scale = Math.Min(scaleX, scaleY); // Use smaller scale to maintain aspect ratio
+                
+                Vector2 origin = new Vector2(cursorTexture.Width / 2, cursorTexture.Height / 2);
+                Globals.SpriteBatch.Draw(cursorTexture, inputState.cursorPosition, null, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
             }
             Globals.SpriteBatch.End();
         }
 
         internal static void AddScreen(Screen screen) 
         {
+            // Check if a screen of the same type already exists and is active
+            Type screenType = screen.GetType();
+            for (int i = screens.Count - 1; i >= 0; i--)
+            {
+                if (screens[i].GetType() == screenType && screens[i].GetScreenState() != ScreenState.Inactive)
+                {
+                    // Screen of this type already exists, don't add duplicate
+                    return;
+                }
+            }
+            
             screens.Add(screen);
         }
 

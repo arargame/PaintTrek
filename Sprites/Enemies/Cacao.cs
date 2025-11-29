@@ -30,8 +30,7 @@ namespace PaintTrek
 
         public override void Load()
         {
-            SetTextures(GlobalTexture.cacaoTexture);
-            animation = new Animation(texture, 5, 1, 5, true);
+            SetTexture(GlobalTexture.cacaoTexture, 5, 1, 5, true);
         }
 
         public override void Update()

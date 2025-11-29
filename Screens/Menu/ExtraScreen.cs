@@ -78,8 +78,8 @@ namespace PaintTrek
         public override void MenuCancel(int selectedEntry)
         {
             base.MenuCancel(selectedEntry);
-            ScreenManager.AddScreen(new MainMenuScreen());
             ExitScreen();
+            ScreenManager.AddScreen(new MainMenuScreen());
         }
 
         public override void ExitScreen()

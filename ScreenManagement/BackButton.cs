@@ -29,6 +29,12 @@ namespace PaintTrek
             this.rect = new Rectangle(0, 0, (int)size.X, (int)size.Y);
             this.clickableArea = new ClickableArea(this.rect);
             
+            // Set owner screen for clickable area
+            if (this.clickableArea != null && screen != null)
+            {
+                this.clickableArea.OwnerScreen = screen;
+            }
+            
             SetAnchor(Anchor.BottomRight, new Vector2(width + 20, height * 2));
         }
 

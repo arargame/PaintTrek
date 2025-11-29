@@ -9,19 +9,18 @@ namespace PaintTrek
 {
     abstract class PlayerBullet : Bullet
     {
-        SoundSystem fireSound;
-        SoundSystem hitSound;
-
         public override void Initialize()
         {
             base.Initialize();
+            
+            // Pre-load sounds
+            SoundManager.Load("laserFire", "Sounds/SoundEffects/laserFire");
+            SoundManager.Load("hit", "Sounds/SoundEffects/hit");
         }
 
         public override void Load()
         {
             base.Load();
-            fireSound = new SoundSystem("Sounds/SoundEffects/laserFire", 1f, 0f, 0f, false, "", "");
-            hitSound = new SoundSystem("Sounds/SoundEffects/hit", 1f, 0f, 0f, false, "", "");
         }
 
         public override void Update()
@@ -60,7 +59,7 @@ namespace PaintTrek
 
                             enemy.TakeDamage(this);
 
-                            hitSound.Play();
+                            SoundManager.Play("hit");
 
                             if (GetHealth() <= 0)
                                 alive = false;
@@ -80,12 +79,7 @@ namespace PaintTrek
         public override void Fire()
         {
             base.Fire();
-            fireSound.Play();
-        }
-
-        public SoundSystem GetHitSound() 
-        {
-            return hitSound;
+            SoundManager.Play("laserFire");
         }
 
         public void SlowMovement(Enemy enemy)

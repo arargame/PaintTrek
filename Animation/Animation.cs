@@ -7,23 +7,24 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace PaintTrek
 {
-    class Animation
+    public class Animation
     {
-
-        private int tilesX;
-        private int tilesY;
+        private PaintTrek.TextureData textureDataObj;
+        private Texture2D texture;
+        public int tilesX;
+        public int tilesY;
         public int tileWidth;
         public int tileHeight;
 
         private int frame;
-        private int frameCount;
+        public int frameCount;
 
         private double frameInterval;
         private double frameTimeRemaining;
 
 
         private bool active;
-        private bool looping;
+        public bool looping;
 
         public int Width
         {
@@ -57,6 +58,7 @@ namespace PaintTrek
 
         public Animation(Texture2D texture, int tilesX, int tilesY, double frameRate, int frameCount, bool looping)
         {
+            this.texture = texture; // Texture'ı sakla
             this.tilesX = tilesX;
             this.tilesY = tilesY;
 
@@ -74,6 +76,9 @@ namespace PaintTrek
             this.looping = looping;
 
             active = true;
+
+            textureDataObj = new TextureData(texture, this.tilesX, this.tilesY);
+            textureDataObj.InitializeLazy();
         }
 
         public void Update()
@@ -105,6 +110,23 @@ namespace PaintTrek
         public int GetCurrentFrame()
         {
             return this.frame;
+        }
+
+        /// <summary>
+        /// Bu animation için TextureData objesi oluşturur.
+        /// Sprite'ların Load() metodunda kullanılmak üzere.
+        /// </summary>
+        public TextureData CreateTextureData()
+        {
+            return new TextureData(this.texture, this.tilesX, this.tilesY);
+        }
+
+        public Color[] GetSpecificAreaColorArray()
+        {
+            if(textureDataObj==null)
+                return new Color[1] { Color.Transparent };
+
+            return textureDataObj.GetSpecificAreaColorArray(frame);
         }
 
     }

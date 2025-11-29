@@ -34,10 +34,14 @@ namespace PaintTrek
             
             previousButton = new TextButton("Previous", Vector2.Zero);
             previousButton.SetAnchor(Anchor.BottomLeft, new Vector2(50, fontHeight * 2));
+            previousButton.SetOwnerScreen(this);
+            RegisterClickableArea(previousButton.clickableArea);
 
             nextButton = new TextButton("Next", Vector2.Zero);
             float prevWidth = Globals.GameFont.MeasureString("Previous").X;
             nextButton.SetAnchor(Anchor.BottomLeft, new Vector2(50 + prevWidth + 50, fontHeight * 2));
+            nextButton.SetOwnerScreen(this);
+            RegisterClickableArea(nextButton.clickableArea);
 
             previousButton.Click += new EventHandler(previousButton_Click);
             nextButton.Click += new EventHandler(nextButton_Click);
@@ -137,6 +141,12 @@ namespace PaintTrek
 
         public override void ExitScreen()
         {
+            // Dispose sample enemies to prevent memory leak
+            if (enemies != null)
+            {
+                enemies.Clear();
+            }
+            
             base.ExitScreen();
         }
 
@@ -271,8 +281,8 @@ namespace PaintTrek
         public override void MenuCancel(int selectedEntry)
         {
             base.MenuCancel(selectedEntry);
-            ScreenManager.AddScreen(new ExtraScreen());
             ExitScreen();
+            ScreenManager.AddScreen(new ExtraScreen());
         }
 
         public override void MenuLeft(int selectedEntry)

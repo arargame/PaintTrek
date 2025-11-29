@@ -39,12 +39,6 @@ namespace PaintTrek
             base.Draw();
         }
 
-        public override void SetTextures(Texture2D newTexture)
-        {
-            base.SetTextures(newTexture);
-            damageTexture = MakeDamageTexture(normalTexture);
-        }
-
         public override void TakeDamage(Sprite another)
         {
             texture = damageTexture;

@@ -23,8 +23,7 @@ namespace PaintTrek
         public override void Load()
         {
            // SetTextures(Globals.Content.Load<Texture2D>("CollectableObjects/wrenchSpriteSheet"));
-            SetTextures(GlobalTexture.wrenchTexture);
-            animation = new Animation(texture, 3, 1, 5, true);
+            SetTexture(GlobalTexture.wrenchTexture, 3, 1, 5, true);
         }
 
         public override void Update()

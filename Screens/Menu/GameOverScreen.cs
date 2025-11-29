@@ -37,7 +37,8 @@ namespace PaintTrek
             {
                 case 0:
                     ExitScreen();
-                    ScreenManager.AddScreen(new GameBoard()); 
+                    // Create new game with singleton pattern
+                    ScreenManager.AddScreen(GameBoard.CreateNewGame()); 
                     break;
                 case 1:
                     MenuCancel(selectedEntry);

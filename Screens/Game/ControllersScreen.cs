@@ -8,8 +8,10 @@ using Microsoft.Xna.Framework.Input;
 
 namespace PaintTrek
 {
-    class ControllersScreen:GameScreen
+    // ControllersScreen provides a tutorial UI for input controls.
+    class ControllersScreen : GameScreen
     {
+        // DroppingLightSystem is kept active for visual effects.
         DroppingLightSystem droppingLightSystem;
         Player testPlayer;
         SpriteSystem spriteSystem;
@@ -19,16 +21,18 @@ namespace PaintTrek
         SpriteFont font;
         Vector2 position;
         MobileController mobileController;
+        private BackButton backButton; // Added back button field
 
-
-        public ControllersScreen() 
+        public ControllersScreen()
         {
             Initialize();
 
+            // Reset global lists and systems.
             SpriteSystem.ClearList();
             GunSystem.Clear();
             droppingLightSystem = new DroppingLightSystem();
             testPlayer = new Player();
+            testPlayer.Load(); // Load player texture and animation
             spriteSystem = new SpriteSystem();
             button = Globals.Content.Load<Texture2D>("Textures/button");
             font = Globals.MenuFont;
@@ -36,10 +40,10 @@ namespace PaintTrek
             foreColor = Color.Blue;
             position = new Vector2(Globals.GameSize.X / 3, Globals.GameSize.Y * 0.1f);
             mobileController = new MobileController();
-            backButton = new BackButton("Back", this, false);
+            backButton = new BackButton("Back", this, true); // Initialize back button (enabled)
         }
 
-        ~ControllersScreen() 
+        ~ControllersScreen()
         {
             UnloadContent();
         }
@@ -47,7 +51,6 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
-
             screenTitle = "Controllers Screen";
             Globals.Window.Title = screenTitle;
         }
@@ -65,40 +68,35 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
-            droppingLightSystem.Update();
+            droppingLightSystem.Update(); // Keep DroppingLightSystem active
             spriteSystem.Update();
-            backButton.Update();
+            backButton.Update(); // Update back button state
             mobileController.Update(this.testPlayer);
         }
 
         public override void Draw()
         {
             Globals.Graphics.GraphicsDevice.Clear(Color.Black);
-
             base.Draw();
 
-            backButton.Draw();
+            // Draw background effects first
+            droppingLightSystem.Draw(); // Render dropping light effects
 
-            droppingLightSystem.Draw();
-
-            #if WINDOWS_PHONE
+#if WINDOWS_PHONE
             mobileController.Draw();
-            #endif
+#endif
 
             Globals.SpriteBatch.Begin();
             string str1, str2;
 
-            #if WINDOWS_PHONE
-
+#if WINDOWS_PHONE
             str1 = "Tap Screen or Red Area ";
             str2 = "Fire";
-
             Globals.SpriteBatch.DrawString(font, str1, position, Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y), mobileController.pressedFire || inputState.IsMouseLeftPressed(), str2);
 
             str1 = "Press 'Up' To Move ";
             str2 = "Up";
-
             Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 50), Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 50), mobileController.pressedUp, str2);
 
@@ -122,16 +120,11 @@ namespace PaintTrek
             Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 250), Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 250), Keyboard.GetState().IsKeyDown(Keys.P) || Keyboard.GetState().IsKeyDown(Keys.Escape), str2);
 
-            #elif XBOX
-
-                  // Execute code that is specific to Xbox 360
-
-            #elif WINDOWS
-
+#elif WINDOWS
             str1 = "Press 'Space' or 'K' or Click Left To ";
             str2 = "Fire";
             Globals.SpriteBatch.DrawString(font, str1, position, Color.White);
-            DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y), Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.K), str2);
+            DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y), Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.K) || Mouse.GetState().LeftButton == ButtonState.Pressed, str2);
 
             str1 = "Press 'W' or 'Up' To Move ";
             str2 = "Up";
@@ -157,33 +150,35 @@ namespace PaintTrek
             str2 = "Pause";
             Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 250), Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 250), Keyboard.GetState().IsKeyDown(Keys.P) || Keyboard.GetState().IsKeyDown(Keys.Escape), str2);
-      
-            #else
 
-                  // Print a compile-time error message
+#else
             #error The platform is not specified or is unsupported by this game.
-
-            #endif
+#endif
 
             Globals.SpriteBatch.End();
-
+            
+            // Draw sprites and back button after main UI
             spriteSystem.Draw();
-
+            backButton.Draw(); // Render back button last so it appears on top
         }
 
         public override void HandleInput()
         {
             base.HandleInput();
-
             InputState input = inputState;
-
+            
+            // Check if back button is clicked
+            if (backButton.IsClicked)
+            {
+                ExitScreen();
+                return;
+            }
+            
             testPlayer.HandleInput(input);
-
             if (input.Fire)
             {
                 testPlayer.Attack();
             }
-
         }
 
         public override void ExitScreen()
@@ -192,6 +187,7 @@ namespace PaintTrek
             ScreenManager.AddScreen(new OptionsScreen());
         }
 
+        // Helper method to draw a key label with optional highlight.
         private void DrawKey(Vector2 position, bool pressed, string label)
         {
             Rectangle rect = new Rectangle((int)position.X, (int)position.Y, (int)font.MeasureString(label).X, (int)font.MeasureString(label).Y);
@@ -201,13 +197,7 @@ namespace PaintTrek
                 Globals.SpriteBatch.Draw(fill, new Rectangle((int)position.X + 1, (int)position.Y + 1, rect2.Width - 2, rect2.Height - 2), Color.CornflowerBlue);
 
             Globals.SpriteBatch.Draw(button, new Rectangle(rect.Left, rect.Top, (int)(rect.Width + font.MeasureString(label).X), rect.Height), Color.Blue);
-
-
             Globals.SpriteBatch.DrawString(font, label, new Vector2(position.X + rect2.Width / 4, position.Y), Color.White);
-
-
         }
-
-
     }
 }

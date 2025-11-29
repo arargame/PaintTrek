@@ -25,8 +25,7 @@ namespace PaintTrek
 
         public override void Load()
         {
-            SetTextures(GlobalTexture.bossFire1Texture);
-            animation = new Animation(texture, 4, 1, 4, true);
+            SetTexture(GlobalTexture.bossFire1Texture, 4, 1, 4, true);
         }
 
 

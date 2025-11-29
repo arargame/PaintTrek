@@ -71,8 +71,7 @@ namespace PaintTrek
         public override void Load()
         {
            // SetTextures(Globals.Content.Load<Texture2D>("Sprites/Boss/snakeStoneSpriteSheetLeft"));
-            SetTextures(GlobalTexture.snakeStoneLeftTexture);
-            animation = new Animation(texture, 1, 3, 3, true);
+            SetTexture(GlobalTexture.snakeStoneLeftTexture, 1, 3, 3, true);
         }
 
 
@@ -145,23 +144,20 @@ namespace PaintTrek
                 {
                     movementStyle = MovementStyle.Left;
                     //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Boss/snakeStoneSpriteSheetLeft"));
-                    SetTextures(GlobalTexture.snakeStoneLeftTexture);
-                    animation = new Animation(texture, 1, 3, 3, true);
+                    SetTexture(GlobalTexture.snakeStoneLeftTexture, 1, 3, 3, true);
                 }
                 else if (number > 33 && number <= 66)
                 {
                     movementStyle = MovementStyle.Up;
                     //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Boss/snakeStoneSpriteSheetUp"));
-                    SetTextures(GlobalTexture.snakeStoneUpTexture);
-                    animation = new Animation(texture, 3, 1, 3, true);
+                    SetTexture(GlobalTexture.snakeStoneUpTexture, 3, 1, 3, true);
 
                 }
                 else if (number > 66)
                 {
                     movementStyle = MovementStyle.Down;
                     //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Boss/snakeStoneSpriteSheetDown"));
-                    SetTextures(GlobalTexture.snakeStoneDownTexture);
-                    animation = new Animation(texture, 3, 1, 3, true);
+                    SetTexture(GlobalTexture.snakeStoneDownTexture, 3, 1, 3, true);
                 }
             }
 

@@ -44,8 +44,7 @@ namespace PaintTrek
         public override void Load()
         {
             //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Boss/boss7SpriteSheet"));
-            SetTextures(GlobalTexture.boss7Texture);
-            animation = new Animation(texture, 1, 5, 5, true);
+            SetTexture(GlobalTexture.boss7Texture, 1, 5, 5, true);
         }
 
         public override void Update()
