@@ -26,10 +26,8 @@ namespace PaintTrek
                 MenuEntries.Clear();
 
             AddEntry(new MenuEntry("Controllers", true, 0));
-
-            if(Globals.GameSoundsActivated)
-            AddEntry(new MenuEntry("Sounds : On", true, 1));
-            else AddEntry(new MenuEntry("Sounds : Off", true, 1));
+            
+            AddEntry(new MenuEntry("Sound Settings", true, 1));
 
             // Resolution selection enabled
             if(Globals.Graphics.IsFullScreen)
@@ -38,12 +36,18 @@ namespace PaintTrek
                 AddEntry(new MenuEntry("Resolution : 800x600", true, 2));
 
             if(Globals.AutoAttack)
-            AddEntry(new MenuEntry("Auto-Attack : On", true, 3));
-            else AddEntry(new MenuEntry("Auto-Attack : Off", true, 3));
+                AddEntry(new MenuEntry("Auto-Attack : On", true, 3));
+            else 
+                AddEntry(new MenuEntry("Auto-Attack : Off", true, 3));
+            
+            if(Globals.DeveloperMode)
+                AddEntry(new MenuEntry("Developer Mode : On", true, 4));
+            else 
+                AddEntry(new MenuEntry("Developer Mode : Off", true, 4));
 
-            AddEntry(new MenuEntry("You Played the game "+TimeKeeper.time, true, 4));
+            AddEntry(new MenuEntry("You Played the game "+TimeKeeper.time, true, 5));
 
-            AddEntry(new MenuEntry("Back", true, 5));
+            AddEntry(new MenuEntry("Back", true, 6));
         }
 
         public override void Initialize()
@@ -64,7 +68,7 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
-            MenuEntries[4].Text = "You Played the game " + TimeKeeper.time;
+            MenuEntries[5].Text = "You Played the game " + TimeKeeper.time;
         }
 
         public override void Draw()
@@ -84,8 +88,9 @@ namespace PaintTrek
                     break;
 
                 case 1:
-                    Globals.GameSoundsActivated = !Globals.GameSoundsActivated;
-                    LoadMenuEntries();
+                    // Sound Settings screen
+                    ExitScreen();
+                    ScreenManager.AddScreen(new SoundSettingsScreen());
                     break;
 
                 case 2:
@@ -98,26 +103,28 @@ namespace PaintTrek
                     {
                         GraphicSettings.MakeFullScreen();
                     }
+                    GameSettings.Instance.UpdateSettings(fullScreen: Globals.Graphics.IsFullScreen);
                     LoadMenuEntries();
                     break;
 
                 case 3:
                     Globals.AutoAttack = !Globals.AutoAttack;
+                    GameSettings.Instance.UpdateSettings(autoAttack: Globals.AutoAttack);
                     LoadMenuEntries();
                     break;
 
                 case 4:
-
-                    #if WINDOWS_PHONE
-                        LoadMenuEntries();
-                    #elif WINDOWS
-                        MenuCancel(selectedEntry);
-                    #endif
-                        LoadMenuEntries();
+                    Globals.DeveloperMode = !Globals.DeveloperMode;
+                    // DeveloperMode is runtime-only, not saved
+                    LoadMenuEntries();
                     break;
 
                 case 5:
+                    // Play time display - do nothing
+                    LoadMenuEntries();
+                    break;
 
+                case 6:
                     MenuCancel(SelectedEntry);
                     break;
 
@@ -128,12 +135,7 @@ namespace PaintTrek
 
         public override void MenuLeft(int selectedEntry)
         {
-            if (selectedEntry == 1) 
-            {
-                Globals.GameSoundsActivated = !Globals.GameSoundsActivated;
-                LoadMenuEntries();
-            }
-            else if(selectedEntry==2)
+            if(selectedEntry==2)
             {
                 // Toggle resolution with left arrow
                 if (Globals.Graphics.IsFullScreen)
@@ -144,25 +146,26 @@ namespace PaintTrek
                 {
                     GraphicSettings.MakeFullScreen();
                 }
+                GameSettings.Instance.UpdateSettings(fullScreen: Globals.Graphics.IsFullScreen);
                 LoadMenuEntries();
             }
             else if(selectedEntry==3)
             {
                 Globals.AutoAttack = !Globals.AutoAttack;
+                GameSettings.Instance.UpdateSettings(autoAttack: Globals.AutoAttack);
                 LoadMenuEntries();
             }
-
-
+            else if(selectedEntry==4)
+            {
+                Globals.DeveloperMode = !Globals.DeveloperMode;
+                // DeveloperMode is runtime-only, not saved
+                LoadMenuEntries();
+            }
         }
 
         public override void MenuRight(int selectedEntry)
         {
-            if (selectedEntry == 1)
-            {
-                Globals.GameSoundsActivated = !Globals.GameSoundsActivated;
-                LoadMenuEntries();
-            }
-            else if (selectedEntry == 2)
+            if (selectedEntry == 2)
             {
                 // Toggle resolution with right arrow
                 if (Globals.Graphics.IsFullScreen)
@@ -173,11 +176,19 @@ namespace PaintTrek
                 {
                     GraphicSettings.MakeFullScreen();
                 }
+                GameSettings.Instance.UpdateSettings(fullScreen: Globals.Graphics.IsFullScreen);
                 LoadMenuEntries();
             }
             else if (selectedEntry == 3)
             {
                 Globals.AutoAttack = !Globals.AutoAttack;
+                GameSettings.Instance.UpdateSettings(autoAttack: Globals.AutoAttack);
+                LoadMenuEntries();
+            }
+            else if (selectedEntry == 4)
+            {
+                Globals.DeveloperMode = !Globals.DeveloperMode;
+                // DeveloperMode is runtime-only, not saved
                 LoadMenuEntries();
             }
         }
@@ -190,50 +201,12 @@ namespace PaintTrek
         }
         public override void ExitScreen()
         {
-            // Save settings including resolution
-            bool b = false;
-            do
-            {
-                StreamWriter streamWriter = null;
-
-                IsolatedStorageFileStream isolatedStorageFileStream = null;
-
-                string filePath = "settings.info";
-
-                try
-                {
-                    IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                    if (!isolatedStorage.FileExists(filePath))
-                    {
-                        isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.CreateNew, isolatedStorage);
-                    }
-                    else
-                    {
-                        isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, isolatedStorage);
-                    }
-
-                    streamWriter = new StreamWriter(isolatedStorageFileStream);
-
-                    streamWriter.WriteLine(Globals.AutoAttack);
-                    streamWriter.WriteLine(Globals.GameSoundsActivated);
-                    streamWriter.WriteLine(Globals.Graphics.IsFullScreen);
-                }
-                catch (IOException exc)
-                {
-                    Console.WriteLine("I/O Error\n: " + exc.Message);
-                }
-                finally
-                {
-                    if (streamWriter != null)
-                        streamWriter.Close();
-
-                    if (isolatedStorageFileStream != null)
-                        isolatedStorageFileStream.Close();
-                }
-                b = true;
-            } while (b == false);
-
+            // Yeni sistem: GameSettings kullan (otomatik kaydediliyor)
+            GameSettings.Instance.SyncFromGlobals();
+            GameSettings.Instance.Save();
+            
+            System.Diagnostics.Debug.WriteLine("[OptionsScreen] Settings saved via GameSettings");
+            
             base.ExitScreen();
         }
     }

@@ -20,18 +20,23 @@ namespace PaintTrek
         }
         public override void Update()
         {
-
-            for (int i = 0; i < spriteList.Count; i++)
+            // Reverse loop to safely remove items while iterating
+            for (int i = spriteList.Count - 1; i >= 0; i--)
             {
-                if(spriteList[i].texture.IsDisposed )
+                // Texture null veya disposed ise kaldır (ama Bullet değilse - Bullet'lar kendilerini yönetir)
+                if (!(spriteList[i] is Bullet) && 
+                    (spriteList[i].texture == null || spriteList[i].texture.IsDisposed))
                 {
                     Remove(spriteList[i]);
+                    continue;
                 }
             }
 
-            for (int i = 0; i < spriteList.Count; i++)
+            for (int i = spriteList.Count - 1; i >= 0; i--)
             {
-                if (spriteList[i] != null && !spriteList[i].texture.IsDisposed)
+                // Texture null check
+                if (i < spriteList.Count && spriteList[i] != null && 
+                    spriteList[i].texture != null && !spriteList[i].texture.IsDisposed)
                 {
                     spriteList[i].Update();
                 }
@@ -43,7 +48,9 @@ namespace PaintTrek
         {
             for (int i = 0; i < GunSystem.bulletList.Count; i++)
             {
-                if (GunSystem.bulletList[i] != null && !GunSystem.bulletList[i].texture.IsDisposed)
+                if (GunSystem.bulletList[i] != null && 
+                    GunSystem.bulletList[i].texture != null && 
+                    !GunSystem.bulletList[i].texture.IsDisposed)
                 {
                     GunSystem.bulletList[i].Draw();
                 }
@@ -52,7 +59,9 @@ namespace PaintTrek
 
             for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
             {
-                if (SpriteSystem.spriteList[i] != null && !SpriteSystem.spriteList[i].texture.IsDisposed)
+                if (SpriteSystem.spriteList[i] != null && 
+                    SpriteSystem.spriteList[i].texture != null && 
+                    !SpriteSystem.spriteList[i].texture.IsDisposed)
                 {
                     if (SpriteSystem.spriteList[i] is Bullet) continue;
 

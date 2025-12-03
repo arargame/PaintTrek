@@ -16,8 +16,22 @@ namespace PaintTrek
         PixelatedAttack,
         None
     }
-    class Abilitiy
+    class Ability
     {
+        // PERFORMANS: Static texture cache - bir kez yükle, hep kullan
+        private static Texture2D redLine;
+        private static Texture2D blueLine;
+        private static Texture2D greenLine;
+        private static Texture2D blackLine;
+        
+        // Bullet texture cache
+        private static Texture2D speedyBulletTexture;
+        private static Texture2D powerBulletTexture;
+        private static Texture2D poisonBulletTexture;
+        private static Texture2D criticalBulletTexture;
+        private static Texture2D normalLaserTexture;
+        
+        private static bool texturesLoaded = false;
 
         TimeSpan timeKeeper;
         double remainingTime;
@@ -25,20 +39,48 @@ namespace PaintTrek
         Player player;
 
         Vector2 linePosition;
-        Texture2D redLine;
-        Texture2D blueLine;
-        Texture2D greenLine;
-        Texture2D blackLine;
 
-        public Abilitiy(Player player)
+        // Static constructor - texture'ları bir kez yükle
+        static Ability()
+        {
+            LoadStaticTextures();
+        }
+
+        private static void LoadStaticTextures()
+        {
+            if (texturesLoaded) return;
+            
+            try
+            {
+                // Line textures
+                redLine = Globals.Content.Load<Texture2D>("Textures/redLine");
+                blueLine = Globals.Content.Load<Texture2D>("Textures/blueLine");
+                blackLine = Globals.Content.Load<Texture2D>("Textures/blackLine");
+                greenLine = Globals.Content.Load<Texture2D>("Textures/greenLine");
+                
+                // Bullet textures
+                speedyBulletTexture = Globals.Content.Load<Texture2D>("Guns/PlayerBullet/speedyBullet");
+                powerBulletTexture = Globals.Content.Load<Texture2D>("Guns/PlayerBullet/powerBullet");
+                poisonBulletTexture = Globals.Content.Load<Texture2D>("Guns/PlayerBullet/poisonBullet");
+                criticalBulletTexture = Globals.Content.Load<Texture2D>("Guns/PlayerBullet/criticalBullet");
+                normalLaserTexture = Globals.Content.Load<Texture2D>("Guns/laser");
+                
+                texturesLoaded = true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ability: Texture loading error: {ex.Message}");
+            }
+        }
+
+        public Ability(Player player)
         {
             skill = Skills.None;
             this.player = player;
             Load();
-
         }
 
-        public Abilitiy(Diamond diamond, Player player)
+        public Ability(Diamond diamond, Player player)
         {
             skill = Skills.None;
             this.player = player;
@@ -54,14 +96,8 @@ namespace PaintTrek
 
         public void Load()
         {
-
+            // Texture'lar static olarak yüklendi, sadece instance değişkenleri ayarla
             timeKeeper = Time.TotalGameTime();
-
-            redLine = Globals.Content.Load<Texture2D>("Textures/redLine");
-            blueLine = Globals.Content.Load<Texture2D>("Textures/blueLine");
-            blackLine = Globals.Content.Load<Texture2D>("Textures/blackLine");
-            greenLine = Globals.Content.Load<Texture2D>("Textures/greenLine");
-            //linePosition = new Vector2((float)(Globals.GameSize.X*0.01),(float)(Globals.GameSize.Y*0.95));
             linePosition = new Vector2(15, 40);
             remainingTime = Globals.Random.Next(5, 15);
         }
@@ -110,7 +146,8 @@ namespace PaintTrek
         public void Draw()
         {
             Globals.SpriteBatch.Begin();
-            Texture2D t = Globals.Content.Load<Texture2D>("Textures/blackLine");
+            // PERFORMANS: Cache'lenmiş texture kullan, her frame yükleme yok
+            Texture2D t = blackLine;
             switch (skill)
             {
                 case Skills.PowerAttack:
@@ -130,11 +167,13 @@ namespace PaintTrek
                     break;
             }
 
-            if (skill != Skills.None)
+            if (skill != Skills.None && t != null)
+            {
                 for (int i = 0; i < remainingTime; i++)
                 {
                     Globals.SpriteBatch.Draw(t, new Rectangle((int)linePosition.X + (i * 5), (int)linePosition.Y, 10, 10), Color.White);
                 }
+            }
 
             Globals.SpriteBatch.End();
         }
@@ -144,22 +183,11 @@ namespace PaintTrek
             return skill;
         }
 
-        /*       void time_Elapsed(object sender, ElapsedEventArgs e)
-               {
-                   remainingTime--;
-
-                   if (remainingTime <= 0)
-                   {
-                       //time.Stop();
-                       remainingTime = 0;
-                   }
-               }*/
-
         private void SpeedyAttack()
         {
             Bullet b = player.GetGun();
-         //   b.color = Color.Blue;
-            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/speedyBullet"), 1, 1, 1, true);
+            // PERFORMANS: Cache'lenmiş texture kullan
+            b.SetTexture(speedyBulletTexture, 1, 1, 1, true);
             (b as Laser).SetVelocity(new Vector2(25, 0));
             b.SetDamage(Globals.Random.Next(10, 25));
         }
@@ -167,23 +195,23 @@ namespace PaintTrek
         private void PowerAttack()
         {
             Bullet b = player.GetGun();
-           // b.color = Color.Red;
-            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/powerBullet"), 1, 1, 1, true);
+            // PERFORMANS: Cache'lenmiş texture kullan
+            b.SetTexture(powerBulletTexture, 1, 1, 1, true);
             b.SetDamage(Globals.Random.Next(25, 40));
         }
 
         private void PoisonAttack()
         {
             Bullet b = player.GetGun();
-           // b.color = Color.Green;
-            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/poisonBullet"), 1, 1, 1, true);
+            // PERFORMANS: Cache'lenmiş texture kullan
+            b.SetTexture(poisonBulletTexture, 1, 1, 1, true);
         }
 
         private void CriticalAttack()
         {
             Bullet b = player.GetGun();
-            //b.color = Color.Black;
-            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/PlayerBullet/criticalBullet"), 1, 1, 1, true);
+            // PERFORMANS: Cache'lenmiş texture kullan
+            b.SetTexture(criticalBulletTexture, 1, 1, 1, true);
             (b as Laser).SetVelocity(new Vector2(20, 0));
             b.SetDamage(Globals.Random.Next(50, 100));
         }
@@ -192,7 +220,8 @@ namespace PaintTrek
         {
             Bullet b = player.GetGun();
             b.color = Color.White;
-            b.SetTexture(Globals.Content.Load<Texture2D>("Guns/laser"), 1, 1, 1, true);
+            // PERFORMANS: Cache'lenmiş texture kullan
+            b.SetTexture(normalLaserTexture, 1, 1, 1, true);
         }
 
         public void SelectSkill(Style style)

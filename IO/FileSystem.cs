@@ -77,155 +77,40 @@ namespace PaintTrek
 
         public void SaveFile(int score, int level)
         {
-            int maxLevel = 0;
-            int maxScore = 0;
-
-            level = level + 1;
-            MathHelper.Clamp(level, 1, 10);
-
-
-            FileSystem FS = new FileSystem();
-            maxLevel = FS.LoadFile()[2];
-            maxScore = FS.LoadFile()[3];
-            FS.Dispose();
-
-            IsolatedStorageFileStream isolatedStorageFileStream = null;
-
-            BinaryWriter writer = null;
-            try
-            {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists("game.save"))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("game.save", FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("game.save", FileMode.Open, isolatedStorage);
-                }
-                writer = new BinaryWriter(isolatedStorageFileStream);
-            }
-            catch (IOException exc)
-            {
-                Console.WriteLine("I/O Error\n: " + exc.Message);
-                return;
-            }
-
-
-            if (level > maxLevel)
-                maxLevel = level;
-
-            if (score > maxScore)
-                maxScore = score;
-
-            try
-            {
-                writer.Write(score);
-                writer.Write(level);
-                writer.Write(maxLevel);
-                writer.Write(maxScore);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                if (writer != null)
-                    writer.Close();
-
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
-            }
+            // Yeni sistem: GameSettings kullan (singleton, otomatik cache)
+            GameSettings.Instance.SaveLevelProgress(level, score);
         }
 
         public int[] LoadFile()
         {
-            int[] array = new int[4];
-
-            IsolatedStorageFileStream isolatedStorageFileStream = null;
-            BinaryReader reader = null;
-            try
+            // Yeni sistem: GameSettings kullan (singleton, otomatik cache)
+            GameSettings settings = GameSettings.Instance;
+            
+            int[] array = new int[14];
+            array[0] = settings.CurrentScore;
+            array[1] = settings.CurrentLevel;
+            array[2] = settings.MaxLevel;
+            array[3] = settings.MaxScore;
+            
+            // Level scores
+            for (int i = 0; i < 10; i++)
             {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists("game.save"))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("game.save", FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("game.save", FileMode.Open, isolatedStorage);
-                }
-
-                reader = new BinaryReader(isolatedStorageFileStream);
-
-                array[0] = reader.ReadInt32();
-                array[1] = reader.ReadInt32();
-                array[2] = reader.ReadInt32();
-                array[3] = reader.ReadInt32();
-
+                array[4 + i] = settings.LevelScores[i];
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                if (reader != null)
-                    reader.Close();
-
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
-            }
-
+            
             return array;
+        }
+        
+        // Belirli bir level'ın skorunu getir
+        public int GetLevelScore(int level)
+        {
+            return GameSettings.Instance.GetLevelScore(level);
         }
 
         public void Reset()
         {
-            IsolatedStorageFileStream isolatedStorageFileStream = null;
-
-            try
-            {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists("game.save"))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("game.save", FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("game.save", FileMode.Open, isolatedStorage);
-                }
-
-                BinaryWriter br = new BinaryWriter(isolatedStorageFileStream as Stream);
-
-                for (int i = 0; i < 4; i++)
-                {
-                    br.Write(1);
-                }
-
-                //StreamWriter sw=new StreamWriter(isolatedStorageFileStream);
-
-                /*for (int i = 0; i < 4; i++)
-                {
-                    sw.WriteLine(1);
-                }
-
-                sw.Close();*/
-                br.Close();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            finally
-            {
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
-            }
+            // Yeni sistem: GameSettings kullan
+            GameSettings.Instance.Reset();
         }
 
         public void ReadLevel()

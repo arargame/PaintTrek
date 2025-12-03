@@ -28,8 +28,7 @@ namespace PaintTrek
             get { return selectedEntry; }
         }
 
-        SoundSystem menuSelectSound;
-        SoundSystem menuUporDownSound;
+        // menuSelectSound ve menuUporDownSound artık SoundManager ile yönetiliyor
 
         DroppingLightSystem droppingLightSystem;
 
@@ -55,8 +54,9 @@ namespace PaintTrek
             contentManager = Globals.Content;
             menuFont = Globals.MenuFont;
 
-            menuSelectSound= new SoundSystem("Sounds/SoundEffects/menu-back", 1f, 0f, 0f, false, "Unknown", "Unknown");
-            menuUporDownSound = new SoundSystem("Sounds/SoundEffects/menu-click", 1f, 0f, 0f, false, "Unknown", "Unknown");
+            // Pre-load menu sounds
+            SoundManager.Load("menu-back", "Sounds/SoundEffects/menu-back");
+            SoundManager.Load("menu-click", "Sounds/SoundEffects/menu-click");
         }
 
         public override void UnloadContent()
@@ -146,7 +146,7 @@ namespace PaintTrek
 
                 if (selectedEntry < 0)
                     selectedEntry = menuEntries.Count - 1;
-                menuUporDownSound.Play();
+                SoundManager.Play("menu-click");
             }
 
             if(inputState.MenuDown)
@@ -155,7 +155,7 @@ namespace PaintTrek
 
                 if (selectedEntry >= menuEntries.Count)
                     selectedEntry = 0;
-                menuUporDownSound.Play();
+                SoundManager.Play("menu-click");
             }
 
 
@@ -171,7 +171,7 @@ namespace PaintTrek
                     if (menuEntries[i].clickableArea.IsOverlapped)
                     {
                         if (selectedEntry != menuEntries[i].entryNumber)
-                            menuUporDownSound.Play();
+                            SoundManager.Play("menu-click");
 
                         selectedEntry = menuEntries[i].entryNumber;
                     }
@@ -204,7 +204,7 @@ namespace PaintTrek
 
         public virtual void MenuSelect(int selectedEntry) {}
 
-        public virtual void MenuCancel(int selectedEntry) { menuSelectSound.Play(); }
+        public virtual void MenuCancel(int selectedEntry) { SoundManager.Play("menu-back"); }
 
         public virtual void MenuLeft(int selectedEntry) { }
 

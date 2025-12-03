@@ -102,11 +102,33 @@ namespace PaintTrek
             //state = musics[activeMusicNumber].soundEffectInstance.State;
             state = mpSystem.GetState();
 
+            // Check if musics are disabled
+            if (!Globals.MusicsEnabled)
+            {
+                // If music is playing, stop it
+                if (state.ToString() == "Playing" || state.ToString() == "Paused")
+                {
+                    Stop();
+                    state = mpSystem.GetState();
+                }
+            }
+
             if (state.ToString() =="Paused" )
                 floatingWord = "Paused";
             else if (state.ToString() == "Playing")
+            {
                 floatingWord = "Playing";
-            else floatingWord = "Stopped";
+                // Eğer müzikler kapalıysa belirt
+                if (!Globals.MusicsEnabled)
+                    floatingWord += " (Musics: Off)";
+            }
+            else
+            {
+                floatingWord = "Stopped";
+                // Eğer müzikler kapalıysa belirt
+                if (!Globals.MusicsEnabled)
+                    floatingWord += " (Musics: Off)";
+            }
 
             ControlColors();
 
@@ -314,8 +336,12 @@ namespace PaintTrek
         #region SoundSettings
         private void Play()
         {
-            //musics[activeMusicNumber].Play();
-            mpSystem.Play();
+            // Check if musics are enabled before playing
+            if (Globals.MusicsEnabled)
+            {
+                //musics[activeMusicNumber].Play();
+                mpSystem.Play();
+            }
         }
 
         private void Stop()

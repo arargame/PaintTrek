@@ -36,5 +36,11 @@ namespace PaintTrek
         
         public static bool DebugMode = false; // Enable debug visualization
         public static bool ShowCursor = true;
+        
+        // Yeni ses ayarları (GameSettings ile senkronize)
+        public static bool SoundEffectsEnabled = true;
+        public static bool MusicsEnabled = true;
+        public static bool MenuSoundsEnabled = true;
+        public static bool DeveloperMode = false;
     }
 }

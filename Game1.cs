@@ -22,8 +22,8 @@ namespace PaintTrek
         RenderTarget2D renderTarget;
         Rectangle renderRect;
         
-        // Debug overlay
-        bool showDebugInfo = false;
+        // Debug overlay - automatically synced with Globals.DeveloperMode
+        private bool showDebugInfo => Globals.DeveloperMode;
         KeyboardState lastKeyboardState;
 
         public Game1()
@@ -69,6 +69,11 @@ namespace PaintTrek
             
             // Initialize RenderTarget with GameSize (1280x800)
             renderTarget = new RenderTarget2D(GraphicsDevice, (int)Globals.GameSize.X, (int)Globals.GameSize.Y);
+            
+            // Load GameSettings and sync to Globals
+            GameSettings.Instance.Load();
+            GameSettings.Instance.SyncToGlobals();
+            System.Diagnostics.Debug.WriteLine("[Game1] GameSettings loaded and synced");
             
             Loader.Load();
             timeKeeper = new TimeKeeper();
@@ -124,10 +129,11 @@ namespace PaintTrek
                 System.Threading.Thread.Sleep(200); // Prevent rapid toggling
             }
             
-            // F1 to toggle debug info
+            // F1 to toggle DeveloperMode (showDebugInfo automatically follows via property)
             if (keyState.IsKeyDown(Keys.F1) && !lastKeyboardState.IsKeyDown(Keys.F1))
             {
-                showDebugInfo = !showDebugInfo;
+                Globals.DeveloperMode = !Globals.DeveloperMode;
+                System.Diagnostics.Debug.WriteLine($"[Game1] Developer Mode: {(Globals.DeveloperMode ? "ON" : "OFF")}");
             }
             lastKeyboardState = keyState;
 
@@ -374,6 +380,44 @@ namespace PaintTrek
                 new Vector2(position.X, currentY), keyColor);
             Globals.SpriteBatch.DrawString(Globals.GameFont, playersValue, 
                 new Vector2(position.X + Globals.GameFont.MeasureString(playersKey).X, currentY), valueColor);
+            currentY += lineHeight * 2;
+            
+            // GameSettings Info Header
+            Globals.SpriteBatch.DrawString(Globals.GameFont, "--- GAME SETTINGS ---", 
+                new Vector2(position.X, currentY), headerColor);
+            currentY += lineHeight;
+            
+            // Settings info
+            string settingsKey = "Sound Effects: ";
+            string settingsValue = $"{(Globals.SoundEffectsEnabled ? "ON" : "OFF")}";
+            Globals.SpriteBatch.DrawString(Globals.GameFont, settingsKey, 
+                new Vector2(position.X, currentY), keyColor);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, settingsValue, 
+                new Vector2(position.X + Globals.GameFont.MeasureString(settingsKey).X, currentY), valueColor);
+            currentY += lineHeight;
+            
+            string musicKey = "Music: ";
+            string musicValue = $"{(Globals.MusicsEnabled ? "ON" : "OFF")}";
+            Globals.SpriteBatch.DrawString(Globals.GameFont, musicKey, 
+                new Vector2(position.X, currentY), keyColor);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, musicValue, 
+                new Vector2(position.X + Globals.GameFont.MeasureString(musicKey).X, currentY), valueColor);
+            currentY += lineHeight;
+            
+            string menuSoundKey = "Menu Sounds: ";
+            string menuSoundValue = $"{(Globals.MenuSoundsEnabled ? "ON" : "OFF")}";
+            Globals.SpriteBatch.DrawString(Globals.GameFont, menuSoundKey, 
+                new Vector2(position.X, currentY), keyColor);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, menuSoundValue, 
+                new Vector2(position.X + Globals.GameFont.MeasureString(menuSoundKey).X, currentY), valueColor);
+            currentY += lineHeight;
+            
+            string devModeKey = "Developer Mode: ";
+            string devModeValue = $"{(Globals.DeveloperMode ? "ON" : "OFF")}";
+            Globals.SpriteBatch.DrawString(Globals.GameFont, devModeKey, 
+                new Vector2(position.X, currentY), keyColor);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, devModeValue, 
+                new Vector2(position.X + Globals.GameFont.MeasureString(devModeKey).X, currentY), valueColor);
         }
 
         protected override void OnExiting(object sender, ExitingEventArgs args)

@@ -482,6 +482,59 @@ Ensure `Content` folder is set to copy to output:
 - Check Event Viewer for crash details
 - Add error logging to your app
 
+### Issue 6: "Product doesn't install on selected device families"
+
+**Error Message:**
+```
+The product doesn't install on the currently selected device families. 
+Please check that the device family selection is correct and re-submit the product.
+Tested devices: HP 17-bs011dx
+```
+
+**Problem:** Package.appxmanifest only targets `Windows.Desktop` device family, but Microsoft Store requires `Windows.Universal` support for broader compatibility.
+
+**Solution:**
+
+1. **Update Package.appxmanifest** to include both Universal and Desktop device families:
+
+```xml
+<Dependencies>
+  <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17134.0" MaxVersionTested="10.0.22621.0" />
+  <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17134.0" MaxVersionTested="10.0.22621.0" />
+</Dependencies>
+```
+
+2. **Add RuntimeIdentifiers to .csproj** for multi-architecture support:
+
+```xml
+<PropertyGroup>
+  <!-- Microsoft Store Compatibility -->
+  <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+  <SelfContained>false</SelfContained>
+  <PublishSingleFile>false</PublishSingleFile>
+  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+</PropertyGroup>
+```
+
+3. **Lower MinVersion** for better compatibility:
+   - Old: `10.0.17763.0` (Windows 10 1809)
+   - New: `10.0.17134.0` (Windows 10 1803)
+   - This increases device compatibility by ~6 months of Windows 10 versions
+
+4. **Rebuild package** with updated configuration
+
+**Why This Happens:**
+- Microsoft Store certification tests on various device types
+- Desktop-only apps may fail on hybrid devices (Surface, tablets)
+- Universal device family ensures broader compatibility
+
+**Verification:**
+After making changes, rebuild and test on:
+- Desktop PC (x64)
+- Laptop (x64)
+- Tablet mode (if available)
+- Different Windows 10/11 versions
+
 ---
 
 ## Important Notes

@@ -38,23 +38,38 @@ namespace PaintTrek
 
         public void Update()
         {
-            FPS = 1 / Globals.GameTime.ElapsedGameTime.TotalSeconds;
-            items[1] = "FPS :" + FPS;
-            items[2] = "Systems :" + DrawableSystem.drawableSystemList.Count;
-            items[3] = "Sprites :" + SpriteSystem.spriteList.Count;
-            items[4] = "Enemies :" + EnemySystem.enemyList.Count;
-            items[5] = "Guns :" + GunSystem.bulletList.Count;
-            items[6] = "Collectables :" + CollectableObjectSystem.collactableObjectList.Count;
-            items[7] = "Score :" + Level.Score;
-            items[8] = "Level :" + Level.LevelCounter;
-            counter += Globals.GameTime.TotalGameTime.Ticks;
-            items[9] = "TIME :" + Globals.XX;
-            items[10] = "Bosses :" + BossSystem.bossList.Count;
-            items[11] = "Explosions :" + ExplosionSystem.expoInfos.Count;
+            // Güvenlik kontrolü - items temizlenmişse güncelleme yapma
+            if (items == null || items.Count < 12)
+                return;
+            
+            try
+            {
+                FPS = 1 / Globals.GameTime.ElapsedGameTime.TotalSeconds;
+                items[1] = "FPS :" + FPS;
+                items[2] = "Systems :" + DrawableSystem.drawableSystemList.Count;
+                items[3] = "Sprites :" + SpriteSystem.spriteList.Count;
+                items[4] = "Enemies :" + EnemySystem.enemyList.Count;
+                items[5] = "Guns :" + GunSystem.bulletList.Count;
+                items[6] = "Collectables :" + CollectableObjectSystem.collactableObjectList.Count;
+                items[7] = "Score :" + Level.Score;
+                items[8] = "Level :" + Level.LevelCounter;
+                counter += Globals.GameTime.TotalGameTime.Ticks;
+                items[9] = "TIME :" + Globals.XX;
+                items[10] = "Bosses :" + BossSystem.bossList.Count;
+                items[11] = "Explosions :" + ExplosionSystem.expoInfos.Count;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // Level geçişi sırasında array erişim hatası - sessizce yoksay
+            }
         }
 
         public void Draw()
         {
+            // Güvenlik kontrolü - items temizlenmişse çizme
+            if (items == null || items.Count == 0)
+                return;
+            
             Globals.SpriteBatch.Begin();
 
             for (int i = 0; i < items.Count; i++)

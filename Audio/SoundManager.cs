@@ -25,16 +25,69 @@ namespace PaintTrek
 
         public static void Play(string name, float volume = 1f, float pitch = 0f, float pan = 0f)
         {
-            if (Globals.GameSoundsActivated && soundEffects.ContainsKey(name))
+            // Check if this is a menu sound
+            bool isMenuSound = (name == "menu-back" || name == "menu-click");
+            
+            if (isMenuSound)
             {
-                // Fire and forget play (uses internal pool)
-                soundEffects[name].Play(volume, pitch, pan);
+                // Menu sounds require MenuSoundsEnabled
+                if (Globals.MenuSoundsEnabled && soundEffects.ContainsKey(name))
+                {
+                    soundEffects[name].Play(volume, pitch, pan);
+                }
+            }
+            else
+            {
+                // Game sound effects require SoundEffectsEnabled
+                if (Globals.SoundEffectsEnabled && soundEffects.ContainsKey(name))
+                {
+                    soundEffects[name].Play(volume, pitch, pan);
+                }
             }
         }
 
         public static void Unload()
         {
             soundEffects.Clear();
+        }
+        
+        /// <summary>
+        /// Apply sound settings immediately (called when settings change)
+        /// </summary>
+        public static void ApplySoundSettings()
+        {
+            // Müzik kontrolü - MediaPlayer üzerinden
+            try
+            {
+                var mediaState = Microsoft.Xna.Framework.Media.MediaPlayer.State;
+                
+                if (Globals.MusicsEnabled)
+                {
+                    // Müzik açıldı - eğer duraklıysa devam et
+                    if (mediaState == Microsoft.Xna.Framework.Media.MediaState.Paused)
+                    {
+                        Microsoft.Xna.Framework.Media.MediaPlayer.Resume();
+                        System.Diagnostics.Debug.WriteLine("[SoundManager] Music resumed");
+                    }
+                    // Eğer hiç çalmıyorsa ve GameBoard aktifse, müzik başlatılmalı
+                    // (Bu GameBoard'un kendi sorumluluğunda)
+                }
+                else
+                {
+                    // Müzik kapatıldı - çalıyorsa duraklat
+                    if (mediaState == Microsoft.Xna.Framework.Media.MediaState.Playing)
+                    {
+                        Microsoft.Xna.Framework.Media.MediaPlayer.Pause();
+                        System.Diagnostics.Debug.WriteLine("[SoundManager] Music paused");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[SoundManager] Error applying music settings: {ex.Message}");
+            }
+            
+            System.Diagnostics.Debug.WriteLine($"[SoundManager] Settings applied - SFX: {Globals.SoundEffectsEnabled}, Music: {Globals.MusicsEnabled}, Menu: {Globals.MenuSoundsEnabled}");
         }
     }
 }

@@ -50,13 +50,7 @@ namespace PaintTrek
             AddEntry(new MenuEntry("Resume Game", true, 0));
             AddEntry(new MenuEntry("Restart", true, 1) );
             AddEntry(new MenuEntry("Main Menu", true, 2));
-
-            if (Globals.GameSoundsActivated)
-            {
-                AddEntry(new MenuEntry("Sounds : On", true, 3));
-            }
-            else AddEntry(new MenuEntry("Sounds : Off", true, 3));
-
+            AddEntry(new MenuEntry("Sound Settings", true, 3));
             AddEntry(new MenuEntry("Quit Game", true, 4));
         }
 
@@ -89,8 +83,10 @@ namespace PaintTrek
                     ExitScreen();
                     break;
                 case 3:
-                    Globals.GameSoundsActivated = !Globals.GameSoundsActivated;
-                    LoadMenuEntries();
+                    // Sound Settings screen
+                    ExitScreen();
+                    var soundSettings = new SoundSettingsScreen(typeof(PauseScreen), gameBoard);
+                    ScreenManager.AddScreen(soundSettings);
                     break;
                 case 4:
                     ExitScreen();
@@ -101,21 +97,12 @@ namespace PaintTrek
 
         public override void MenuRight(int selectedEntry)
         {
-
-            if (selectedEntry == 3)
-            {
-                Globals.GameSoundsActivated = !Globals.GameSoundsActivated;
-                LoadMenuEntries();
-            }
+            // No toggle actions needed anymore
         }
+        
         public override void MenuLeft(int selectedEntry)
         {
-            if (selectedEntry == 3)
-            {
-                Globals.GameSoundsActivated = !Globals.GameSoundsActivated;
-                LoadMenuEntries();
-            }
-
+            // No toggle actions needed anymore
         }
 
         public override void MenuCancel(int selectedEntry)

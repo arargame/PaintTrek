@@ -15,7 +15,7 @@ namespace PaintTrek
         public bool Isclicked;
         public Rectangle mouseCursorRectangle;
         double startingHealth;
-        public Abilitiy ability;
+        public Ability ability;
 
         InfoString infoString;
         Laser laser;
@@ -68,7 +68,7 @@ namespace PaintTrek
             laser = new Laser(this);
             timeUntilFire = TimeSpan.FromSeconds(0.2);
             infoString = new InfoString();
-            ability = new Abilitiy(this);
+            ability = new Ability(this);
             secondGun = new SecondGun(this);
             pixelatedMode = false;
             pixelatedModeTime = 0;
@@ -411,7 +411,7 @@ namespace PaintTrek
                                 if (co is Diamond)
                                 {
                                     infoString.GetInfo(co.GetPoint() + " Points", co.position);
-                                    ability = new Abilitiy(co as Diamond, this);
+                                    ability = new Ability(co as Diamond, this);
                                 }
                                 else if (co is PixelSupply)
                                 {

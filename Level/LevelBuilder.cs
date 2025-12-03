@@ -280,10 +280,29 @@ namespace PaintTrek
 
         private void BuildLevel()
         {
+            // ===== GEÇİCİ TEST MODU - BOSS1 TESTİ =====
+            // Boss1'i hızlıca test etmek için
+            //if (Level.LevelCounter == 1)
+            //{
+            //    Console.WriteLine($"[LevelBuilder] TEST MODE: Building test level 1 with Boss1");
+                
+            //    // Boss1'i hemen spawn et
+            //    timeCursor = 2; // 2 saniye sonra
+            //    AddItem(ItemType.Boss1);
+                
+            //    Console.WriteLine($"[LevelBuilder] Test level built with {levelItems.Count} items");
+            //    return; // Dosyadan okuma yapma
+            //}
+            // ===== GEÇİCİ TEST MODU SONU =====
+            
             string path = "Content/Levels/level" + Level.LevelCounter + ".txt";
+            Console.WriteLine($"[LevelBuilder] Building level {Level.LevelCounter}");
+            
             FileSystem fs = new FileSystem(path);
 
             fs.ReadLevel();
+            
+            Console.WriteLine($"[LevelBuilder] FileSystem loaded {fs.Amount.Count} items");
 
             for (int i = 0; i < fs.Amount.Count; i++)
             {
