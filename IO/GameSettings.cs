@@ -256,7 +256,7 @@ namespace PaintTrek
             // DeveloperMode is runtime-only, not synced from file
             
             // Eski GameSoundsActivated için backward compatibility
-            Globals.GameSoundsActivated = SoundEffectsEnabled && MusicEnabled;
+            Globals.GameSoundsActivated = SoundEffectsEnabled || MusicEnabled;
         }
         
         // Globals'den ayarları al

@@ -65,15 +65,33 @@ namespace PaintTrek
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.Content = Content;
             Globals.Window.Title = "Paint Trek";
-            graphicSettings = new GraphicSettings();
             
-            // Initialize RenderTarget with GameSize (1280x800)
-            renderTarget = new RenderTarget2D(GraphicsDevice, (int)Globals.GameSize.X, (int)Globals.GameSize.Y);
-            
-            // Load GameSettings and sync to Globals
+            // Load GameSettings FIRST
             GameSettings.Instance.Load();
             GameSettings.Instance.SyncToGlobals();
             System.Diagnostics.Debug.WriteLine("[Game1] GameSettings loaded and synced");
+            
+            // Initialize graphics (defaults to fullscreen)
+            graphicSettings = new GraphicSettings();
+            
+            // Override with saved resolution from GameSettings if different
+            if (!GameSettings.Instance.IsFullScreen && Globals.Graphics.IsFullScreen)
+            {
+                GraphicSettings.MakeWindowed();
+                System.Diagnostics.Debug.WriteLine("[Game1] Applied windowed resolution from saved settings");
+            }
+            else if (GameSettings.Instance.IsFullScreen && !Globals.Graphics.IsFullScreen)
+            {
+                GraphicSettings.MakeFullScreen();
+                System.Diagnostics.Debug.WriteLine("[Game1] Applied fullscreen resolution from saved settings");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"[Game1] Using default resolution (IsFullScreen: {Globals.Graphics.IsFullScreen})");
+            }
+            
+            // Initialize RenderTarget with GameSize
+            renderTarget = new RenderTarget2D(GraphicsDevice, (int)Globals.GameSize.X, (int)Globals.GameSize.Y);
             
             Loader.Load();
             timeKeeper = new TimeKeeper();
@@ -89,6 +107,20 @@ namespace PaintTrek
         protected override void UnloadContent()
         {
             
+        }
+        
+        /// <summary>
+        /// Recreate RenderTarget when resolution changes
+        /// </summary>
+        public void RecreateRenderTarget()
+        {
+            if (renderTarget != null)
+            {
+                renderTarget.Dispose();
+            }
+            
+            renderTarget = new RenderTarget2D(GraphicsDevice, (int)Globals.GameSize.X, (int)Globals.GameSize.Y);
+            System.Diagnostics.Debug.WriteLine($"[Game1] RenderTarget recreated: {Globals.GameSize.X}x{Globals.GameSize.Y}");
         }
 
 

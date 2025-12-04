@@ -36,23 +36,22 @@ namespace PaintTrek
         {
             if (levelSong != null)
             {
-                if (!Globals.GameSoundsActivated)
-                    levelSong.Stop();
+                // Check if music is enabled
+                if (!Globals.MusicsEnabled)
+                {
+                    // Music disabled - pause if playing
+                    if (levelSong.GetState().ToString() == "Playing")
+                        levelSong.Pause();
+                }
                 else
                 {
+                    // Music enabled - play or resume
                     if (levelSong.GetState().ToString() == "Stopped")
                         levelSong.Play();
-                    else if (levelSong.GetState().ToString() == "Playing")
-                        levelSong.Resume();
-                    else 
+                    else if (levelSong.GetState().ToString() == "Paused")
                         levelSong.Resume();
                 }
             }
-
-            /*if (Globals.GameSoundsActivated && levelSong.GetState().ToString()=="Paused")
-            {
-                levelSong.Resume();
-            }*/
         }
 
         public void Pause()

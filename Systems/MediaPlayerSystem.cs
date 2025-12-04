@@ -40,7 +40,7 @@ namespace PaintTrek
         public void Play()
         {
             // MediaPlayerSystem is for music, check MusicsEnabled
-            if (Globals.GameSoundsActivated && Globals.MusicsEnabled && MediaPlayer.GameHasControl)
+            if (Globals.MusicsEnabled && MediaPlayer.GameHasControl)
                 for (int i = 0; i < songList.Count; i++)
                 {
                     if(i==activeSongIndex)

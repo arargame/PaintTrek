@@ -16,7 +16,8 @@ namespace PaintTrek
 
         public GraphicSettings()
         {
-            // Always start with fullscreen (1280x800) - low resolution option removed
+            // Default to fullscreen - will be overridden by GameSettings if needed
+            // This ensures we have a valid initial state
             MakeFullScreen();
         }
 
@@ -52,11 +53,23 @@ namespace PaintTrek
             Globals.Graphics.ApplyChanges();
 
             ExecuteAllRect();
+            
+            // Recreate RenderTarget with new resolution
+            if (Globals.Game != null)
+            {
+                ((Game1)Globals.Game).RecreateRenderTarget();
+            }
         }
         
         public static void MakeWindowed()
         {
             ExecuteScreenSize(800, 600);
+            
+            // Recreate RenderTarget with new resolution
+            if (Globals.Game != null)
+            {
+                ((Game1)Globals.Game).RecreateRenderTarget();
+            }
         }
 
         public static void ExecuteAllRect()

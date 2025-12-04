@@ -69,16 +69,24 @@ namespace PaintTrek
                         Microsoft.Xna.Framework.Media.MediaPlayer.Resume();
                         System.Diagnostics.Debug.WriteLine("[SoundManager] Music resumed");
                     }
-                    // Eğer hiç çalmıyorsa ve GameBoard aktifse, müzik başlatılmalı
-                    // (Bu GameBoard'un kendi sorumluluğunda)
+                    else if (mediaState == Microsoft.Xna.Framework.Media.MediaState.Stopped)
+                    {
+                        // Müzik durmuşsa, kullanıcı tekrar başlatmalı veya GameBoard otomatik başlatır
+                        System.Diagnostics.Debug.WriteLine("[SoundManager] Music is stopped, needs manual restart");
+                    }
                 }
                 else
                 {
-                    // Müzik kapatıldı - çalıyorsa duraklat
+                    // Müzik kapatıldı - çalıyorsa veya duraklıysa durdur
                     if (mediaState == Microsoft.Xna.Framework.Media.MediaState.Playing)
                     {
                         Microsoft.Xna.Framework.Media.MediaPlayer.Pause();
                         System.Diagnostics.Debug.WriteLine("[SoundManager] Music paused");
+                    }
+                    else if (mediaState == Microsoft.Xna.Framework.Media.MediaState.Paused)
+                    {
+                        // Zaten duraklı, hiçbir şey yapma
+                        System.Diagnostics.Debug.WriteLine("[SoundManager] Music already paused");
                     }
                 }
             }

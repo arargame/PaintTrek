@@ -63,7 +63,7 @@ namespace PaintTrek
         public void Play()
         {
             // SoundSystem is used for game sound effects, not music
-            if (Globals.GameSoundsActivated && Globals.SoundEffectsEnabled)
+            if (Globals.SoundEffectsEnabled)
                 soundEffectInstance.Play();
         }
 
