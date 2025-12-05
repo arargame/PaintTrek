@@ -30,33 +30,9 @@ namespace PaintTrek
             amount = new List<int>();
             type = new List<string>();
             str = new List<string>();
-
             filePath = path;
-            IsolatedStorageFileStream isolatedStorageFileStream = null;
-
-            try
-            {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists(filePath))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, isolatedStorage);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return;
-            }
-            finally
-            {
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
-            }
+            
+            // Legacy file check removed. GameSettings handles file I/O.
         }
         public FileSystem()
         {

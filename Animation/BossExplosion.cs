@@ -37,7 +37,7 @@ namespace PaintTrek
             texture = Globals.Content.Load<Texture2D>("Explosions/explosion");
             animation = new Animation(texture,12,1,12,true);
             exit = false;
-
+            SoundManager.Load("explosion", "Sounds/SoundEffects/explosion");
         }
 
         public void Update() 
@@ -71,8 +71,8 @@ namespace PaintTrek
 
             if(!explode[(int)time] && isActive)
             {
-                SoundSystem deathSound = new SoundSystem("Sounds/SoundEffects/explosion", 1f, 0f, 0f, false, "Unknown", "Unknown");
-                deathSound.Play();
+                // SoundSystem deathSound = new SoundSystem("Sounds/SoundEffects/explosion", 1f, 0f, 0f, false, "Unknown", "Unknown");
+                SoundManager.Play("explosion");
                 explode[(int)time] = true;
             }
         }

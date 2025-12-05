@@ -167,6 +167,14 @@ namespace PaintTrek
                 Globals.DeveloperMode = !Globals.DeveloperMode;
                 System.Diagnostics.Debug.WriteLine($"[Game1] Developer Mode: {(Globals.DeveloperMode ? "ON" : "OFF")}");
             }
+
+            // F12 to Factory Reset (Clear Save Data)
+            if (keyState.IsKeyDown(Keys.F12) && !lastKeyboardState.IsKeyDown(Keys.F12))
+            {
+                GameSettings.Instance.FactoryReset();
+                Exit(); // Exit to ensure clean state on next restart
+            }
+            
             lastKeyboardState = keyState;
 
             screenManager.Update();

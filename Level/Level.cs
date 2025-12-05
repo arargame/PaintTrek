@@ -46,7 +46,7 @@ namespace PaintTrek
 
         double timeToExit;
         bool canExit;
-        public static SoundSystem exitLevelSound = new SoundSystem("Sounds/SoundEffects/exitReached", false);
+        // public static SoundSystem exitLevelSound = new SoundSystem("Sounds/SoundEffects/exitReached", false);
 
         public bool ReachedExit
         {
@@ -100,6 +100,7 @@ namespace PaintTrek
             scenarioScene = new ScenarioScene();
             loadingScene = new LoadingScene();
             levelSoundtrack = new LevelSoundtrack();
+            SoundManager.Load("exitReached", "Sounds/SoundEffects/exitReached");
         }
 
         public void UnloadContent() 
@@ -134,7 +135,7 @@ namespace PaintTrek
 
                 if (exitDoor.IsOpen() )
                 {
-                    if (player.CollisionWithExitDoor(exitDoor))
+                    if (!canExit && player.CollisionWithExitDoor(exitDoor))
                     {
                         canExit = true;
                         OnExitReached();
@@ -215,7 +216,7 @@ namespace PaintTrek
         private void OnExitReached()
         {
            
-            exitLevelSound.Play();
+            SoundManager.Play("exitReached");
             levelSoundtrack.Pause();
          //   reachedExit = true;
             if(LevelCounter!=10)
@@ -236,8 +237,11 @@ namespace PaintTrek
         public void Dispose() 
         {
             // Dispose soundtrack
-            levelSoundtrack.Dispose();
-            
+            if (levelSoundtrack != null)
+            {
+                levelSoundtrack.Dispose();
+            }
+
             // Clear all sprite lists to prevent memory leaks
             SpriteSystem.ClearList();
             EnemySystem.ClearList();
@@ -247,6 +251,8 @@ namespace PaintTrek
             
             // Clear drawable system
             DrawableSystem.Clear();
+
+            GC.Collect();
         }
 
 

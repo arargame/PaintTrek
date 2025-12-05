@@ -16,6 +16,7 @@ namespace PaintTrek
             base.Initialize();
 
           //  hitSound = new SoundSystem("Sounds/SoundEffects/hit", 1f, 0f, 0f, false, "", "");
+            SoundManager.Load("hit", "Sounds/SoundEffects/hit");
 
             for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
             {

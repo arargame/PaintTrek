@@ -11,7 +11,7 @@ namespace PaintTrek
     {
         protected SpriteFont gameFont;
         protected BackButton backButton;
-        SoundSystem menuSelectSound;
+        // SoundSystem menuSelectSound;
         
 
         public override void Initialize()
@@ -36,7 +36,8 @@ namespace PaintTrek
         {
             contentManager = Globals.Content;
             gameFont = Globals.GameFont;
-            menuSelectSound = new SoundSystem("Sounds/SoundEffects/menu-back", 1f, 0f, 0f, false, "Unknown", "Unknown");
+            // menuSelectSound = new SoundSystem("Sounds/SoundEffects/menu-back", 1f, 0f, 0f, false, "Unknown", "Unknown");
+            SoundManager.Load("menu-back", "Sounds/SoundEffects/menu-back");
            
         }
 
@@ -87,7 +88,7 @@ namespace PaintTrek
             CleanupClickableAreas();
             
             GC.ReRegisterForFinalize(this);
-            menuSelectSound.Play();
+            SoundManager.Play("menu-back");
         }
 
 

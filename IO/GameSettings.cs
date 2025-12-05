@@ -380,5 +380,31 @@ namespace PaintTrek
                 return false;
             }
         }
+        public void FactoryReset()
+        {
+            try
+            {
+                IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain();
+
+                if (storage.FileExists("game.save"))
+                {
+                    storage.DeleteFile("game.save");
+                }
+
+                if (storage.FileExists("lock.info"))
+                {
+                    storage.DeleteFile("lock.info");
+                }
+
+                // Reset in-memory values
+                Reset();
+
+                System.Diagnostics.Debug.WriteLine("[GameSettings] FACTORY RESET COMPLETED - Files deleted.");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] Factory Reset Error: {ex.Message}");
+            }
+        }
     }
 }
