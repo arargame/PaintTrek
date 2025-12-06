@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.IO;
-using System.IO.IsolatedStorage;
 
 namespace PaintTrek
 {

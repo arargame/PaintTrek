@@ -1,0 +1,8 @@
+{
+  "configProperties": {
+    "System.Diagnostics.Debugger.IsSupported": false,
+    "System.Diagnostics.Tracing.EventSource.IsSupported": false,
+    "System.Globalization.Invariant": false,
+    "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false
+  }
+}

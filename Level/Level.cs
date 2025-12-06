@@ -215,14 +215,33 @@ namespace PaintTrek
 
         private void OnExitReached()
         {
-           
-            SoundManager.Play("exitReached");
-            levelSoundtrack.Pause();
-         //   reachedExit = true;
             if(LevelCounter!=10)
             {
-                FileSystem file = new FileSystem("game.save");
-                file.SaveFile(Score, LevelCounter);
+                try
+                {
+                    SoundManager.Play("exitReached");
+                    levelSoundtrack.Pause();
+                    // Direct save using GameSettings (Windows.Storage compatible)
+                    GameSettings.Instance.SaveLevelProgress(LevelCounter, Score);
+                }
+                catch (Exception ex)
+                {
+                    // Log save error
+                    try
+                    {
+                        string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                        string logPath = System.IO.Path.Combine(docPath, "PaintTrek_CrashLog.txt");
+                        using (var writer = new System.IO.StreamWriter(logPath, true))
+                        {
+                            writer.WriteLine("--------------------------------------------------");
+                            writer.WriteLine($"[Level.OnExitReached] Save Error Date: {DateTime.Now}");
+                            writer.WriteLine($"Exception: {ex.Message}");
+                            writer.WriteLine($"Stack Trace: {ex.StackTrace}");
+                            writer.WriteLine("--------------------------------------------------");
+                        }
+                    }
+                    catch { }
+                }
             }
         }
 
@@ -236,6 +255,7 @@ namespace PaintTrek
 
         public void Dispose() 
         {
+            Logger.Log("[Level] Disposing...");
             // Dispose soundtrack
             if (levelSoundtrack != null)
             {
@@ -253,6 +273,7 @@ namespace PaintTrek
             DrawableSystem.Clear();
 
             GC.Collect();
+            Logger.Log("[Level] Disposed.");
         }
 
 

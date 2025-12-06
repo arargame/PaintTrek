@@ -74,10 +74,12 @@ namespace PaintTrek
 
         public LevelBuilder()
         {
+            Logger.Log("[LevelBuilder] Initializing...");
             levelItems = new List<LevelItem>();
             BuildLevel();
             enemyAutomate = new EnemyAutomate();
             collectableObjectAutomate = new CollectableObjectAutomate();
+            Logger.Log("[LevelBuilder] Initialized.");
         }
 
         public void Update()
@@ -280,8 +282,8 @@ namespace PaintTrek
 
         private void BuildLevel()
         {
-             //===== GEÇİCİ TEST MODU -BOSS1 TESTİ =====
-             //Boss1'i hızlıca test etmek için
+            //===== GEÇİCİ TEST MODU -BOSS1 TESTİ =====
+            //Boss1'i hızlıca test etmek için
             //if (Level.LevelCounter == 1)
             //{
             //    Console.WriteLine($"[LevelBuilder] TEST MODE: Building test level 1 with Boss1");
@@ -293,7 +295,7 @@ namespace PaintTrek
             //    Console.WriteLine($"[LevelBuilder] Test level built with {levelItems.Count} items");
             //    return; // Dosyadan okuma yapma
             //}
-             //===== GEÇİCİ TEST MODU SONU =====
+            //===== GEÇİCİ TEST MODU SONU =====
 
             string path = "Content/Levels/level" + Level.LevelCounter + ".txt";
             Console.WriteLine($"[LevelBuilder] Building level {Level.LevelCounter}");

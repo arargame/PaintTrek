@@ -5,46 +5,18 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Microsoft.Xna.Framework;
-using System.IO.IsolatedStorage;
+using Windows.Storage;
+using System.Threading.Tasks;
 
 namespace PaintTrek
 {
     class Loader
     {
         string filePath;
-        IsolatedStorageFileStream isolatedStorageFileStream;
 
         public Loader()
         {
             filePath = "settings.info";
-
-
-            isolatedStorageFileStream = null;
-
-            try
-            {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists(filePath))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, isolatedStorage);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return;
-            }
-            finally
-            {
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
-            }
             FileSettingsLoad();
         }
 
@@ -54,24 +26,27 @@ namespace PaintTrek
             List<string> str = new List<string>();
             string s = null;
             StreamReader streamReader = null;
-
-
-            isolatedStorageFileStream = null;
+            Stream stream = null;
 
             try
             {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists(filePath))
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                
+                var item = localFolder.TryGetItemAsync(filePath).AsTask().Result;
+                if (item == null)
                 {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.CreateNew, isolatedStorage);
+                    // File doesn't exist, create it? Or just use defaults.
+                    // Original code created it if not exists.
+                    StorageFile file = localFolder.CreateFileAsync(filePath, CreationCollisionOption.OpenIfExists).AsTask().Result;
+                    stream = file.OpenStreamForReadAsync().Result;
                 }
                 else
                 {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, isolatedStorage);
+                    StorageFile file = (StorageFile)item;
+                    stream = file.OpenStreamForReadAsync().Result;
                 }
 
-                streamReader = new StreamReader(isolatedStorageFileStream);
+                streamReader = new StreamReader(stream);
 
                 while ((s = streamReader.ReadLine()) != null)
                 {
@@ -79,7 +54,7 @@ namespace PaintTrek
                 }
 
             }
-            catch (IOException exc)
+            catch (Exception exc)
             {
                 Console.WriteLine("I/O Error\n: " + exc.Message);
             }
@@ -87,9 +62,9 @@ namespace PaintTrek
             {
                 if (streamReader != null)
                     streamReader.Close();
-
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
+                
+                if (stream != null)
+                    stream.Close();
 
                 if (str.Count >= 3)
                 {
@@ -111,29 +86,21 @@ namespace PaintTrek
         public bool FileSettingsSave()
         {
             StreamWriter streamWriter = null;
-
-            isolatedStorageFileStream = null;
+            Stream stream = null;
 
             try
             {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists(filePath))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, isolatedStorage);
-                }
-
-                streamWriter = new StreamWriter(isolatedStorageFileStream);
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile file = localFolder.CreateFileAsync(filePath, CreationCollisionOption.ReplaceExisting).AsTask().Result;
+                
+                stream = file.OpenStreamForWriteAsync().Result;
+                streamWriter = new StreamWriter(stream);
 
                 streamWriter.WriteLine(Globals.AutoAttack);
                 streamWriter.WriteLine(Globals.GameSoundsActivated);
                 streamWriter.WriteLine(Globals.Graphics.IsFullScreen);
             }
-            catch (IOException exc)
+            catch (Exception exc)
             {
                 Console.WriteLine("I/O Error\n: " + exc.Message);
             }
@@ -141,9 +108,9 @@ namespace PaintTrek
             {
                 if (streamWriter != null)
                     streamWriter.Close();
-
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
+                
+                if (stream != null)
+                    stream.Close();
             }
             return true;
         }
@@ -151,32 +118,26 @@ namespace PaintTrek
         public static void Reset()
         {
             //Game.Save 
-            FileSystem FS = new FileSystem();
-            FS.Reset();
+            // Use GameSettings.Instance.Reset() instead of FileSystem
+            GameSettings.Instance.Reset();
 
             //Settings.info
             StreamWriter streamWriter = null;
-            IsolatedStorageFileStream isolatedStorageFileStream = null;
+            Stream stream = null;
             try
             {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists("settings.info"))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("settings.info", FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("settings.info", FileMode.Open, isolatedStorage);
-                }
-
-                streamWriter = new StreamWriter(isolatedStorageFileStream);
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile file = localFolder.CreateFileAsync("settings.info", CreationCollisionOption.ReplaceExisting).AsTask().Result;
+                
+                stream = file.OpenStreamForWriteAsync().Result;
+                streamWriter = new StreamWriter(stream);
+                
                 bool b = false;
                 streamWriter.WriteLine(b);//Auto-Attack false
                 streamWriter.WriteLine(!b);//Sound true
                 streamWriter.WriteLine(!b); //Full-screen true
             }
-            catch (IOException exc)
+            catch (Exception exc)
             {
                 Console.WriteLine("I/O Error\n: " + exc.Message);
             }
@@ -184,9 +145,9 @@ namespace PaintTrek
             {
                 if (streamWriter != null)
                     streamWriter.Close();
-
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
+                
+                if (stream != null)
+                    stream.Close();
             }
             //time.info
 
@@ -196,20 +157,14 @@ namespace PaintTrek
             //isFistTime FALSE
 
             StreamWriter streamWriter2 = null;
+            Stream stream2 = null;
             try
             {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists("lock.info"))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("lock.info", FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("lock.info", FileMode.Open, isolatedStorage);
-                }
-
-                streamWriter2 = new StreamWriter(isolatedStorageFileStream);
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile file = localFolder.CreateFileAsync("lock.info", CreationCollisionOption.ReplaceExisting).AsTask().Result;
+                
+                stream2 = file.OpenStreamForWriteAsync().Result;
+                streamWriter2 = new StreamWriter(stream2);
                 streamWriter2.Write(1); // is not first time
             }
             catch (Exception ex)
@@ -218,10 +173,11 @@ namespace PaintTrek
             }
             finally
             {
-                streamWriter2.Close();
-
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
+                if (streamWriter2 != null)
+                    streamWriter2.Close();
+                
+                if (stream2 != null)
+                    stream2.Close();
             }
 
         }

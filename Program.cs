@@ -1,33 +1,81 @@
 using System;
+using System.IO;
+using Windows.Storage;
+using System.Threading.Tasks;
 
-try
+namespace PaintTrek
+{
+    public static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            // Clear previous session logs to keep file size manageable
+            Logger.Clear();
+
+            // Global exception handlers for non-UI threads and tasks
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            {
+                LogCrash((Exception)args.ExceptionObject, "AppDomain.UnhandledException");
+            };
+
+            TaskScheduler.UnobservedTaskException += (sender, args) =>
+            {
+                LogCrash(args.Exception, "TaskScheduler.UnobservedTaskException");
+                args.SetObserved();
+            };
+
+            try
             {
                 using var game = new PaintTrek.Game1();
                 game.Run();
             }
             catch (Exception ex)
             {
+                LogCrash(ex, "Main Loop Exception");
+                throw;
+            }
+        }
+
+        private static void LogCrash(Exception ex, string source)
+        {
+            try
+            {
+                string crashInfo = $"--------------------------------------------------\n" +
+                                   $"Crash Date: {DateTime.Now}\n" +
+                                   $"Source: {source}\n" +
+                                   $"Exception: {ex.Message}\n" +
+                                   $"Stack Trace: {ex.StackTrace}\n";
+
+                if (ex.InnerException != null)
+                {
+                    crashInfo += $"Inner Exception: {ex.InnerException.Message}\n" +
+                                 $"Inner Stack Trace: {ex.InnerException.StackTrace}\n";
+                }
+                crashInfo += "--------------------------------------------------\n";
+
+                // Try 1: MyDocuments
                 try
                 {
-                    using (var storage = System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForDomain())
-                    {
-                        using (var stream = new System.IO.IsolatedStorage.IsolatedStorageFileStream("crash.log", System.IO.FileMode.Create, storage))
-                        using (var writer = new System.IO.StreamWriter(stream))
-                        {
-                            writer.WriteLine($"Crash Date: {DateTime.Now}");
-                            writer.WriteLine($"Exception: {ex.Message}");
-                            writer.WriteLine($"Stack Trace: {ex.StackTrace}");
-                            if (ex.InnerException != null)
-                            {
-                                writer.WriteLine($"Inner Exception: {ex.InnerException.Message}");
-                                writer.WriteLine($"Inner Stack Trace: {ex.InnerException.StackTrace}");
-                            }
-                        }
-                    }
+                    string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    string logPath = Path.Combine(docPath, "PaintTrek_CrashLog.txt");
+                    File.AppendAllText(logPath, crashInfo);
                 }
-                catch
+                catch { }
+
+                // Try 2: LocalFolder (Store Safe)
+                try
                 {
-                    // If logging fails, there's not much we can do.
+                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                    StorageFile file = localFolder.CreateFileAsync("crash_store.log", CreationCollisionOption.OpenIfExists).AsTask().Result;
+                    File.AppendAllText(file.Path, crashInfo);
                 }
-                throw; // Re-throw to let the OS handle the crash reporting if needed
+                catch { }
             }
+            catch
+            {
+                // Last resort: fails silently
+            }
+        }
+    }
+}

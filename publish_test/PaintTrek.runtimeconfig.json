@@ -1,0 +1,26 @@
+{
+  "runtimeOptions": {
+    "tfm": "net9.0",
+    "rollForward": "Major",
+    "frameworks": [
+      {
+        "name": "Microsoft.NETCore.App",
+        "version": "9.0.0"
+      },
+      {
+        "name": "Microsoft.WindowsDesktop.App",
+        "version": "9.0.0"
+      }
+    ],
+    "configProperties": {
+      "System.Diagnostics.Debugger.IsSupported": false,
+      "System.Diagnostics.Tracing.EventSource.IsSupported": false,
+      "System.Globalization.Invariant": false,
+      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false,
+      "System.Reflection.Metadata.MetadataUpdater.IsSupported": false,
+      "System.Runtime.TieredCompilation": false,
+      "System.Text.Encoding.EnableUnsafeUTF7Encoding": false,
+      "CSWINRT_USE_WINDOWS_UI_XAML_PROJECTIONS": false
+    }
+  }
+}

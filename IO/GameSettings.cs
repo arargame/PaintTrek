@@ -1,6 +1,7 @@
 using System;
 using System.IO;
-using System.IO.IsolatedStorage;
+using Windows.Storage;
+using System.Threading.Tasks;
 
 namespace PaintTrek
 {
@@ -60,21 +61,24 @@ namespace PaintTrek
         {
             System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
             
-            IsolatedStorageFileStream stream = null;
+            Stream stream = null;
             BinaryReader reader = null;
             
             try
             {
-                IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain();
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
                 
-                if (!storage.FileExists("game.save"))
+                // Check if file exists
+                var item = localFolder.TryGetItemAsync("game.save").AsTask().Result;
+                if (item == null)
                 {
                     System.Diagnostics.Debug.WriteLine("[GameSettings] Save file not found, using defaults");
                     isDirty = false;
                     return;
                 }
                 
-                stream = new IsolatedStorageFileStream("game.save", FileMode.Open, storage);
+                StorageFile file = (StorageFile)item;
+                stream = file.OpenStreamForReadAsync().Result;
                 reader = new BinaryReader(stream);
                 
                 CurrentScore = reader.ReadInt32();
@@ -119,13 +123,15 @@ namespace PaintTrek
             if (!isDirty) return;
             
             System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
-            IsolatedStorageFileStream stream = null;
+            Stream stream = null;
             BinaryWriter writer = null;
             
             try
             {
-                IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain();
-                stream = new IsolatedStorageFileStream("game.save", FileMode.Create, storage);
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile file = localFolder.CreateFileAsync("game.save", CreationCollisionOption.ReplaceExisting).AsTask().Result;
+                
+                stream = file.OpenStreamForWriteAsync().Result;
                 writer = new BinaryWriter(stream);
                 
                 writer.Write(CurrentScore);
@@ -384,16 +390,18 @@ namespace PaintTrek
         {
             try
             {
-                IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (storage.FileExists("game.save"))
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                
+                var gameSave = localFolder.TryGetItemAsync("game.save").AsTask().Result;
+                if (gameSave != null)
                 {
-                    storage.DeleteFile("game.save");
+                    gameSave.DeleteAsync().AsTask().Wait();
                 }
 
-                if (storage.FileExists("lock.info"))
+                var lockInfo = localFolder.TryGetItemAsync("lock.info").AsTask().Result;
+                if (lockInfo != null)
                 {
-                    storage.DeleteFile("lock.info");
+                    lockInfo.DeleteAsync().AsTask().Wait();
                 }
 
                 // Reset in-memory values

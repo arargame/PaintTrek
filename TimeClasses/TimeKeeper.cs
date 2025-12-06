@@ -12,7 +12,6 @@ namespace PaintTrek
     {
         TimeSpan oldTime;
         TimeSpan newTime;
-        IsolatedStorageFileStream isolatedStorageFileStream;
         string filePath;
         string str;
         public static string time;
@@ -29,141 +28,69 @@ namespace PaintTrek
 
         public void Initialize()
         {
-
             filePath = "time.info";
-
-            isolatedStorageFileStream = null;
-
-            try
-            {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists(filePath))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, isolatedStorage);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return;
-            }
-            finally
-            {
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
-            }
-
             Load();
         }
 
         public void Load()
         {
             oldTime = new TimeSpan(0, 0, 0);
-            StreamReader streamReader = null;
-            isolatedStorageFileStream = null;
+            
             try
             {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists(filePath))
+                Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+                var item = localFolder.TryGetItemAsync(filePath).AsTask().Result;
+                
+                if (item != null)
                 {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.CreateNew, isolatedStorage);
+                    Windows.Storage.StorageFile file = (Windows.Storage.StorageFile)item;
+                    string content = Windows.Storage.FileIO.ReadTextAsync(file).AsTask().Result;
+                    
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        // Remove any potential newline characters
+                        content = content.Trim();
+                        oldTime = TimeSpan.Parse(content);
+                    }
                 }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, isolatedStorage);
-                }
-
-                streamReader = new StreamReader(isolatedStorageFileStream);
-                str = streamReader.ReadLine();
             }
-            catch (IOException exc)
+            catch (Exception exc)
             {
-                Console.WriteLine("I/O Error\n: " + exc.Message);
-            }
-            finally
-            {
-                if (streamReader != null)
-                    streamReader.Close();
-
-                if (str != null)
-                    oldTime = TimeSpan.Parse(str);
-
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
+                System.Diagnostics.Debug.WriteLine("[TimeKeeper] Load Error: " + exc.Message);
             }
         }
 
         public void Save()
         {
-            StreamWriter streamWriter = null;
-            isolatedStorageFileStream = null;
             try
             {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists(filePath))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, isolatedStorage);
-                }
-
-                streamWriter = new StreamWriter(isolatedStorageFileStream);
-                streamWriter.WriteLine(newTime + oldTime);
+                Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+                Windows.Storage.StorageFile file = localFolder.CreateFileAsync(filePath, Windows.Storage.CreationCollisionOption.OpenIfExists).AsTask().Result;
+                
+                string content = (newTime + oldTime).ToString();
+                Windows.Storage.FileIO.WriteTextAsync(file, content).AsTask().Wait();
             }
-            catch (IOException exc)
+            catch (Exception exc)
             {
-                Console.WriteLine("I/O Error\n: " + exc.Message);
-            }
-            finally
-            {
-                if (streamWriter != null)
-                    streamWriter.Close();
-
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
+                System.Diagnostics.Debug.WriteLine("[TimeKeeper] Save Error: " + exc.Message);
             }
         }
+
         public void Reset()
         {
-            StreamWriter streamWriter = null;
-            isolatedStorageFileStream = null;
-
             try
             {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
-
-                if (!isolatedStorage.FileExists(filePath))
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.CreateNew, isolatedStorage);
-                }
-                else
-                {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, isolatedStorage);
-                }
-
-                streamWriter = new StreamWriter(isolatedStorageFileStream);
-                streamWriter.WriteLine(new TimeSpan(0, 0, 0));
+                Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+                Windows.Storage.StorageFile file = localFolder.CreateFileAsync(filePath, Windows.Storage.CreationCollisionOption.OpenIfExists).AsTask().Result;
+                
+                string content = new TimeSpan(0, 0, 0).ToString();
+                Windows.Storage.FileIO.WriteTextAsync(file, content).AsTask().Wait();
+                
+                oldTime = TimeSpan.Zero;
             }
-            catch (IOException exc)
+            catch (Exception exc)
             {
-                Console.WriteLine("I/O Error\n: " + exc.Message);
-            }
-            finally
-            {
-                if (streamWriter != null)
-                    streamWriter.Close();
-
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
+                System.Diagnostics.Debug.WriteLine("[TimeKeeper] Reset Error: " + exc.Message);
             }
         }
         public void Update()

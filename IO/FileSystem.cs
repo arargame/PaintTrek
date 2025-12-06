@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework;
-using System.IO.IsolatedStorage;
 
 namespace PaintTrek
 {
@@ -135,36 +134,42 @@ namespace PaintTrek
         public bool isFirstTime()
         {
             int number = 0;
-
-            IsolatedStorageFileStream isolatedStorageFileStream = null;
-
+            Stream stream = null;
+            StreamReader st = null;
 
             try
             {
-                IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForDomain();
+                Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+                
+                var item = localFolder.TryGetItemAsync("lock.info").AsTask().Result;
+                Windows.Storage.StorageFile file;
 
-                if (!isolatedStorage.FileExists("lock.info"))
+                if (item == null)
                 {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("lock.info", FileMode.CreateNew, isolatedStorage);
+                    file = localFolder.CreateFileAsync("lock.info", Windows.Storage.CreationCollisionOption.OpenIfExists).AsTask().Result;
                 }
                 else
                 {
-                    isolatedStorageFileStream = new IsolatedStorageFileStream("lock.info", FileMode.Open, isolatedStorage);
+                    file = (Windows.Storage.StorageFile)item;
                 }
 
-                StreamReader st = new StreamReader(isolatedStorageFileStream);
-                number = Convert.ToInt32(st.ReadLine());
-
-                st.Close();
+                stream = file.OpenStreamForReadAsync().Result;
+                st = new StreamReader(stream);
+                
+                string line = st.ReadLine();
+                if (line != null)
+                {
+                    number = Convert.ToInt32(line);
+                }
             }
-            catch (IOException exc)
+            catch (Exception exc)
             {
-                Console.WriteLine("I/O Error\n: " + exc.Message);
+                System.Diagnostics.Debug.WriteLine("[FileSystem] isFirstTime Error: " + exc.Message);
             }
             finally
             {
-                if (isolatedStorageFileStream != null)
-                    isolatedStorageFileStream.Close();
+                if (st != null) st.Close();
+                if (stream != null) stream.Close();
             }
 
             return number == 0;
