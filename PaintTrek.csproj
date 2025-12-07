@@ -95,6 +95,11 @@
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.*" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
   </ItemGroup>
+
+  <!-- Shared Statistics Project -->
+  <ItemGroup>
+    <ProjectReference Include="..\PaintTrek.Shared\PaintTrek.Shared.csproj" />
+  </ItemGroup>
   
   <!-- Exclude unnecessary assemblies that trigger Store certification warnings -->
   <ItemGroup>

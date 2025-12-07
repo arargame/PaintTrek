@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Windows.Storage;
 using System.Threading.Tasks;
 
 namespace PaintTrek
@@ -63,12 +62,13 @@ namespace PaintTrek
                 }
                 catch { }
 
-                // Try 2: LocalFolder (Store Safe)
+                // Try 2: LocalApplicationData (Store Safe)
                 try
                 {
-                    StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                    StorageFile file = localFolder.CreateFileAsync("crash_store.log", CreationCollisionOption.OpenIfExists).AsTask().Result;
-                    File.AppendAllText(file.Path, crashInfo);
+                    string localFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PaintTrek");
+                    Directory.CreateDirectory(localFolder);
+                    string logPath = Path.Combine(localFolder, "crash_store.log");
+                    File.AppendAllText(logPath, crashInfo);
                 }
                 catch { }
             }

@@ -134,42 +134,34 @@ namespace PaintTrek
         public bool isFirstTime()
         {
             int number = 0;
-            Stream stream = null;
-            StreamReader st = null;
 
             try
             {
-                Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+                string localFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PaintTrek");
+                string fullPath = Path.Combine(localFolder, "lock.info");
                 
-                var item = localFolder.TryGetItemAsync("lock.info").AsTask().Result;
-                Windows.Storage.StorageFile file;
-
-                if (item == null)
+                if (!Directory.Exists(localFolder))
                 {
-                    file = localFolder.CreateFileAsync("lock.info", Windows.Storage.CreationCollisionOption.OpenIfExists).AsTask().Result;
+                    Directory.CreateDirectory(localFolder);
+                }
+                
+                if (File.Exists(fullPath))
+                {
+                    string content = File.ReadAllText(fullPath);
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        number = Convert.ToInt32(content.Trim());
+                    }
                 }
                 else
                 {
-                    file = (Windows.Storage.StorageFile)item;
-                }
-
-                stream = file.OpenStreamForReadAsync().Result;
-                st = new StreamReader(stream);
-                
-                string line = st.ReadLine();
-                if (line != null)
-                {
-                    number = Convert.ToInt32(line);
+                    // Create the file with 0 to mark first time
+                    File.WriteAllText(fullPath, "0");
                 }
             }
             catch (Exception exc)
             {
                 System.Diagnostics.Debug.WriteLine("[FileSystem] isFirstTime Error: " + exc.Message);
-            }
-            finally
-            {
-                if (st != null) st.Close();
-                if (stream != null) stream.Close();
             }
 
             return number == 0;

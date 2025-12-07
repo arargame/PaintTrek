@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Statistics;
 
 namespace PaintTrek
 {
@@ -54,6 +55,7 @@ namespace PaintTrek
         {
             if (this.destinationRectangle.Intersects(new Rectangle(GraphicSettings.leftAreaRectofScreen.Left, GraphicSettings.leftAreaRectofScreen.Top, GraphicSettings.leftAreaRectofScreen.Width - 50, GraphicSettings.leftAreaRectofScreen.Height)))
             {
+                // Enemy escaped off screen - no kill credit
                 alive = false;
             }
         }
@@ -67,7 +69,31 @@ namespace PaintTrek
         public override void TakeDamage(Sprite another)
         {
             texture = damageTexture;
+            
+            // Store health before damage
+            double healthBefore = GetHealth();
+            
             base.TakeDamage(another);
+            
+            // Check if this damage killed the enemy
+            if (healthBefore > 0 && GetHealth() <= 0)
+            {
+                // Record kill statistics with weapon info
+                string weaponUsed = "Unknown";
+                if (another is PlayerBullet)
+                {
+                    weaponUsed = another.GetType().Name; // "Laser", "Rocket", etc.
+                }
+                else if (another is Player)
+                {
+                    weaponUsed = "PlayerCollision";
+                }
+                
+                StatisticsManager.Instance.RecordEnemyKill(
+                    enemyType: this.GetType().Name,
+                    weaponUsed: weaponUsed
+                );
+            }
         }
 
         public override void SetStartingPosition()

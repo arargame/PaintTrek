@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Statistics;
 
 namespace PaintTrek
 {
@@ -280,10 +281,14 @@ namespace PaintTrek
 
         public override void TakeDamage(Sprite another)
         {
+            // Calculate damage before applying
+            double damageAmount = 0;
+            string damageSource = another.GetType().Name;
 
             if (!pixelatedMode)
             {
                 texture = damageTexture;
+                damageAmount = Math.Abs(another.GetDamage());
                 base.TakeDamage(another);
                 Level.AddScore(this.GetPoint());
             }
@@ -293,11 +298,22 @@ namespace PaintTrek
                 isTakingDamage = true;
 
                 if(another is Enemy || another is EnemyBullet)
-                     SetHealth(-5);
+                {
+                    damageAmount = 5;
+                    SetHealth(-5);
+                }
 
                 Level.AddScore(this.GetPoint());
             }
 
+            // Record damage statistics
+            bool wasFatal = GetHealth() <= 0;
+            StatisticsManager.Instance.RecordDamage(
+                damageSource: damageSource,
+                damageAmount: (int)damageAmount,
+                playerHealthAfter: (float)GetHealth(),
+                wasFatal: wasFatal
+            );
 
             if (!(another is Boss))
             {

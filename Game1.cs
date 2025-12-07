@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -8,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using PaintTrek.Shared.Statistics;
 
 namespace PaintTrek
 {
@@ -21,6 +23,9 @@ namespace PaintTrek
         Loader loader;
         RenderTarget2D renderTarget;
         Rectangle renderRect;
+        
+        // Statistics
+        private StatisticsStorage statisticsStorage;
         
         // Debug overlay - automatically synced with Globals.DeveloperMode
         private bool showDebugInfo => Globals.DeveloperMode;
@@ -53,7 +58,37 @@ namespace PaintTrek
             Globals.PreviousSpawnTime = TimeSpan.Zero;
             Globals.EnemySpawnTime = TimeSpan.FromSeconds(1.0f);
 
+            // Initialize Statistics System
+            InitializeStatistics();
+
             base.Initialize();
+        }
+
+        private void InitializeStatistics()
+        {
+            try
+            {
+                // Get platform-specific storage path
+                // Using MyDocuments for easier access
+                string storagePath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    "PaintTrek", "Statistics");
+
+                statisticsStorage = new StatisticsStorage(storagePath);
+
+                // Listen to session completed events
+                StatisticsManager.Instance.OnSessionCompleted += (session) =>
+                {
+                    statisticsStorage.SaveSession(session);
+                    System.Diagnostics.Debug.WriteLine($"[Stats] Session saved: Level {session.LevelNumber}, Score: {session.FinalScore}");
+                };
+
+                System.Diagnostics.Debug.WriteLine("[Stats] Statistics system initialized");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[Stats] Init error: {ex.Message}");
+            }
         }
 
 
@@ -66,10 +101,12 @@ namespace PaintTrek
             Globals.Content = Content;
             Globals.Window.Title = "Paint Trek";
             
-            // Load GameSettings FIRST
-            GameSettings.Instance.Load();
-            GameSettings.Instance.SyncToGlobals();
-            System.Diagnostics.Debug.WriteLine("[Game1] GameSettings loaded and synced");
+            // Load GameSettings FIRST (ApplicationData.Current is now ready)
+            System.Diagnostics.Debug.WriteLine("[Game1] 📂 Loading GameSettings...");
+            var settings = GameSettings.Instance;
+            settings.Load(); // Explicitly load after ApplicationData is ready
+            settings.SyncToGlobals();
+            System.Diagnostics.Debug.WriteLine("[Game1] ✅ GameSettings loaded and synced to Globals");
             
             // Initialize graphics (defaults to fullscreen)
             graphicSettings = new GraphicSettings();

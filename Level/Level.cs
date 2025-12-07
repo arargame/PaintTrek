@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PaintTrek.Shared.Statistics;
 
 namespace PaintTrek
 {
@@ -58,6 +59,9 @@ namespace PaintTrek
         {
             Initialize();
             Load();
+            
+            // Start statistics session
+            StatisticsManager.Instance.StartSession(LevelCounter);
         }
 
         ~Level() 
@@ -148,7 +152,16 @@ namespace PaintTrek
                 }
 
                 if((int)timeToExit<=0)
+                {
                     ReachedExit = true;
+                    
+                    // Complete statistics session (level completed)
+                    StatisticsManager.Instance.CompleteSession(
+                        finalScore: Score,
+                        isCompleted: true,
+                        isGameOver: false
+                    );
+                }
 
                 for (int i = 0; i < EnemySystem.enemyList.Count; i++)
                 {
@@ -250,6 +263,13 @@ namespace PaintTrek
             if (player != null && player.OnKilled() && gameState == GameState.Active)
             {
                 gameState = GameState.GameOver;
+                
+                // Complete statistics session (game over)
+                StatisticsManager.Instance.CompleteSession(
+                    finalScore: Score,
+                    isCompleted: false,
+                    isGameOver: true
+                );
             }
         }
 

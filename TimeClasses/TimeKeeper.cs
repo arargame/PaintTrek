@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.IO;
-using System.IO.IsolatedStorage;
 
 namespace PaintTrek
 {
@@ -38,17 +37,15 @@ namespace PaintTrek
             
             try
             {
-                Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-                var item = localFolder.TryGetItemAsync(filePath).AsTask().Result;
+                string localFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PaintTrek");
+                string fullPath = Path.Combine(localFolder, filePath);
                 
-                if (item != null)
+                if (File.Exists(fullPath))
                 {
-                    Windows.Storage.StorageFile file = (Windows.Storage.StorageFile)item;
-                    string content = Windows.Storage.FileIO.ReadTextAsync(file).AsTask().Result;
+                    string content = File.ReadAllText(fullPath);
                     
                     if (!string.IsNullOrEmpty(content))
                     {
-                        // Remove any potential newline characters
                         content = content.Trim();
                         oldTime = TimeSpan.Parse(content);
                     }
@@ -64,11 +61,12 @@ namespace PaintTrek
         {
             try
             {
-                Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-                Windows.Storage.StorageFile file = localFolder.CreateFileAsync(filePath, Windows.Storage.CreationCollisionOption.OpenIfExists).AsTask().Result;
+                string localFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PaintTrek");
+                Directory.CreateDirectory(localFolder);
+                string fullPath = Path.Combine(localFolder, filePath);
                 
                 string content = (newTime + oldTime).ToString();
-                Windows.Storage.FileIO.WriteTextAsync(file, content).AsTask().Wait();
+                File.WriteAllText(fullPath, content);
             }
             catch (Exception exc)
             {
@@ -80,11 +78,12 @@ namespace PaintTrek
         {
             try
             {
-                Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-                Windows.Storage.StorageFile file = localFolder.CreateFileAsync(filePath, Windows.Storage.CreationCollisionOption.OpenIfExists).AsTask().Result;
+                string localFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PaintTrek");
+                Directory.CreateDirectory(localFolder);
+                string fullPath = Path.Combine(localFolder, filePath);
                 
                 string content = new TimeSpan(0, 0, 0).ToString();
-                Windows.Storage.FileIO.WriteTextAsync(file, content).AsTask().Wait();
+                File.WriteAllText(fullPath, content);
                 
                 oldTime = TimeSpan.Zero;
             }

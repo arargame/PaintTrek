@@ -1,7 +1,5 @@
 using System;
 using System.IO;
-using Windows.Storage;
-using System.Threading.Tasks;
 
 namespace PaintTrek
 {
@@ -49,8 +47,10 @@ namespace PaintTrek
                 {
                     if (instance == null)
                     {
+                        System.Diagnostics.Debug.WriteLine("[GameSettings] 🆕 Creating new instance (defaults only, call Load() explicitly)");
                         instance = new GameSettings();
-                        instance.Load();
+                        // DON'T call Load() here - ApplicationData.Current not ready yet!
+                        // Load() must be called explicitly from LoadContent()
                     }
                     return instance;
                 }
@@ -66,30 +66,47 @@ namespace PaintTrek
             
             try
             {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                // Use standard file system instead of ApplicationData.Current (timing issues)
+                string localFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "PaintTrek");
+                
+                // Ensure directory exists
+                if (!Directory.Exists(localFolder))
+                    Directory.CreateDirectory(localFolder);
+                
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] LocalFolder: {localFolder}");
                 
                 // Check if file exists
-                var item = localFolder.TryGetItemAsync("game.save").AsTask().Result;
-                if (item == null)
+                string filePath = Path.Combine(localFolder, "game.save");
+                if (!File.Exists(filePath))
                 {
-                    System.Diagnostics.Debug.WriteLine("[GameSettings] Save file not found, using defaults");
+                    System.Diagnostics.Debug.WriteLine("[GameSettings] ⚠️ Save file not found, using defaults");
+                    System.Diagnostics.Debug.WriteLine($"[GameSettings] Expected location: {filePath}");
                     isDirty = false;
                     return;
                 }
                 
-                StorageFile file = (StorageFile)item;
-                stream = file.OpenStreamForReadAsync().Result;
+                stream = File.OpenRead(filePath);
                 reader = new BinaryReader(stream);
+                
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] File size: {stream.Length} bytes");
                 
                 CurrentScore = reader.ReadInt32();
                 CurrentLevel = reader.ReadInt32();
                 MaxLevel = reader.ReadInt32();
                 MaxScore = reader.ReadInt32();
                 
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] Progress: Score={CurrentScore}, Level={CurrentLevel}, MaxLevel={MaxLevel}");
+                
                 for (int i = 0; i < 10; i++)
                 {
                     try { LevelScores[i] = reader.ReadInt32(); }
-                    catch { LevelScores[i] = 0; }
+                    catch (Exception ex) 
+                    { 
+                        LevelScores[i] = 0;
+                        System.Diagnostics.Debug.WriteLine($"[GameSettings] ⚠️ Error reading LevelScores[{i}]: {ex.Message}");
+                    }
                 }
                 
                 try
@@ -99,17 +116,22 @@ namespace PaintTrek
                     MenuSoundsEnabled = reader.ReadBoolean();
                     AutoAttack = reader.ReadBoolean();
                     IsFullScreen = reader.ReadBoolean();
-                    // DeveloperMode is not loaded from file
+                    
+                    System.Diagnostics.Debug.WriteLine($"[GameSettings] Settings: Sound={SoundEffectsEnabled}, Music={MusicEnabled}, Menu={MenuSoundsEnabled}, AutoAttack={AutoAttack}, FullScreen={IsFullScreen}");
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[GameSettings] ⚠️ Error reading settings (using defaults): {ex.Message}");
+                }
                 
                 isDirty = false;
                 sw.Stop();
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] Loaded in {sw.ElapsedMilliseconds}ms");
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] ✅ Loaded successfully in {sw.ElapsedMilliseconds}ms");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] Load error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] ❌ Load error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] Stack trace: {ex.StackTrace}");
             }
             finally
             {
@@ -120,7 +142,11 @@ namespace PaintTrek
         
         public void Save()
         {
-            if (!isDirty) return;
+            // Always save when explicitly called (removed isDirty check for debugging)
+            if (!isDirty)
+            {
+                System.Diagnostics.Debug.WriteLine("[GameSettings] ⚠️ Save called but not dirty - saving anyway for safety");
+            }
             
             System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
             Stream stream = null;
@@ -128,10 +154,19 @@ namespace PaintTrek
             
             try
             {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFile file = localFolder.CreateFileAsync("game.save", CreationCollisionOption.ReplaceExisting).AsTask().Result;
+                // Use standard file system
+                string localFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "PaintTrek");
                 
-                stream = file.OpenStreamForWriteAsync().Result;
+                // Ensure directory exists
+                if (!Directory.Exists(localFolder))
+                    Directory.CreateDirectory(localFolder);
+                
+                string filePath = Path.Combine(localFolder, "game.save");
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] Saving to: {filePath}");
+                
+                stream = File.Create(filePath);
                 writer = new BinaryWriter(stream);
                 
                 writer.Write(CurrentScore);
@@ -147,15 +182,17 @@ namespace PaintTrek
                 writer.Write(MenuSoundsEnabled);
                 writer.Write(AutoAttack);
                 writer.Write(IsFullScreen);
-                // DeveloperMode is not saved to file
+                
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] Data: Score={CurrentScore}, Level={CurrentLevel}, Sound={SoundEffectsEnabled}, Music={MusicEnabled}, AutoAttack={AutoAttack}, FullScreen={IsFullScreen}");
                 
                 isDirty = false;
                 sw.Stop();
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] Saved in {sw.ElapsedMilliseconds}ms");
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] ✅ Saved successfully in {sw.ElapsedMilliseconds}ms");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] Save error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] ❌ Save error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] Stack trace: {ex.StackTrace}");
             }
             finally
             {
@@ -213,42 +250,59 @@ namespace PaintTrek
         public void UpdateSettings(bool? soundEffects = null, bool? music = null, bool? menuSounds = null, 
                                    bool? autoAttack = null, bool? fullScreen = null)
         {
+            System.Diagnostics.Debug.WriteLine($"[GameSettings] 🔧 UpdateSettings called: Sound={soundEffects}, Music={music}, Menu={menuSounds}, Auto={autoAttack}, Full={fullScreen}");
+            
+            bool wasChanged = false;
+            
             if (soundEffects.HasValue && SoundEffectsEnabled != soundEffects.Value)
             {
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] SoundEffects: {SoundEffectsEnabled} → {soundEffects.Value}");
                 SoundEffectsEnabled = soundEffects.Value;
                 isDirty = true;
+                wasChanged = true;
             }
             
             if (music.HasValue && MusicEnabled != music.Value)
             {
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] Music: {MusicEnabled} → {music.Value}");
                 MusicEnabled = music.Value;
                 isDirty = true;
+                wasChanged = true;
             }
             
             if (menuSounds.HasValue && MenuSoundsEnabled != menuSounds.Value)
             {
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] MenuSounds: {MenuSoundsEnabled} → {menuSounds.Value}");
                 MenuSoundsEnabled = menuSounds.Value;
                 isDirty = true;
+                wasChanged = true;
             }
             
             if (autoAttack.HasValue && AutoAttack != autoAttack.Value)
             {
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] AutoAttack: {AutoAttack} → {autoAttack.Value}");
                 AutoAttack = autoAttack.Value;
                 isDirty = true;
+                wasChanged = true;
             }
             
             if (fullScreen.HasValue && IsFullScreen != fullScreen.Value)
             {
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] FullScreen: {IsFullScreen} → {fullScreen.Value}");
                 IsFullScreen = fullScreen.Value;
                 isDirty = true;
+                wasChanged = true;
             }
             
-            // DeveloperMode is not persisted
-            
-            if (isDirty)
+            if (wasChanged)
             {
+                System.Diagnostics.Debug.WriteLine("[GameSettings] 💾 Calling Save()...");
                 Save();
-                System.Diagnostics.Debug.WriteLine("[GameSettings] Settings updated");
+                System.Diagnostics.Debug.WriteLine("[GameSettings] ✅ Settings updated and saved");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("[GameSettings] ⏭️ No changes detected");
             }
         }
         
@@ -390,18 +444,20 @@ namespace PaintTrek
         {
             try
             {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                string localFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "PaintTrek");
                 
-                var gameSave = localFolder.TryGetItemAsync("game.save").AsTask().Result;
-                if (gameSave != null)
+                string gameSavePath = Path.Combine(localFolder, "game.save");
+                if (File.Exists(gameSavePath))
                 {
-                    gameSave.DeleteAsync().AsTask().Wait();
+                    File.Delete(gameSavePath);
                 }
 
-                var lockInfo = localFolder.TryGetItemAsync("lock.info").AsTask().Result;
-                if (lockInfo != null)
+                string lockInfoPath = Path.Combine(localFolder, "lock.info");
+                if (File.Exists(lockInfoPath))
                 {
-                    lockInfo.DeleteAsync().AsTask().Wait();
+                    File.Delete(lockInfoPath);
                 }
 
                 // Reset in-memory values

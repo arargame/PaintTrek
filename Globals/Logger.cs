@@ -1,7 +1,5 @@
 using System;
 using System.IO;
-using Windows.Storage;
-using System.Threading.Tasks;
 
 namespace PaintTrek
 {
@@ -21,9 +19,9 @@ namespace PaintTrek
                 {
                     string logEntry = $"{DateTime.Now:HH:mm:ss.fff} - {message}{Environment.NewLine}";
                     
-                    // Use standard IO since we have runFullTrust and it's synchronous
-                    // But to be 100% safe with UWP/Store paths, let's use the LocalFolder path
-                    string folderPath = ApplicationData.Current.LocalFolder.Path;
+                    // Use standard IO with LocalApplicationData folder
+                    string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PaintTrek");
+                    Directory.CreateDirectory(folderPath);
                     string fullPath = Path.Combine(folderPath, logFileName);
                     
                     File.AppendAllText(fullPath, logEntry);
@@ -39,7 +37,7 @@ namespace PaintTrek
         {
             try
             {
-                string folderPath = ApplicationData.Current.LocalFolder.Path;
+                string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PaintTrek");
                 string fullPath = Path.Combine(folderPath, logFileName);
                 if (File.Exists(fullPath))
                 {
