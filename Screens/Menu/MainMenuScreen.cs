@@ -91,11 +91,8 @@ namespace PaintTrek
                 case 1:
                     if (MenuEntries[selectedEntry].Enabled) 
                     {
-                        Level.LevelCounter = Convert.ToInt32(fileSystem.LoadFile()[1]);
-                        Level.Score = Convert.ToInt32(fileSystem.LoadFile()[0]);
                         ExitScreen();
-                        // Create new game with singleton pattern
-                        ScreenManager.AddScreen(GameBoard.CreateNewGame());
+                        ScreenManager.AddScreen(new ContinueScreen());
                     }
                     break;
                 case 2:

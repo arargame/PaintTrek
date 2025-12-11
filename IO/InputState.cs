@@ -71,11 +71,14 @@ namespace PaintTrek
             get { return IsKeyPress(Keys.Space) || IsKeyPress(Keys.K) || IsMouseLeftPressed(); }
         }
 
+        public GamePadState lastGamePadState;
+
         public void Update() 
         {
             lastKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
 
+            lastGamePadState = gamePadState;
             gamePadState = GamePad.GetState(PlayerIndex.One);
 
             lastMouseState = currentMouseState;
@@ -133,7 +136,6 @@ namespace PaintTrek
                 }
                 else CA.IsClicked = false;
             }
-
         }
 
         public bool IsNewKeyPress(Keys key)
@@ -147,7 +149,13 @@ namespace PaintTrek
 
         public bool IsGamePadPress(Keys key) 
         {
+            // Legacy support
             return gamePadState.Buttons.Back == ButtonState.Pressed;
+        }
+
+        public bool IsNewButtonPress(Buttons button)
+        {
+            return gamePadState.IsButtonDown(button) && lastGamePadState.IsButtonUp(button);
         }
 
         public bool IsLeftClicked()

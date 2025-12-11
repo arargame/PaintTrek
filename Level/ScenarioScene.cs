@@ -31,8 +31,8 @@ namespace PaintTrek
 
         public ScenarioScene()
         {
-            isKeyForStarting = false;
-            Globals.ShowCursor = false;
+            isKeyForStarting = true;
+            Globals.ShowCursor = true;
             time = 0;
             charCounter = 0;
 
