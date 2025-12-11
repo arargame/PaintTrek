@@ -32,8 +32,16 @@ namespace PaintTrek
             levelSong.UnloadContent();
         }
 
+        private float startDelay = 0.1f; // 500ms delay to prevent abrupt start/stutter sync
+
         public void Update()
         {
+            if (startDelay > 0)
+            {
+                startDelay -= (float)Globals.GameTime.ElapsedGameTime.TotalSeconds;
+                return;
+            }
+
             if (levelSong != null)
             {
                 // Check if music is enabled
