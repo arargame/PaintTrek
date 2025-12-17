@@ -88,6 +88,7 @@ namespace PaintTrek
             {
                 enemy.velocity = new Vector2(enemy.velocity.X * 0.5f, enemy.velocity.Y);
                 enemy.color = Color.Green;
+                enemy.isPoisoned = true;
             }
         }
     }

@@ -90,7 +90,10 @@ namespace PaintTrek
 
             fireTime += (float)Globals.GameTime.ElapsedGameTime.TotalSeconds;
 
-            if (fireTime > Globals.Random.Next(2, 5))
+            float fireThreshold = Globals.Random.Next(2, 5);
+            if (isPoisoned) fireThreshold *= 3.0f;
+
+            if (fireTime > fireThreshold)
             {
                 fireTime = 0;
                 if (canFire)

@@ -29,6 +29,9 @@ namespace PaintTrek
             set { clickableArea = value; }
         }
 
+        PaintTrek.Shared.Tips.GameTip currentTip;
+
+
         #endregion
 
         public LoadingScene()
@@ -47,7 +50,12 @@ namespace PaintTrek
             transTextureRect = new Rectangle(0, Globals.GameRect.Center.Y - (transitionTexture.Height), (int)Globals.GameSize.X, (int)Globals.GameSize.Y / 3);
             clickableArea = new ClickableArea(new Rectangle((int)(Globals.GameRect.Center.X - Globals.GameSize.X / 7), (int)(Globals.GameRect.Center.Y + Globals.GameSize.Y / 5), 100, 30));
 
+            clickableArea = new ClickableArea(new Rectangle((int)(Globals.GameRect.Center.X - Globals.GameSize.X / 7), (int)(Globals.GameRect.Center.Y + Globals.GameSize.Y / 5), 100, 30));
+
             GlobalTexture.LoadTextures();
+
+            // Load a random tip
+            currentTip = PaintTrek.Shared.Tips.LoadingTipProvider.GetRandom(PaintTrek.Shared.Tips.Platform.Desktop);
         }
 
         ~LoadingScene() 
@@ -86,6 +94,20 @@ namespace PaintTrek
 
             Globals.SpriteBatch.Draw(loadBar, loadBarRect, Color.White);
 
+            // Draw Tip
+            if (currentTip != null)
+            {
+                string text = "'" + currentTip.Text + "'";
+                float tipScale = 0.7f;
+                // Adjust wrap width for scale
+                string wrappedText = WrapText(Globals.GameFont, text, (Globals.GameSize.X * 0.8f) / tipScale);
+                Vector2 textSize = Globals.GameFont.MeasureString(wrappedText) * tipScale;
+                
+                Vector2 pos = new Vector2(Globals.GameSize.X / 2 - textSize.X / 2, loadBarRect.Bottom + 20);
+                
+                Globals.SpriteBatch.DrawString(Globals.GameFont, wrappedText, pos, Color.LightGray, 0f, Vector2.Zero, tipScale, SpriteEffects.None, 0f);
+            }
+
 
             //Globals.SpriteBatch.Draw(barStrike,new Rectangle(405+5*i,405,5,10),Color.White);
             for (int i = 0; i < transitionTimer; i++)
@@ -111,6 +133,32 @@ namespace PaintTrek
         public bool GetKeyForStarting()
         {
             return openingKeyForLevel;
+        }
+
+        private string WrapText(SpriteFont spriteFont, string text, float maxLineWidth)
+        {
+            string[] words = text.Split(' ');
+            StringBuilder sb = new StringBuilder();
+            float lineWidth = 0f;
+            float spaceWidth = spriteFont.MeasureString(" ").X;
+
+            foreach (string word in words)
+            {
+                Vector2 size = spriteFont.MeasureString(word);
+
+                if (lineWidth + size.X < maxLineWidth)
+                {
+                    sb.Append(word + " ");
+                    lineWidth += size.X + spaceWidth;
+                }
+                else
+                {
+                    sb.Append("\n" + word + " ");
+                    lineWidth = size.X + spaceWidth;
+                }
+            }
+
+            return sb.ToString();
         }
     }
 }

@@ -30,6 +30,7 @@ namespace PaintTrek
         {
             base.Update();
             SimpleMovement(velocity);
+            rotation += 0.05f; // Slow rotation
         }
         public override void Draw()
         {

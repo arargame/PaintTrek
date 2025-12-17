@@ -92,7 +92,11 @@ namespace PaintTrek
                     active = false;
             }
 
-            this.frameTimeRemaining -= Globals.GameTime.ElapsedGameTime.TotalSeconds;
+            double elapsed = Globals.GameTime.ElapsedGameTime.TotalSeconds;
+            // Cap elapsed time to avoid glitches after long loads
+            if (elapsed > 0.1) elapsed = 0.1;
+
+            this.frameTimeRemaining -= elapsed;
             if (this.frameTimeRemaining <= 0)
             {
                 this.frame++;

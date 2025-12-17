@@ -10,6 +10,8 @@ namespace PaintTrek
 {
     abstract class Enemy : Sprite
     {
+        public bool isPoisoned = false;
+        private Texture2D poisonTexture; // Just for visual reference if needed, or use GlobalTexture
         Texture2D damageTexture; 
 
         public override void Initialize()
@@ -39,6 +41,31 @@ namespace PaintTrek
 
         public override void Draw()
         {
+             if (isPoisoned && alive && visible)
+             {
+                 // Draw generic green glow behind
+                 // Reusing GlobalTexture.diamondGreenTexture if it exists, or just a tinted sprite
+                 // Let's assume GlobalTexture has it, or just draw the enemy itself with Green color and offsets
+                 // Ideally use a particle texture. Wrench uses GlobalTexture.wrenchTexture.
+                 // Let's use `GlobalTexture.diamondGreenTexture` assuming it exists (common for "green diamond").
+                 // If not, I'll fallback to a simple circle or just tinting.
+                 // PROPOSED: Pulsating "Frog Swimming" Effect
+                 // Use Sine wave for smooth breathing/pulsing
+                 float time = (float)Globals.GameTime.TotalGameTime.TotalSeconds;
+                 float pulseSpeed = 10f; // How fast it pulsates
+                 float pulseAmount = 0.1f; // How much it expands
+                 float baseScale = 1.2f;
+                 
+                 float currentPulse = (float)Math.Sin(time * pulseSpeed); // -1 to 1
+                 float finalScaleMultiplier = baseScale + (currentPulse * pulseAmount); 
+                 
+                 // Also oscillate Alpha for extra "shine"
+                 float alpha = 0.7f + (currentPulse * 0.2f); // 0.5 to 0.9
+
+                 Globals.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+                 Globals.SpriteBatch.Draw(texture, position, sourceRectangle, Color.Lime * alpha, rotation, origin, scale * finalScaleMultiplier, spriteEffect, 1f);
+                 Globals.SpriteBatch.End();
+             }
             base.Draw();
         }
 

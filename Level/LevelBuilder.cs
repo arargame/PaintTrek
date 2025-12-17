@@ -82,204 +82,6 @@ namespace PaintTrek
             Logger.Log("[LevelBuilder] Initialized.");
         }
 
-        public void Update()
-        {
-            timer += Globals.GameTime.ElapsedGameTime.TotalSeconds;
-            Globals.XX = timer;
- 
-
-            for (int i = itemIndex; i < levelItems.Count; i++)
-            {
-                if (levelItems[i].Time > timer)
-                    break;
-                SpawnItem(levelItems[i]);
-                itemIndex++;
-            }
-
-            enemyAutomate.Update();
-            collectableObjectAutomate.Update();
-        }
-
-        public void AddItem(ItemType type)
-        {
-            LevelItem item = new LevelItem();
-            item.Type = type;
-            item.Time = timeCursor;
-            levelItems.Add(item);
-        }
-
-        private void SpawnItem(LevelItem levelItem)
-        {
-            if (levelItem.Type == ItemType.Eye)
-            {
-                Eye.GetEyes();
-            }
-            else if (levelItem.Type == ItemType.Cacao)
-            {
-                Cacao.GetCacaos();
-            }
-            else if (levelItem.Type == ItemType.Boss1)
-            {
-                Boss1.GetBoss1();
-            }
-            else if (levelItem.Type == ItemType.Boss2)
-            {
-                Boss2.GetBoss2();
-            }
-            else if (levelItem.Type == ItemType.Boss3)
-            {
-                Boss3.GetBoss3();
-            }
-            else if (levelItem.Type == ItemType.Boss4)
-            {
-                Boss4.GetBoss4();
-            }
-            else if (levelItem.Type == ItemType.Boss5)
-            {
-                Boss5.GetBoss5();
-            }
-            else if (levelItem.Type == ItemType.Boss6)
-            {
-                Boss6.GetBoss6();
-            }
-            else if (levelItem.Type == ItemType.Boss7)
-            {
-                Boss7.GetBoss7();
-            }
-            else if (levelItem.Type == ItemType.Boss8)
-            {
-                Boss8.GetBoss8();
-            }
-            else if (levelItem.Type == ItemType.Boss9)
-            {
-                Boss9.GetBoss9();
-            }
-            else if (levelItem.Type == ItemType.Boss10)
-            {
-                Boss10.GetBoss10();
-            }
-            else if (levelItem.Type == ItemType.MrBrain)
-            {
-                MRBrain.GetMRBrain();
-            }
-            else if (levelItem.Type == ItemType.MonsterFish)
-            {
-                MonsterFish.GetMonsterFish();
-            }
-            else if (levelItem.Type == ItemType.Diamond)
-            {
-                Diamond.GetDiamond();
-            }
-            else if (levelItem.Type == ItemType.Wrench)
-            {
-                Wrench.GetWrench();
-            }
-            else if (levelItem.Type == ItemType.RocketSupply)
-            {
-                RocketSupply.GetRocketSupply();
-            }
-            else if (levelItem.Type == ItemType.PixelSupply)
-            {
-                PixelSupply.GetPixelSupply();
-            }
-            else if(levelItem.Type==ItemType.WaveGunSupply)
-            {
-                WaveGunSupply.GetWaveGunSupply();
-            }
-            else if (levelItem.Type == ItemType.Bone)
-            {
-                Bone.GetBone();
-            }
-            else if (levelItem.Type == ItemType.Bristle)
-            {
-                Bristle.GetBristle();
-            }
-            else if (levelItem.Type == ItemType.Invader1)
-            {
-                Invader1.GetInvader1();
-            }
-            else if (levelItem.Type == ItemType.Invader2)
-            {
-                Invader2.GetInvader2();
-            }
-            else if (levelItem.Type == ItemType.Invader3)
-            {
-                Invader3.GetInvader3();
-            }
-            else if (levelItem.Type == ItemType.Comet)
-            {
-                Comet.GetComet();
-            }
-            else if (levelItem.Type == ItemType.BouncingFireCollection)
-            {
-                BouncingFireCollection.GetCollactableBouncingBall();
-            }
-            else if (levelItem.Type == ItemType.Astreoid)
-            {
-                Asteroid.GetAstreoid();
-            }
-            else if (levelItem.Type == ItemType.Bubble)
-            {
-                Bubble.GetBubble();
-            }
-            else if (levelItem.Type == ItemType.EnemyAutomate)
-            {
-                EnemyAutomate.Start();
-            }
-            else if (levelItem.Type == ItemType.CollectableObjectAutomate)
-            {
-                CollectableObjectAutomate.Start();
-            }
-            else if (levelItem.Type == ItemType.Squid)
-            {
-                JellyFish.GetSquid();
-            }
-            else if (levelItem.Type == ItemType.SharpCube)
-            {
-                SharpCube.GetSharpCube();
-            }
-            else if (levelItem.Type == ItemType.SpaceSnake)
-            {
-                SpaceSnake.GetSpaceSnake();
-            }
-            else if (levelItem.Type == ItemType.SnakeStone)
-            {
-                SnakeStone.GetSnakeStone();
-            }
-            else if (levelItem.Type == ItemType.RandomSupply)
-            {
-                RandomSupply.GetRandomSupply();
-            }
-            else if (levelItem.Type == ItemType.DiffusedFireSupply)
-            {
-                DiffusedFireSupply.GetDiffusedFireSupply();
-            }
-            else if (levelItem.Type == ItemType.TripleFireSupply)
-            {
-                TripleFireSupply.GetTripleFireSupply();
-            }
-            else if (levelItem.Type == ItemType.OrbitalFireSupply)
-            {
-                OrbitalFireSupply.GetOrbitalFireSupply();
-            }
-            else if (levelItem.Type == ItemType.Ufo1)
-            {
-                Ufo.GetUfo();
-            }
-
-            else if (levelItem.Type == ItemType.Ufo2)
-            {
-                Ufo2.GetUfo2();
-            }
-
-            else if (levelItem.Type == ItemType.ChildTrilobit)
-            {
-                ChildTrilobit.GetChildTrilobit();
-            }
-
-
-        }
-
         private void BuildLevel()
         {
             //===== GEÇİCİ TEST MODU -BOSS1 TESTİ =====
@@ -290,7 +92,16 @@ namespace PaintTrek
 
             //    // Boss1'i hemen spawn et
             //    timeCursor = 2; // 2 saniye sonra
-            //    AddItem(ItemType.Boss1);
+            //    AddItem(ItemType.Ufo1);
+            //    AddItem(ItemType.Ufo2);
+            //    AddItem(ItemType.MrBrain);
+            //    AddItem(ItemType.Diamond);
+            //    AddItem(ItemType.Diamond);
+            //    AddItem(ItemType.Diamond);
+            //    AddItem(ItemType.Diamond);
+            //    AddItem(ItemType.Diamond);
+            //    AddItem(ItemType.Diamond);
+            //    AddItem(ItemType.Wrench);
 
             //    Console.WriteLine($"[LevelBuilder] Test level built with {levelItems.Count} items");
             //    return; // Dosyadan okuma yapma
@@ -299,11 +110,11 @@ namespace PaintTrek
 
             string path = "Content/Levels/level" + Level.LevelCounter + ".txt";
             Console.WriteLine($"[LevelBuilder] Building level {Level.LevelCounter}");
-            
+
             FileSystem fs = new FileSystem(path);
 
             fs.ReadLevel();
-            
+
             Console.WriteLine($"[LevelBuilder] FileSystem loaded {fs.Amount.Count} items");
 
             for (int i = 0; i < fs.Amount.Count; i++)
@@ -619,6 +430,206 @@ namespace PaintTrek
 
             }
         }
+
+        public void Update()
+        {
+            timer += Globals.GameTime.ElapsedGameTime.TotalSeconds;
+            Globals.XX = timer;
+ 
+
+            for (int i = itemIndex; i < levelItems.Count; i++)
+            {
+                if (levelItems[i].Time > timer)
+                    break;
+                SpawnItem(levelItems[i]);
+                itemIndex++;
+            }
+
+            enemyAutomate.Update();
+            collectableObjectAutomate.Update();
+        }
+
+        public void AddItem(ItemType type)
+        {
+            LevelItem item = new LevelItem();
+            item.Type = type;
+            item.Time = timeCursor;
+            levelItems.Add(item);
+        }
+
+        private void SpawnItem(LevelItem levelItem)
+        {
+            if (levelItem.Type == ItemType.Eye)
+            {
+                Eye.GetEyes();
+            }
+            else if (levelItem.Type == ItemType.Cacao)
+            {
+                Cacao.GetCacaos();
+            }
+            else if (levelItem.Type == ItemType.Boss1)
+            {
+                Boss1.GetBoss1();
+            }
+            else if (levelItem.Type == ItemType.Boss2)
+            {
+                Boss2.GetBoss2();
+            }
+            else if (levelItem.Type == ItemType.Boss3)
+            {
+                Boss3.GetBoss3();
+            }
+            else if (levelItem.Type == ItemType.Boss4)
+            {
+                Boss4.GetBoss4();
+            }
+            else if (levelItem.Type == ItemType.Boss5)
+            {
+                Boss5.GetBoss5();
+            }
+            else if (levelItem.Type == ItemType.Boss6)
+            {
+                Boss6.GetBoss6();
+            }
+            else if (levelItem.Type == ItemType.Boss7)
+            {
+                Boss7.GetBoss7();
+            }
+            else if (levelItem.Type == ItemType.Boss8)
+            {
+                Boss8.GetBoss8();
+            }
+            else if (levelItem.Type == ItemType.Boss9)
+            {
+                Boss9.GetBoss9();
+            }
+            else if (levelItem.Type == ItemType.Boss10)
+            {
+                Boss10.GetBoss10();
+            }
+            else if (levelItem.Type == ItemType.MrBrain)
+            {
+                MRBrain.GetMRBrain();
+            }
+            else if (levelItem.Type == ItemType.MonsterFish)
+            {
+                MonsterFish.GetMonsterFish();
+            }
+            else if (levelItem.Type == ItemType.Diamond)
+            {
+                Diamond.GetDiamond();
+            }
+            else if (levelItem.Type == ItemType.Wrench)
+            {
+                Wrench.GetWrench();
+            }
+            else if (levelItem.Type == ItemType.RocketSupply)
+            {
+                RocketSupply.GetRocketSupply();
+            }
+            else if (levelItem.Type == ItemType.PixelSupply)
+            {
+                PixelSupply.GetPixelSupply();
+            }
+            else if(levelItem.Type==ItemType.WaveGunSupply)
+            {
+                WaveGunSupply.GetWaveGunSupply();
+            }
+            else if (levelItem.Type == ItemType.Bone)
+            {
+                Bone.GetBone();
+            }
+            else if (levelItem.Type == ItemType.Bristle)
+            {
+                Bristle.GetBristle();
+            }
+            else if (levelItem.Type == ItemType.Invader1)
+            {
+                Invader1.GetInvader1();
+            }
+            else if (levelItem.Type == ItemType.Invader2)
+            {
+                Invader2.GetInvader2();
+            }
+            else if (levelItem.Type == ItemType.Invader3)
+            {
+                Invader3.GetInvader3();
+            }
+            else if (levelItem.Type == ItemType.Comet)
+            {
+                Comet.GetComet();
+            }
+            else if (levelItem.Type == ItemType.BouncingFireCollection)
+            {
+                BouncingFireCollection.GetCollactableBouncingBall();
+            }
+            else if (levelItem.Type == ItemType.Astreoid)
+            {
+                Asteroid.GetAstreoid();
+            }
+            else if (levelItem.Type == ItemType.Bubble)
+            {
+                Bubble.GetBubble();
+            }
+            else if (levelItem.Type == ItemType.EnemyAutomate)
+            {
+                EnemyAutomate.Start();
+            }
+            else if (levelItem.Type == ItemType.CollectableObjectAutomate)
+            {
+                CollectableObjectAutomate.Start();
+            }
+            else if (levelItem.Type == ItemType.Squid)
+            {
+                JellyFish.GetSquid();
+            }
+            else if (levelItem.Type == ItemType.SharpCube)
+            {
+                SharpCube.GetSharpCube();
+            }
+            else if (levelItem.Type == ItemType.SpaceSnake)
+            {
+                SpaceSnake.GetSpaceSnake();
+            }
+            else if (levelItem.Type == ItemType.SnakeStone)
+            {
+                SnakeStone.GetSnakeStone();
+            }
+            else if (levelItem.Type == ItemType.RandomSupply)
+            {
+                RandomSupply.GetRandomSupply();
+            }
+            else if (levelItem.Type == ItemType.DiffusedFireSupply)
+            {
+                DiffusedFireSupply.GetDiffusedFireSupply();
+            }
+            else if (levelItem.Type == ItemType.TripleFireSupply)
+            {
+                TripleFireSupply.GetTripleFireSupply();
+            }
+            else if (levelItem.Type == ItemType.OrbitalFireSupply)
+            {
+                OrbitalFireSupply.GetOrbitalFireSupply();
+            }
+            else if (levelItem.Type == ItemType.Ufo1)
+            {
+                Ufo.GetUfo();
+            }
+
+            else if (levelItem.Type == ItemType.Ufo2)
+            {
+                Ufo2.GetUfo2();
+            }
+
+            else if (levelItem.Type == ItemType.ChildTrilobit)
+            {
+                ChildTrilobit.GetChildTrilobit();
+            }
+
+
+        }
+
+
 
     }
 }

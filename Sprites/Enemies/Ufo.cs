@@ -53,7 +53,10 @@ namespace PaintTrek
 
             fireTime += (float)Globals.GameTime.ElapsedGameTime.TotalSeconds;
 
-            if (fireTime > Globals.Random.Next(1, 3))
+            float fireThreshold = Globals.Random.Next(1, 3);
+            if (isPoisoned) fireThreshold *= 3.0f; 
+
+            if (fireTime > fireThreshold)
             {
                 fireTime = 0;
                 laser = new UfoLaser(this);
