@@ -181,6 +181,11 @@ namespace PaintTrek
                 level.Dispose();
             }
             
+            // Explicitly clear pools on exit to be safe
+            GunSystem.ClearList();
+            BulletPool.ClearAll();
+            SupplyPool.ClearAll();
+            
             UnloadContent();
             
             // Clear singleton instance

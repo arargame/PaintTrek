@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace PaintTrek
 {
-    abstract class Supply:CollectableObject
+    public abstract class Supply:CollectableObject
     {
         bool isIncreasing;
         double maxScale;
@@ -15,10 +15,16 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
             isIncreasing = false;
             maxScale = 1.5f;
             scale = Globals.Random.Next(1, 2);
             R = (float)(Globals.Random.Next(5, 8) / 10f);
+            SetVelocity();
         }
 
         public override void Update()

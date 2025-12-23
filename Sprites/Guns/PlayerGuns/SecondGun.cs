@@ -12,6 +12,9 @@ namespace PaintTrek
         bool isActive;
         Player owner;
 
+        // PERFORMANS: Gun type'ı cache'le
+        private Type gunType;
+
         public SecondGun(Player owner ) 
         {
             isActive = false;
@@ -22,6 +25,7 @@ namespace PaintTrek
         {
             this.gun = newGun;
             this.bullet = bullet;
+            this.gunType = newGun.GetType(); // Type'ı cache'le
             isActive = true;
         }
 
@@ -34,29 +38,31 @@ namespace PaintTrek
         public void Reload() 
         {
             bullet--;
-            if (gun is Rocket)
+            
+            // PERFORMANS: BulletPool kullanımı
+            if (gunType == typeof(Rocket))
             {
-                gun = new Rocket(owner);
+                gun = BulletPool.Get<Rocket>(owner);
             }
-            else if(gun is BouncingFire)
+            else if (gunType == typeof(BouncingFire))
             {
-                gun = new BouncingFire(owner);
+                gun = BulletPool.Get<BouncingFire>(owner);
             }
-            else if(gun is DiffusedPlayerFire)
+            else if (gunType == typeof(DiffusedPlayerFire))
             {
-                gun = new DiffusedPlayerFire(owner);
+                gun = BulletPool.Get<DiffusedPlayerFire>(owner);
             }
-            else if (gun is OrbitalFire)
+            else if (gunType == typeof(OrbitalFire))
             {
-                gun = new OrbitalFire(owner);
+                gun = BulletPool.Get<OrbitalFire>(owner);
             }
-            else if(gun is TripleFire)
+            else if (gunType == typeof(TripleFire))
             {
-                gun = new TripleFire(owner);
+                gun = BulletPool.Get<TripleFire>(owner);
             }
-            else if(gun is WaveGun)
+            else if (gunType == typeof(WaveGun))
             {
-                gun = new WaveGun(owner);
+                gun = BulletPool.Get<WaveGun>(owner);
             }
         }
 

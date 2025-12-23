@@ -46,7 +46,7 @@ namespace PaintTrek
         }
         internal static RocketSupply GetRocketSupply() 
         {
-            return new RocketSupply();
+            return SupplyPool.Get<RocketSupply>();
         }
     }
 }

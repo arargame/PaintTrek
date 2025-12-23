@@ -6,10 +6,26 @@ using Microsoft.Xna.Framework;
 
 namespace PaintTrek
 {
-    abstract class Bullet : Sprite
+    public abstract class Bullet : Sprite
     {
         bool isOut;
         public Sprite owner;
+
+        /// <summary>
+        /// Resets the bullet state for reuse (Object Pooling)
+        /// </summary>
+        public virtual void Reset(Sprite owner)
+        {
+            this.owner = owner;
+            // Initialize(); // REMOVED: Do NOT call Initialize as it adds to lists again
+            
+            // Manually reset state
+            visible = false;
+            alive = true;
+            isOut = false;
+            
+            SetStartingPosition();
+        }
 
         public override void Initialize()
         {

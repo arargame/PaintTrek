@@ -33,6 +33,9 @@ namespace PaintTrek
         {
             get
             {
+                // PERFORMANS: Sadece pixel-perfect collision gerekiyorsa çağrılmalı
+                // Her karede çağrılırsa performans düşer
+                if (!CollisionEnabled) return null;
                 return animation?.GetSpecificAreaColorArray();
             }
         }
@@ -120,6 +123,14 @@ namespace PaintTrek
 
         public virtual void Load()
         {
+            // Optimization: Don't reload if already loaded
+            if (texture != null && normalTexture != null)
+            {
+                // Ensure animation is reset if needed? 
+                // Mostly we just want to skip the expensive Content.Load and IO
+                return;
+            }
+
             normalTexture = Globals.Content.Load<Texture2D>("Sprites/Default/SmilemanTexture");
             texture = normalTexture;
             animation = new Animation(texture, 1, 1, 1, false);
@@ -148,10 +159,23 @@ namespace PaintTrek
                 animation.Update();
                 
                 Rotation();
-
+                
+                // Matrix calculation is now handled lazily in GetBoundingBox 
+                // or specific methods that need it. No need to check every frame here
+                // unless we heavily rely on transformMatrix being up to date for Draw()
+                // Update: Draw uses position/rotation/scale directly. 
+                // Collision uses GetBoundingBox.
+                
+                // Only update matrix if creating a bounding box or per-pixel check
                 if (position != lastPosition || rotation != lastRotation || scale != lastScale || origin != lastOrigin)
                 {
+                    // Mark dirty
+                    boundingBoxDirty = true;
+                    // CalculateTransformMatrix(); // Defer until needed? 
+                    // No, some systems might read transformMatrix directly. 
+                    // Let's keep it but ensure it's efficient.
                     CalculateTransformMatrix();
+                    
                     lastPosition = position;
                     lastRotation = rotation;
                     lastScale = scale;
@@ -173,6 +197,7 @@ namespace PaintTrek
         }
         public virtual void Draw()
         {
+            // Desktop requires self-batching as Game1 doesn't provide global batch
             Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.NonPremultiplied);
 
             if (alive && visible && !texture.IsDisposed)

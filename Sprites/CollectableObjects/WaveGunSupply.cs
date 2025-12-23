@@ -44,7 +44,7 @@ namespace PaintTrek
         }
         internal static WaveGunSupply GetWaveGunSupply() 
         {
-            return new WaveGunSupply();
+            return SupplyPool.Get<WaveGunSupply>();
         }
     }
 }

@@ -55,7 +55,7 @@ namespace PaintTrek
 
         internal static OrbitalFireSupply GetOrbitalFireSupply()
         {
-            return new OrbitalFireSupply();
+            return SupplyPool.Get<OrbitalFireSupply>();
         }
         
     }

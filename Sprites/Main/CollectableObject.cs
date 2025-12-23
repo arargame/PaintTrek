@@ -8,7 +8,7 @@ using PaintTrek.Shared.Statistics;
 
 namespace PaintTrek
 {
-    abstract class CollectableObject : Sprite
+    public abstract class CollectableObject : Sprite
     {
         Texture2D damageTexture; 
 
@@ -16,8 +16,15 @@ namespace PaintTrek
         {
             base.Initialize();
             CollectableObjectSystem.Add(this);
+            Reset();
+        }
+
+        public virtual void Reset()
+        {
             SetName("Collectable Object");
             visible = false;
+            alive = true;
+            SetStartingPosition();
         }
         public override void Load()
         {

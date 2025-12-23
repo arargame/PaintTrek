@@ -289,6 +289,10 @@ namespace PaintTrek
             BossSystem.ClearList();
             CollectableObjectSystem.ClearList();
             
+            // Clear pool systems
+            BulletPool.ClearAll();
+            SupplyPool.ClearAll();
+            
             // Clear drawable system
             DrawableSystem.Clear();
 
