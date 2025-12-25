@@ -61,16 +61,31 @@ namespace PaintTrek
                 velocity.X = (velocity.X * 1280) / 800;
         }
 
+        // PERFORMANS: Player cache - SpriteSystem'de arama yerine direkt erişim
+        private static Player cachedPlayer = null;
+
         public override void SimpleMovement(Vector2 amount)
         {
             Vector2 playerPosition = Vector2.Zero;
 
-            for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
+            // PERFORMANS: Player cache check
+            if (cachedPlayer == null || !cachedPlayer.alive)
             {
-                Player player = SpriteSystem.spriteList[i] as Player;
+                for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
+                {
+                    Player player = SpriteSystem.spriteList[i] as Player;
 
-                if (player != null)
-                    playerPosition = player.position;
+                    if (player != null)
+                    {
+                        cachedPlayer = player;
+                        break;
+                    }
+                }
+            }
+
+            if (cachedPlayer != null && cachedPlayer.alive)
+            {
+                 playerPosition = cachedPlayer.position;
             }
 
             if (playerPosition == Vector2.Zero)

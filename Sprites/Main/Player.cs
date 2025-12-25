@@ -207,7 +207,7 @@ namespace PaintTrek
             {
                 canFire = false;
                 timeUntilFire = TimeSpan.FromSeconds(0.2);
-                laser = new Laser(this);
+                laser = new Laser(this); // Reverted to new Laser(this) as requested by user
                 laser.Fire();
                 secondGun.Fire();
             }

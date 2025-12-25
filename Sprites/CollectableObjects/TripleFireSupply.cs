@@ -29,7 +29,7 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
-            SimpleMovement(velocity);
+            SimpleMovement(velocity); // Removed redundant call to fix double movement bug
         }
 
         public override void Draw()

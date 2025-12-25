@@ -18,6 +18,9 @@ namespace PaintTrek
         MovementStyle movementStyle;
         double timer;
         Vector2 targetPosition;
+        
+        // PERFORMANS: Static player cache
+        private static Player cachedPlayer = null;
 
         public ChildTrilobit()
         {
@@ -58,15 +61,25 @@ namespace PaintTrek
 
             if (movementStyle == MovementStyle.chasing)
             {
-
-                for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
+                // PERFORMANS: Player cache check
+                if (cachedPlayer == null || !cachedPlayer.alive)
                 {
-                    Player player = SpriteSystem.spriteList[i] as Player;
+                    for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
+                    {
+                        Player player = SpriteSystem.spriteList[i] as Player;
+                        if (player == null) continue;
+                        cachedPlayer = player;
+                        break;
+                    }
+                }
 
-                    if (player == null) continue;
-
-                    targetPosition = player.position;
-                    break;
+                if (cachedPlayer != null && cachedPlayer.alive)
+                {
+                    targetPosition = cachedPlayer.position;
+                }
+                else
+                {
+                    targetPosition = Vector2.Zero;
                 }
 
                 if (targetPosition != Vector2.Zero)

@@ -51,8 +51,8 @@ namespace PaintTrek
                 // Only reload if slot is empty (bullet fired/detached) or dead
                 if (bullets[i] == null || !bullets[i].alive)
                 {
-                    bullets[i] = BulletPool.Get<Laser>(owner);
-                    bullets[i].Reset(owner);
+                    bullets[i] = new Laser(owner);
+                    // bullets[i].Reset(owner); // Not needed for new instance
                     // visible should be FALSE until fired (Reset does this)
                 }
             }

@@ -51,7 +51,6 @@ namespace PaintTrek
         {
             base.Update();
             SimpleMovement(velocity);
-
             time += (float)Globals.GameTime.ElapsedGameTime.TotalSeconds;
 
 
@@ -100,7 +99,7 @@ namespace PaintTrek
             if (fireTime > Globals.Random.Next(2, 5))
             {
                 fireTime = 0;
-                gun = new Invader2Gun(this);
+                // gun = new Invader2Gun(this); // REMOVED: Allocation bug
                 if (canFire)
                 {
                     gun.Fire();

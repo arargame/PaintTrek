@@ -32,7 +32,6 @@ namespace PaintTrek
         {
             base.Update();
             SimpleMovement(velocity);
-
         }
 
         public override void Draw()

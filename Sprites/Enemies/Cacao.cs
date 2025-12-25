@@ -24,7 +24,7 @@ namespace PaintTrek
             base.Initialize();
             SetCharacterInfo("Cacao", 10, 10, 10);
             SetVelocity();
-            bullet = new BasicEnemyBullet(this);
+            bullet = BulletPool.Get<BasicEnemyBullet>(this);
             timeUntilFire = TimeSpan.FromSeconds(Globals.Random.NextDouble());
         }
 
@@ -39,7 +39,7 @@ namespace PaintTrek
             SimpleMovement(velocity);
 
             if (!bullet.alive)
-                bullet = new BasicEnemyBullet(this);
+                bullet = BulletPool.Get<BasicEnemyBullet>(this);
 
             fireTime += (float)Globals.GameTime.ElapsedGameTime.TotalSeconds;
 
@@ -48,7 +48,7 @@ namespace PaintTrek
                 fireTime = 0;
 
                 if(bullet==null)
-                bullet = new BasicEnemyBullet(this);
+                    bullet = BulletPool.Get<BasicEnemyBullet>(this);
 
                 if (canFire)
                 {

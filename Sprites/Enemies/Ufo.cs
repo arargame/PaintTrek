@@ -59,7 +59,8 @@ namespace PaintTrek
             if (fireTime > fireThreshold)
             {
                 fireTime = 0;
-                laser = new UfoLaser(this);
+                // laser = new UfoLaser(this); // REMOVED
+                laser = BulletPool.Get<UfoLaser>(this); // POOLING
                 if (canFire)
                 {
                     laser.Fire();

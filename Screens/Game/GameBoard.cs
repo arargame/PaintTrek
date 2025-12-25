@@ -220,5 +220,16 @@ namespace PaintTrek
 
         }
 
+        public void ResumeGame()
+        {
+            if (level != null)
+            {
+                level.Resume();
+            }
+            this.screenState = ScreenState.Active;
+            isGameActive = true;
+            Globals.ShowCursor = false;
+        }
+
     }
 }

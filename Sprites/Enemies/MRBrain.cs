@@ -98,7 +98,20 @@ namespace PaintTrek
                 fireTime = 0;
                 if (canFire)
                 {
-                    hearthBreaker = new HeartBreaker(this);
+                    // PERFORMANCE: Reuse existing HeartBreaker if dead, otherwise create new (or do nothing if active)
+                    if (hearthBreaker == null)
+                    {
+                        hearthBreaker = new HeartBreaker(this);
+                    }
+                    else if (!hearthBreaker.alive)
+                    {
+                         hearthBreaker.Initialize();
+                         hearthBreaker.alive = true;
+                         // Add back to systems if removed? usually handled by Initialize or specific method
+                         // For now assuming Initialize resets state and position relative to owner
+                         hearthBreaker.SetStartingPosition();
+                    }
+                    
                     canFire = false;
                 }
             }

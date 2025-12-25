@@ -125,6 +125,27 @@ namespace PaintTrek
             }
             else if (gameState == GameState.Active)
             {
+                // PERFORMANS: SpatialGrid'i her frame başında temizle ve populate et
+                SpatialGrid.Instance.Clear();
+                
+                // Enemy'leri spatial grid'e ekle (PlayerBullet collision için)
+                foreach (Enemy enemy in EnemySystem.enemyList)
+                {
+                    if (enemy != null && enemy.alive)
+                    {
+                        SpatialGrid.Instance.Add(enemy);
+                    }
+                }
+                
+                // PERFORMANS: PlayerBullet'leri de grid'e ekle (EnemyBullet collision için)
+                foreach (Sprite bullet in GunSystem.bulletList)
+                {
+                    if (bullet is PlayerBullet && bullet.alive)
+                    {
+                        SpatialGrid.Instance.Add(bullet);
+                    }
+                }
+
                 bgSystem.Update();
                 spriteSystem.Update();
                 levelBuilder.Update();
@@ -223,7 +244,14 @@ namespace PaintTrek
 
         public void Pause() 
         {
+            isPaused = true;
             levelSoundtrack.Pause();
+        }
+
+        public void Resume()
+        {
+            isPaused = false;
+            levelSoundtrack.Update(); // Force update to check Resume condition
         }
 
         private void OnExitReached()

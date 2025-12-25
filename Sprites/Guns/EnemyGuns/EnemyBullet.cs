@@ -75,12 +75,15 @@ namespace PaintTrek
 
         private void CollisionDetectionWithBubble()
         {
-            for (int i = 0; i < CollectableObjectSystem.collactableObjectList.Count; i++)
+            // OPTIMIZATION: Use cached activeBubbles list instead of full object list
+            // Reduces complexity from O(AllObjects) to O(ActiveBubbles)
+            
+            for (int i = 0; i < CollectableObjectSystem.activeBubbles.Count; i++)
             {
                 if (!visible) continue;
-                Bubble bubble = CollectableObjectSystem.collactableObjectList[i] as Bubble;
+                Bubble bubble = CollectableObjectSystem.activeBubbles[i];
 
-                if (bubble != null && bubble.GetOwner() != null)
+                if (bubble != null && bubble.GetOwner() != null && bubble.IsActive) // Ensure active
                 {
                     Rectangle rect1 = Sprite.CalculateBoundingRectangle(new Rectangle(0, 0, (int)size.X, (int)size.Y), transformMatrix);
                     Rectangle rect2 = Sprite.CalculateBoundingRectangle(new Rectangle(0, 0, (int)bubble.size.X, (int)bubble.size.Y), bubble.transformMatrix);
@@ -103,13 +106,18 @@ namespace PaintTrek
 
         private void CollisionDetectionWithPlayerBullet()
         {
-            for (int i = 0; i < GunSystem.bulletList.Count; i++)
+            // OPTIMIZATION: Use SpatialGrid for spatial partitioning collision check
+            // Reduces O(N*M) to O(N*k) where k is generally small
+            
+            var nearbyBullets = SpatialGrid.Instance.GetNearby<PlayerBullet>(this);
+            
+            foreach (var bullet in nearbyBullets)
             {
                 if (!visible) continue;
+                
+                PlayerBullet playerBullet = bullet as PlayerBullet; // Already filtered by GetNearby generic, but cast confirms
 
-                PlayerBullet playerBullet = GunSystem.bulletList[i] as PlayerBullet;
-
-                if (playerBullet != null && playerBullet.visible)
+                if (playerBullet != null && playerBullet.visible && playerBullet.alive) // Alive check important
                 {
                     Rectangle rect1 = Sprite.CalculateBoundingRectangle(new Rectangle(0, 0, (int)size.X, (int)size.Y), transformMatrix);
                     Rectangle rect2 = Sprite.CalculateBoundingRectangle(new Rectangle(0, 0, (int)playerBullet.size.X, (int)playerBullet.size.Y), playerBullet.transformMatrix);

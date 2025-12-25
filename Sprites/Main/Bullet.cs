@@ -66,8 +66,16 @@ namespace PaintTrek
             if (!alive)
             {
                 GunSystem.Remove(this);
-                SpriteSystem.Remove(this);
+                // SpriteSystem.Remove(this); // Handled by base.RemoveFromAllSystems() now
+                
+                visible = false;
             }
+        }
+        
+        protected override void RemoveFromAllSystems()
+        {
+             GunSystem.Remove(this);
+             base.RemoveFromAllSystems(); // Calls SpriteSystem.Remove(this)
         }
 
         public override void Draw()
@@ -98,6 +106,12 @@ namespace PaintTrek
                 this.visible = true;
                 position.X = this.owner.destinationRectangle.X+this.owner.animation.Width/2;
                 position.Y = this.owner.destinationRectangle.Y+this.owner.animation.Height/2;
+                
+                // IMPORTANT: Ensure bullet is in GunSystem (for pooled bullets)
+                if (!GunSystem.bulletList.Contains(this))
+                {
+                    GunSystem.Add(this);
+                }
             }
         }
 

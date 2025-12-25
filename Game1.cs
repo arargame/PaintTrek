@@ -417,7 +417,6 @@ namespace PaintTrek
                 new Vector2(position.X + Globals.GameFont.MeasureString(enemiesKey).X, currentY), valueColor);
             currentY += lineHeight;
             
-            // Bullets
             string bulletsKey = "Bullets: ";
             string bulletsValue = $"{GunSystem.bulletList.Count}";
             Globals.SpriteBatch.DrawString(Globals.GameFont, bulletsKey, 
@@ -425,6 +424,39 @@ namespace PaintTrek
             Globals.SpriteBatch.DrawString(Globals.GameFont, bulletsValue, 
                 new Vector2(position.X + Globals.GameFont.MeasureString(bulletsKey).X, currentY), valueColor);
             currentY += lineHeight;
+
+            // Pool Stats
+            string poolKey = "[BulletPool Stats]";
+            Globals.SpriteBatch.DrawString(Globals.GameFont, poolKey, 
+                 new Vector2(position.X, currentY), Color.Yellow);
+            currentY += lineHeight;
+            
+            // Draw BulletPool content
+            string poolStats = BulletPool.GetStats();
+            // Split by newlines to draw strictly
+             string[] poolLines = poolStats.Split('\n');
+             foreach (string line in poolLines)
+             {
+                 if (string.IsNullOrWhiteSpace(line) || line.Contains("[BulletPool Stats]")) continue;
+                 Globals.SpriteBatch.DrawString(Globals.GameFont, line, new Vector2(position.X, currentY), valueColor);
+                 currentY += lineHeight;
+             }
+            
+            // Supply Pool
+             string supplyPoolKey = "[SupplyPool Stats]";
+            Globals.SpriteBatch.DrawString(Globals.GameFont, supplyPoolKey, 
+                 new Vector2(position.X, currentY), Color.Yellow);
+             currentY += lineHeight;
+
+             // Draw SupplyPool content
+             string supplyStats = SupplyPool.GetStats();
+             string[] supplyLines = supplyStats.Split('\n');
+             foreach (string line in supplyLines)
+             {
+                 if (string.IsNullOrWhiteSpace(line) || line.Contains("[SupplyPool Stats]")) continue;
+                 Globals.SpriteBatch.DrawString(Globals.GameFont, line, new Vector2(position.X, currentY), valueColor);
+                 currentY += lineHeight;
+             }
             
             // Collectables
             string collectKey = "Collectables: ";

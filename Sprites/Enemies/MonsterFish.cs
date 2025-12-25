@@ -31,7 +31,7 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
-            SimpleMovement(velocity);
+            SimpleMovement(velocity); // Redundant, handled by base.Update()
         }
 
         public override void Draw()

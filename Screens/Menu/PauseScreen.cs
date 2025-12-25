@@ -108,7 +108,7 @@ namespace PaintTrek
         public override void MenuCancel(int selectedEntry)
         {
             base.MenuCancel(selectedEntry);
-            gameBoard.screenState = ScreenState.Active;
+            gameBoard.ResumeGame();
             ExitScreen();
         }
         public override void ExitScreen()

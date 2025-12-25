@@ -17,20 +17,28 @@ namespace PaintTrek
             Initialize();
         }
 
+        // PERFORMANS: Static player cache
+        private static Player cachedPlayer = null;
+
         public override void Initialize()
         {
             base.Initialize();
             SetCharacterInfo("HeartBreaker", 30, 30, 30);
 
-            for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
+            // PERFORMANS: Player cache check
+            if (cachedPlayer == null || !cachedPlayer.alive)
             {
-                Player player = SpriteSystem.spriteList[i] as Player;
-
-                if (player == null) continue;
-
-                targetPosition = player.position;
-                break;
+                for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
+                {
+                    Player player = SpriteSystem.spriteList[i] as Player;
+                    if (player == null) continue;
+                    cachedPlayer = player;
+                    break;
+                }
             }
+
+            if (cachedPlayer != null && cachedPlayer.alive) targetPosition = cachedPlayer.position;
+            else targetPosition = Vector2.Zero;
 
             SetVelocity();
         }

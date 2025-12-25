@@ -62,7 +62,7 @@ namespace PaintTrek
             if (fireTime > Globals.Random.Next(2, 6))
             {
                 fireTime = 0;
-                dls = new DiffusedLightSystem(this, 8, "StarFire", fireSpeed);
+                // dls = new DiffusedLightSystem(this, 8, "StarFire", fireSpeed); // REMOVED: Re-use existing system
                 if (canFire)
                 {
                     dls.Fire();

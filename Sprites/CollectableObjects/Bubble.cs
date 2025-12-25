@@ -11,7 +11,12 @@ namespace PaintTrek
     {
         Player owner;
 
-        public Bubble() 
+        public bool IsActive 
+        { 
+            get { return alive && owner != null; } 
+        }
+
+        public Bubble()  
         {
             Initialize();
         }

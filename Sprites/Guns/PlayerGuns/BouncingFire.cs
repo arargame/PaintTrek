@@ -17,10 +17,15 @@ namespace PaintTrek
             SetVelocity();
         }
 
+        // LIFECYCLE: Lifetime variable to prevent infinite existence
+        private double lifeTime;
+        private const double MAX_LIFETIME = 20.0; // 20 seconds lifetime
+
         public override void Initialize()
         {
             base.Initialize();
             SetCharacterInfo("Bouncing Ball", 500, 20, 10);
+            lifeTime = 0;
         }
 
         public override void Load()
@@ -32,7 +37,13 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
-
+            
+            // AUTOMATIC CLEANUP
+            lifeTime += Globals.GameTime.ElapsedGameTime.TotalSeconds;
+            if (lifeTime >= MAX_LIFETIME)
+            {
+                alive = false;
+            }
 
             if (position.X <= 0)
             {

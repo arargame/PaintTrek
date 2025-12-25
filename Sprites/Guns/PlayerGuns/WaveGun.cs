@@ -32,7 +32,17 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
-            scale += (float)Globals.GameTime.ElapsedGameTime.TotalSeconds;
+            // Scale limiti
+            if (scale < 3.0f)
+            {
+                scale += (float)Globals.GameTime.ElapsedGameTime.TotalSeconds;
+            }
+            
+            // Ekran dışı kontrolü
+            if (position.X > Globals.GameSize.X + 100)
+            {
+                alive = false;
+            }
         }
 
         public override void Draw()

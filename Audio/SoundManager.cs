@@ -66,8 +66,16 @@ namespace PaintTrek
                     // Müzik açıldı - eğer duraklıysa devam et
                     if (mediaState == Microsoft.Xna.Framework.Media.MediaState.Paused)
                     {
-                        Microsoft.Xna.Framework.Media.MediaPlayer.Resume();
-                        System.Diagnostics.Debug.WriteLine("[SoundManager] Music resumed");
+                        // FIXED: Don't resume music if the game itself is paused (e.g. Pause Menu)
+                        if (!Level.isPaused)
+                        {
+                            Microsoft.Xna.Framework.Media.MediaPlayer.Resume();
+                            System.Diagnostics.Debug.WriteLine("[SoundManager] Music resumed");
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("[SoundManager] Music enabled but kept paused (Game is Paused)");
+                        }
                     }
                     else if (mediaState == Microsoft.Xna.Framework.Media.MediaState.Stopped)
                     {

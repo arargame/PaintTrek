@@ -42,27 +42,27 @@ namespace PaintTrek
             // PERFORMANS: BulletPool kullanımı
             if (gunType == typeof(Rocket))
             {
-                gun = BulletPool.Get<Rocket>(owner);
+                gun = new Rocket(owner);
             }
             else if (gunType == typeof(BouncingFire))
             {
-                gun = BulletPool.Get<BouncingFire>(owner);
+                gun = new BouncingFire(owner);
             }
             else if (gunType == typeof(DiffusedPlayerFire))
             {
-                gun = BulletPool.Get<DiffusedPlayerFire>(owner);
+                gun = new DiffusedPlayerFire(owner);
             }
             else if (gunType == typeof(OrbitalFire))
             {
-                gun = BulletPool.Get<OrbitalFire>(owner);
+                gun = new OrbitalFire(owner);
             }
             else if (gunType == typeof(TripleFire))
             {
-                gun = BulletPool.Get<TripleFire>(owner);
+                gun = new TripleFire(owner);
             }
             else if (gunType == typeof(WaveGun))
             {
-                gun = BulletPool.Get<WaveGun>(owner);
+                gun = new WaveGun(owner);
             }
         }
 

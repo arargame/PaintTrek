@@ -248,8 +248,14 @@ namespace PaintTrek
 
             if (!alive)
             {
-                SpriteSystem.Remove(this);
+                RemoveFromAllSystems();
             }
+        }
+
+        // Added virtual method to allow overriding by Bullet (for pooling optimization)
+        protected virtual void RemoveFromAllSystems()
+        {
+             SpriteSystem.Remove(this);
         }
 
         public void SetCharacterInfo(string name, double health, double damage, int point)

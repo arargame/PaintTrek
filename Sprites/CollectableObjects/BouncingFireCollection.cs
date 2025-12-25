@@ -72,10 +72,6 @@ namespace PaintTrek
         public override void Draw()
         {
             base.Draw();
-           // Vector2 measure = Globals.GameFont.MeasureString(((int)time).ToString());
-            Globals.SpriteBatch.Begin();
-           // Globals.SpriteBatch.DrawString(Globals.GameFont, ((int)time).ToString(), new Vector2(position.X, position.Y), Color.Black);
-            Globals.SpriteBatch.End();
         }
         public override void SetVelocity()
         {

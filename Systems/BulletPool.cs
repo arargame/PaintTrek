@@ -32,11 +32,7 @@ namespace PaintTrek
             {
                 Bullet bullet = pool[i];
 
-                //if (bullet is not PlayerBullet)
-                //    continue;
-
                 if (!bullet.alive && !bullet.visible)
-                //if (!bullet.alive)
                 {
                     // Reuse this bullet
                     bullet.Reset(owner);

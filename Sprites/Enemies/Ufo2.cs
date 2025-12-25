@@ -24,7 +24,7 @@ namespace PaintTrek
             base.Initialize();
             SetVelocity();
             SetCharacterInfo("Ufo 2", 50, 20, 10);
-            ufoFire = new Ufo2Fire(this);
+            // ufoFire = new Ufo2Fire(this);
             timeUntilFire = TimeSpan.FromSeconds(Globals.Random.NextDouble());
         }
 
@@ -38,8 +38,8 @@ namespace PaintTrek
         {
             base.Update();
 
-            if (!ufoFire.alive)
-                ufoFire = new Ufo2Fire(this);
+            // if (!ufoFire.alive)
+            //    ufoFire = new Ufo2Fire(this);
 
             fireTime += (float)Globals.GameTime.ElapsedGameTime.TotalSeconds;
 
@@ -49,7 +49,8 @@ namespace PaintTrek
             if (fireTime > fireThreshold)
             {
                 fireTime = 0;
-                ufoFire = new Ufo2Fire(this);
+                // ufoFire = new Ufo2Fire(this); // REMOVED
+                ufoFire = BulletPool.Get<Ufo2Fire>(this); // POOLING
                 if (canFire)
                 {
                     ufoFire.Fire();
