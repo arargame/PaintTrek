@@ -78,12 +78,15 @@ namespace PaintTrek
                     clickableArea.Update();
                     
                     // Mouse hover logic for selection
-                    if (clickableArea.IsOverlapped)
-                    {
-                        IsSelected = true;
-                    }
+                    // Removed automatic IsSelected assignment to prevent conflict with keyboard
+                    // The parent screen will check IsHovered and update IsSelected accordingly.
                 }
             }
+        }
+
+        public bool IsHovered
+        {
+            get { return !IsLocked && clickableArea != null && clickableArea.IsOverlapped; }
         }
 
         public void Draw()

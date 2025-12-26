@@ -196,6 +196,7 @@ namespace PaintTrek
                 case 3:
                     enemies.Add(new SampleEnemy(new MonsterFish()));
                     enemies.Add(new SampleEnemy(new MRBrain()));
+                    enemies.Add(new SampleEnemy(new HeartBreaker(new MRBrain())));
                     enemies.Add(new SampleEnemy(new Bone()));
                     enemies.Add(new SampleEnemy(new Boss3()));
         

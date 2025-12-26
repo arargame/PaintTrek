@@ -23,9 +23,12 @@ namespace PaintTrek
         private TimeSpan lastInputTime = TimeSpan.Zero;
 
 
+        private MouseState lastMouseState;
+
         public ContinueScreen()
         {
             Initialize();
+            lastMouseState = Mouse.GetState();
         }
 
         public override void Initialize()
@@ -108,16 +111,23 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
-            
+
+            MouseState currentMouseState = Mouse.GetState();
+            bool isMouseMoving = (currentMouseState.X != lastMouseState.X || currentMouseState.Y != lastMouseState.Y);
+
             foreach (var card in levelCards)
             {
                 card.Update();
                 
                 // Mouse/Touch interaction support from LevelCard
-                if (card.IsSelected && !card.IsLocked && IsMouseMoving()) 
+                if (isMouseMoving && card.IsHovered) 
                 {
                     // If mouse moved and hovered this card, update selected index
-                    selectedCardIndex = levelCards.IndexOf(card);
+                    if (selectedCardIndex != levelCards.IndexOf(card))
+                    {
+                        selectedCardIndex = levelCards.IndexOf(card);
+                        UpdateSelection();
+                    }
                 }
                 
                 if (card.IsClicked)
@@ -125,16 +135,14 @@ namespace PaintTrek
                     LoadLevel(card.LevelNumber);
                 }
             }
+            
+            lastMouseState = currentMouseState;
         }
         
-        private bool IsMouseMoving()
-        {
-             // Simple check if mouse moved significantly or is active
-             // For now assume if card.IsSelected becomes true via Mouse Hover (in LevelCard), we sync index.
-             // LevelCard sets IsSelected = true on hover.
-             // But we need to de-select others.
-             return true;
-        }
+        // Helper no longer needed as logic is inline, but keeping signature if referenced elsewhere (it was private so safe to remove, but I replaced the whole block covering it).
+        // I will just omit it since I covered lines up to 137 which included IsMouseMoving method body.
+        // Wait, IsMouseMoving signature was 130-137. I should simply not include it in replacement if I want to delete it, or include a dummy if I must.
+        // My EndLine is 137, so I am wiping IsMouseMoving. Good.
 
         public override void Draw()
         {

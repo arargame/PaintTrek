@@ -82,6 +82,11 @@ namespace PaintTrek
                 alive = false;
             }
 
+            if (movementStyle != MovementStyle.Starting && isPoisoned)
+            {
+                velocity *= 0.5f;
+            }
+
             FireSettings();
         }
 

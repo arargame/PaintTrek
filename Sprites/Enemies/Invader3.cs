@@ -74,6 +74,11 @@ namespace PaintTrek
             }
 
 
+            if (movementStyle != MovementStyle.Starting && isPoisoned)
+            {
+                velocity *= 0.5f;
+            }
+
             if (!this.destinationRectangle.Intersects(Globals.GameRect) && movementStyle != MovementStyle.Starting)
             {
                 alive = false;

@@ -48,6 +48,7 @@ namespace PaintTrek
             d++;
             float angle = (float)Math.Sin(d * MathHelper.Pi / 180);
             velocity.Y = ((float)Math.Sin(angle)) * 2;
+            if (isPoisoned) velocity.Y *= 0.5f;
 
             FireSettings();
             Rotate(degree);

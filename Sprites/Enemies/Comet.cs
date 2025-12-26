@@ -54,7 +54,7 @@ namespace PaintTrek
             {
                 CalculateVelocity();
                 
-                double angle = Math.Atan2(velocity.Y, velocity.X); // Angle follows velocity
+                double angle = Math.Atan2(-velocity.Y, -velocity.X); // Angle follows velocity
                 rotation = (float)angle;
             }
         }
@@ -76,7 +76,9 @@ namespace PaintTrek
         private void CalculateVelocity()
         {
              Vector2 direction = Vector2.Normalize(targetPosition - this.position);
-             velocity = direction * speed;
+             float currentSpeed = speed;
+             if (isPoisoned) currentSpeed *= 0.5f;
+             velocity = direction * currentSpeed;
         }
 
         public override void Draw()
