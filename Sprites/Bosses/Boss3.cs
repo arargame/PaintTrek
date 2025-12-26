@@ -116,11 +116,11 @@ namespace PaintTrek
                 timeToVacuum--;
                 if (0 < timeToVacuum && timeToVacuum < 11)
                 {
-                    SetTexture(texture, 6, 1, 15 + (11 - (int)timeToVacuum), true);
+                    SetTexture(GlobalTexture.boss3Texture, 6, 1, 15 + (11 - (int)timeToVacuum), true);
                 }
                 else
                 {
-                    SetTexture(texture, 6, 1, 10, true);
+                    SetTexture(GlobalTexture.boss3Texture, 6, 1, 10, true);
                 }
 
                 if (timeToVacuum <= 0)

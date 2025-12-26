@@ -51,10 +51,11 @@ namespace PaintTrek
 
         public static void AddExplosion(Sprite sprite)
         {
-
-            Animation animation = new Animation(GlobalTexture.explosionTexture, 12, 1, 10, false);
-            expoInfos.Add(sprite, animation);
-
+            if (!expoInfos.ContainsKey(sprite))
+            {
+                Animation animation = new Animation(GlobalTexture.explosionTexture, 12, 1, 10, false);
+                expoInfos.Add(sprite, animation);
+            }
         }
 
         public void AddBossExplosion(Boss b) 

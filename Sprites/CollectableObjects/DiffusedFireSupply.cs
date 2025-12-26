@@ -38,7 +38,7 @@ namespace PaintTrek
         }
         internal static DiffusedFireSupply GetDiffusedFireSupply()
         {
-            return new DiffusedFireSupply();
+            return SupplyPool.Get<DiffusedFireSupply>();
         }
     }
 }

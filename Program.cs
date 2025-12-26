@@ -24,6 +24,7 @@ namespace PaintTrek
                 args.SetObserved();
             };
 
+            // Global Exception Handler Wrapper
             try
             {
                 using var game = new PaintTrek.Game1();
@@ -43,7 +44,9 @@ namespace PaintTrek
                 string crashInfo = $"--------------------------------------------------\n" +
                                    $"Crash Date: {DateTime.Now}\n" +
                                    $"Source: {source}\n" +
-                                   $"Exception: {ex.Message}\n" +
+                                   $"Exception: {ex.GetType().Name}\n" +
+                                   $"Message: {ex.Message}\n" +
+                                   $"Source: {ex.Source}\n" +
                                    $"Stack Trace: {ex.StackTrace}\n";
 
                 if (ex.InnerException != null)
@@ -57,7 +60,7 @@ namespace PaintTrek
                 try
                 {
                     string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    string logPath = Path.Combine(docPath, "PaintTrek_CrashLog.txt");
+                    string logPath = Path.Combine(docPath, "PaintTrek_ErrorLog.txt");
                     File.AppendAllText(logPath, crashInfo);
                 }
                 catch { }
@@ -70,7 +73,9 @@ namespace PaintTrek
                     string logPath = Path.Combine(localFolder, "crash_store.log");
                     File.AppendAllText(logPath, crashInfo);
                 }
-                catch { }
+                catch { 
+                
+                }
             }
             catch
             {

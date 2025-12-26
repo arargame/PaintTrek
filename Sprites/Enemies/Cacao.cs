@@ -9,7 +9,6 @@ namespace PaintTrek
 {
     class Cacao : Enemy
     {
-        BasicEnemyBullet bullet;
         float fireTime;
         TimeSpan timeUntilFire;
         bool canFire = false;
@@ -24,7 +23,6 @@ namespace PaintTrek
             base.Initialize();
             SetCharacterInfo("Cacao", 10, 10, 10);
             SetVelocity();
-            bullet = BulletPool.Get<BasicEnemyBullet>(this);
             timeUntilFire = TimeSpan.FromSeconds(Globals.Random.NextDouble());
         }
 
@@ -38,28 +36,15 @@ namespace PaintTrek
             base.Update();
             SimpleMovement(velocity);
 
-            if (!bullet.alive)
-                bullet = BulletPool.Get<BasicEnemyBullet>(this);
-
             fireTime += (float)Globals.GameTime.ElapsedGameTime.TotalSeconds;
 
             if (fireTime > Globals.Random.Next(2, 5))
             {
                 fireTime = 0;
-
-                if(bullet==null)
-                    bullet = BulletPool.Get<BasicEnemyBullet>(this);
-
-                if (canFire)
-                {
-                    bullet.Fire();
-                    canFire = false;
-                }
+                var bullet = BulletPool.Get<BasicEnemyBullet>(this);
+                // Bullet is auto-fired by Get->Reset logic, but we can ensure it
+                // bullet.Fire(); // Already called/setup in Reset effectively
             }
-
-            timeUntilFire = TimeSpan.FromSeconds(timeUntilFire.TotalSeconds - Globals.GameTime.ElapsedGameTime.TotalSeconds);
-            if (timeUntilFire.TotalSeconds <= 0)
-                canFire = true;
         }
 
         public override void Draw()

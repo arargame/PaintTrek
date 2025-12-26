@@ -10,6 +10,7 @@ namespace PaintTrek
     {
         bool isOut;
         public Sprite owner;
+        double invisibleTime;
 
         /// <summary>
         /// Resets the bullet state for reuse (Object Pooling)
@@ -19,10 +20,16 @@ namespace PaintTrek
             this.owner = owner;
             // Initialize(); // REMOVED: Do NOT call Initialize as it adds to lists again
             
+            // CRITICAL FIX: Re-add to systems because RemoveFromAllSystems removed them!
+            // Without this, the bullet is "Alive" but receives no Update() calls, causing it to freeze.
+            if (!GunSystem.bulletList.Contains(this)) GunSystem.Add(this);
+            if (!SpriteSystem.spriteList.Contains(this)) SpriteSystem.Add(this);
+            
             // Manually reset state
             visible = false;
             alive = true;
             isOut = false;
+            invisibleTime = 0;
             
             SetStartingPosition();
         }
@@ -48,6 +55,14 @@ namespace PaintTrek
             {
                 alive = false;
             }
+            
+            // STRICT SAFETY CHECK: Force kill if way off screen
+            // Reduced buffer to 10 to catch bullets stuck just outside (e.g. 1283)
+            if (position.X < -50 || position.X > Globals.GameSize.X + 10 || 
+                position.Y < -50 || position.Y > Globals.GameSize.Y + 10)
+            {
+                alive = false;
+            }
 
             if (visible)
             {
@@ -62,12 +77,27 @@ namespace PaintTrek
                 }
                 else isOut = true;
             }
+            else
+            {
+                // ZOMBIE BULLET CHECK:
+                // If alive but not visible for too long, kill it.
+                // Increased to 5.0s to allow Cacao aiming time
+                invisibleTime += Globals.GameTime.ElapsedGameTime.TotalSeconds;
+                if (invisibleTime > 5.0)
+                {
+                   alive = false;
+                   GunSystem.Remove(this); // Ensure removal
+                   return;
+                }
+            }
 
             if (!alive)
             {
-                GunSystem.Remove(this);
-                // SpriteSystem.Remove(this); // Handled by base.RemoveFromAllSystems() now
+                // RemoveFromAllSystems(); // Already called by base or logic? 
+                // Wait, logic says 'if (!alive)'. 
+                // Desktop code usually removes here.
                 
+                RemoveFromAllSystems();
                 visible = false;
             }
         }

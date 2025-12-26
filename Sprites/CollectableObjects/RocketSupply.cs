@@ -11,15 +11,18 @@ namespace PaintTrek
     {
         public RocketSupply() 
         {
+            System.Diagnostics.Debug.WriteLine("[RocketSupply] Constructor started");
             Initialize();
-            
+            System.Diagnostics.Debug.WriteLine("[RocketSupply] Constructor finished");
         }
 
         public override void Initialize()
         {
-            base.Initialize();
+            System.Diagnostics.Debug.WriteLine("[RocketSupply] Initialize started");
+            base.Initialize(); // Calls CollectableObject.Initialize -> Add -> Reset
             SetCharacterInfo("Rocket Supply", 10, 0, 10);
             SetVelocity();
+            System.Diagnostics.Debug.WriteLine("[RocketSupply] Initialize finished");
         }
 
         public override void Load()

@@ -10,47 +10,36 @@ namespace PaintTrek
     class Comet : Enemy
     {
         Vector2 targetPosition;
+        float speed;
+
         public Comet()
         {
             Initialize();
         }
 
-        // PERFORMANS: Static player cache
-        private static Player cachedPlayer = null;
-
         public override void Initialize()
         {
             base.Initialize();
             SetCharacterInfo("Comet", 20, 20, 10);
-            SetVelocity();
-
-            // PERFORMANS: Player cache check
-            if (cachedPlayer == null || !cachedPlayer.alive)
-            {
-                for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
-                {
-                    Player player = SpriteSystem.spriteList[i] as Player;
-                    if (player == null) continue;
-                    cachedPlayer = player;
-                    break;
-                }
-            }
-            if (cachedPlayer != null && cachedPlayer.alive) targetPosition = cachedPlayer.position;
-            else targetPosition = Vector2.Zero;
-
-
+            
+            // Random speed once
+            speed = Globals.Random.Next(4, 7);
+            
+            // Initial target search
+            FindTarget();
+            
             if (targetPosition != Vector2.Zero)
             {
-                Vector2 direction = Vector2.Normalize(this.position - targetPosition);
-                velocity = (-1) * direction * Globals.Random.Next(5, 7);
-                double angle = Math.Atan2(-velocity.Y, -velocity.X);
-                rotation = (float)angle;
+                CalculateVelocity();
+            }
+            else
+            {
+                velocity = new Vector2(-speed, 0); // Default left
             }
         }
 
         public override void Load()
         {
-
             SetTexture(GlobalTexture.cometTexture, 4, 2, 16, true);
         }
 
@@ -59,27 +48,35 @@ namespace PaintTrek
             base.Update();
             SimpleMovement(velocity);
 
-            // PERFORMANS: Player cache check
-            if (cachedPlayer == null || !cachedPlayer.alive)
+            FindTarget();
+            
+            if (targetPosition != Vector2.Zero)
             {
-                for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
+                CalculateVelocity();
+                
+                double angle = Math.Atan2(velocity.Y, velocity.X); // Angle follows velocity
+                rotation = (float)angle;
+            }
+        }
+        
+        private void FindTarget()
+        {
+            targetPosition = Vector2.Zero;
+            for (int i = 0; i < SpriteSystem.spriteList.Count; i++)
+            {
+                Player player = SpriteSystem.spriteList[i] as Player;
+                if (player != null && player.alive)
                 {
-                    Player player = SpriteSystem.spriteList[i] as Player;
-                     if (player == null) continue;
-                    cachedPlayer = player;
+                    targetPosition = player.position;
                     break;
                 }
             }
-            if (cachedPlayer != null && cachedPlayer.alive) targetPosition = cachedPlayer.position;
-            else targetPosition = Vector2.Zero;
-
-            if (targetPosition != Vector2.Zero)
-            {
-                Vector2 direction = Vector2.Normalize(this.position - targetPosition);
-                velocity = (-1) * direction * Globals.Random.Next(3, 5);
-                double angle = Math.Atan2(-velocity.Y, -velocity.X);
-                rotation = (float)angle;
-            }
+        }
+        
+        private void CalculateVelocity()
+        {
+             Vector2 direction = Vector2.Normalize(targetPosition - this.position);
+             velocity = direction * speed;
         }
 
         public override void Draw()
@@ -89,7 +86,7 @@ namespace PaintTrek
 
         public override void SetVelocity()
         {
-            velocity = new Vector2(-1, -1);
+             // Handled in Initialize/Update
         }
 
         internal static Comet GetComet()

@@ -55,5 +55,12 @@ namespace PaintTrek
         {
             base.Fire();
         }
+
+        public override void Reset(Sprite owner)
+        {
+            base.Reset(owner);
+            SetCharacterInfo("Boss 7 Bullet", 10, 10, 10);
+            SetVelocity();
+        }
     }
 }

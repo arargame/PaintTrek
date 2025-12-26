@@ -78,7 +78,7 @@ namespace PaintTrek
             int height = (int)Globals.GameSize.Y;
 
             Globals.GameRect = new Rectangle(0, 0, width, height);
-            leftAreaRectofScreen = new Rectangle(-width, -height, width - 100, height * 3);
+            leftAreaRectofScreen = new Rectangle(-width, -height, width, height * 3); // Removed -100 gap
             rightAreaofScreen = new Rectangle(width, -height, width, height * 3);
             topAreaofScreen = new Rectangle(0, -height, width, height);
             bottomAreaofScreen = new Rectangle(0, height, width, height);

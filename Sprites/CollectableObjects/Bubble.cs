@@ -56,6 +56,11 @@ namespace PaintTrek
             {
                 color.A = 64;
             }
+
+            if (GetHealth() <= 0)
+            {
+                RemoveFromAllSystems(); // Or Kill() but explicit cleanup is safer
+            }
         }
         public override void Draw()
         {
@@ -85,7 +90,14 @@ namespace PaintTrek
             return new Bubble();
         }
 
-        public void CollisionDetectionWithEnemies() 
+        public override void TakeDamage(Sprite another)
+        {
+            // OVERRIDE: Do NOT swap to damageTexture (avoid invisibility bug)
+            isTakingDamage = true;
+            SetHealth(another.GetDamage());
+        }
+
+        public void CollisionDetectionWithEnemies()
         {
             Rectangle rect1 = Sprite.CalculateBoundingRectangle(new Rectangle(0, 0, (int)size.X, (int)size.Y), transformMatrix);
 

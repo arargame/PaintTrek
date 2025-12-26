@@ -97,5 +97,19 @@ namespace PaintTrek
             isTakingDamage = true;
             SetHealth(-10.0);
         }
+
+        public override void Kill()
+        {
+            // Bosses should not die just by touching the screen edge
+            if (this.destinationRectangle.Intersects(Globals.GameRect))
+            {
+               // Still inside game
+            }
+            // Only kill if WAY off screen (optional safety)
+             if (position.X < -500 || position.Y < -500 || position.X > Globals.GameSize.X + 500)
+             {
+                 base.Kill(); // Or just alive = false
+             }
+        }
     }
 }

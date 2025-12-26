@@ -129,7 +129,9 @@ namespace PaintTrek
             {
                 float width = Globals.GameSize.X;
                 float height = Globals.GameSize.Y - animation.Height;
-                position = new Vector2(Globals.Random.Next((int)width, (int)(width + width / 3)), Globals.Random.Next(0, (int)height));
+                int maxY = (int)height;
+                if (maxY <= 0) maxY = 1;
+                position = new Vector2(Globals.Random.Next((int)width, (int)(width + width / 3)), Globals.Random.Next(0, maxY));
                 position.X = MathHelper.Clamp(position.X, width, width + width / 3);
                 position.Y = MathHelper.Clamp(position.Y, 0, height);
             }
@@ -143,7 +145,10 @@ namespace PaintTrek
                     {
                         float width = Globals.GameSize.X;
                         float height = Globals.GameSize.Y - size.Y;
-                        position = new Vector2(Globals.Random.Next((int)width, (int)(width + width / 3)), Globals.Random.Next(0, (int)height));
+                        int maxY = (int)height;
+                        if (maxY <= 0) maxY = 1;
+                        
+                        position = new Vector2(Globals.Random.Next((int)width, (int)(width + width / 3)), Globals.Random.Next(0, maxY));
                         position.X = MathHelper.Clamp(position.X, width, width + width / 3);
                         position.Y = MathHelper.Clamp(position.Y, 0, height);
 

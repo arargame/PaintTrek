@@ -54,6 +54,14 @@ namespace PaintTrek
             }
         }
 
+        public override void Reset(Sprite owner)
+        {
+            base.Reset(owner);
+            SetCharacterInfo("Boss Fire 1", 50, 20, 20);
+            scale = Globals.Random.Next(1, 2);
+            SetVelocity();
+        }
+
         public override void SetStartingPosition()
         {
             base.SetStartingPosition();

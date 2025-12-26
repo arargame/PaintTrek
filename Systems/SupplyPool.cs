@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace PaintTrek
 {
@@ -44,9 +45,10 @@ namespace PaintTrek
             }
             
             // No inactive supply found, create a new one
+            System.Diagnostics.Debug.WriteLine($"[SupplyPool] Creating new instance of {type.Name}...");
             T newSupply = new T();
             pool.Add(newSupply);
-            //System.Diagnostics.Debug.WriteLine($"[SupplyPool] Created new {type.Name} (Pool size: {pool.Count})");
+            System.Diagnostics.Debug.WriteLine($"[SupplyPool] Created new {type.Name} (Pool size: {pool.Count})");
             return newSupply;
         }
         
@@ -73,7 +75,8 @@ namespace PaintTrek
         /// </summary>
         public static string GetStats()
         {
-            string stats = "[SupplyPool Stats]\n";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("[SupplyPool Stats]");
             foreach (var kvp in pools)
             {
                 int total = kvp.Value.Count;
@@ -88,9 +91,25 @@ namespace PaintTrek
                         inactive++;
                 }
                 
-                stats += $"{kvp.Key.Name}: Total={total}, Active={active}, Inactive={inactive}\n";
+                sb.AppendLine($"{kvp.Key.Name}: Total={total}, Active={active}, Inactive={inactive}");
+
+                // DEBUG: Show first 3 active supplies to find leaks
+                int shown = 0;
+                foreach (var supply in kvp.Value)
+                {
+                    if ((supply.alive || supply.visible) && shown < 3)
+                    {
+                        sb.AppendLine($"   -> [Active] Pos:({supply.position.X:F0},{supply.position.Y:F0}) Vel:({supply.velocity.X:F1},{supply.velocity.Y:F1}) Rect:{supply.destinationRectangle} Vis:{supply.visible} Alive:{supply.alive}");
+                        shown++;
+                    }
+                }
+                
+                if (active > 0 && shown == 0)
+                {
+                     sb.AppendLine("   -> [WARNING] Active count > 0 but no details found! (Possible race condition)");
+                }
             }
-            return stats;
+            return sb.ToString();
         }
     }
 }

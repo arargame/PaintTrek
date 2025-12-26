@@ -41,11 +41,15 @@ namespace PaintTrek
         {
             // MediaPlayerSystem is for music, check MusicsEnabled
             if (Globals.MusicsEnabled && MediaPlayer.GameHasControl)
+            {
+                MediaPlayer.Volume = 0.85f; // User Request: Lower music volume by 15% (to 0.85) on Desktop
+
                 for (int i = 0; i < songList.Count; i++)
                 {
-                    if(i==activeSongIndex)
-                    MediaPlayer.Play(songList[i]);   
+                    if (i == activeSongIndex)
+                        MediaPlayer.Play(songList[i]);
                 }
+            }
         }
 
         public int GetSongCount() 

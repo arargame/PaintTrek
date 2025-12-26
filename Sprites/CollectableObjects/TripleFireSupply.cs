@@ -44,7 +44,7 @@ namespace PaintTrek
 
         internal static TripleFireSupply GetTripleFireSupply()
         {
-            return new TripleFireSupply();
+            return SupplyPool.Get<TripleFireSupply>();
         }
     }
 }

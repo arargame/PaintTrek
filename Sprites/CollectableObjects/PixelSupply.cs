@@ -51,7 +51,7 @@ namespace PaintTrek
 
         internal static PixelSupply GetPixelSupply() 
         {
-            return new PixelSupply();
+            return SupplyPool.Get<PixelSupply>();
         }
 
     }

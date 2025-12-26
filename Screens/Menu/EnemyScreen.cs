@@ -13,6 +13,10 @@ namespace PaintTrek
         int counter;
 
         List<SampleEnemy> enemies;
+        
+        // Static cache for performance
+        private static List<SampleEnemy> cachedEnemies = null;
+        private static int cachedMaxLevel = -1;
 
         BackButton backButton;
         TextButton previousButton;
@@ -141,11 +145,15 @@ namespace PaintTrek
 
         public override void ExitScreen()
         {
-            // Dispose sample enemies to prevent memory leak
-            if (enemies != null)
-            {
-                enemies.Clear();
-            }
+            // NOT: enemies.Clear() yapma - cache'i bozar!
+            // Cache static olduğu için temizlemeye gerek yok
+            
+            // Temizlik yap - sprite listeleri temizle
+            SpriteSystem.ClearList();
+            EnemySystem.ClearList();
+            GunSystem.ClearList();
+            BossSystem.ClearList();
+            CollectableObjectSystem.ClearList();
             
             base.ExitScreen();
         }
@@ -190,6 +198,7 @@ namespace PaintTrek
                     enemies.Add(new SampleEnemy(new MRBrain()));
                     enemies.Add(new SampleEnemy(new Bone()));
                     enemies.Add(new SampleEnemy(new Boss3()));
+        
                     if (c < maxLevel)
                     {
                         c++;
@@ -269,6 +278,10 @@ namespace PaintTrek
                 default:
                     break;
             }
+
+            // Update cache
+            cachedEnemies = enemies;
+            cachedMaxLevel = maxLevel;
 
             return enemies;
         }

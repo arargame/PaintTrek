@@ -35,7 +35,7 @@ namespace PaintTrek
             velocity.Y = ((float)Math.Sin(angle)) * 2;
             //velocity.Y = ((float)Math.Tan(angle))*2;
 
-            // SimpleMovement(velocity); // Redundant, handled by base.Update()
+            SimpleMovement(velocity); // Required for movement
             base.Update();
         }
 

@@ -145,7 +145,16 @@ namespace PaintTrek
         }
         public override void SetStartingPosition()
         {
-            position = new Vector2((float)(Globals.GameSize.X / 2 - size.X / 2), (float)Globals.Random.Next((int)(-Globals.GameSize.Y / 2), (int)(-size.Y)));
+            int minVal = (int)(-Globals.GameSize.Y / 2);
+            int maxVal = (int)(-size.Y);
+            
+            // Safety check: ensure min < max
+            if (minVal >= maxVal)
+            {
+                minVal = maxVal - 1; 
+            }
+            
+            position = new Vector2((float)(Globals.GameSize.X / 2 - size.X / 2), (float)Globals.Random.Next(minVal, maxVal));
         }
 
         internal static Invader1 GetInvader1()

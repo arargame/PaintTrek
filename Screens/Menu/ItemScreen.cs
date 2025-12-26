@@ -153,6 +153,13 @@ namespace PaintTrek
 
         public override void ExitScreen()
         {
+            // Temizlik yap - sprite listeleri temizle
+            SpriteSystem.ClearList();
+            EnemySystem.ClearList();
+            GunSystem.ClearList();
+            BossSystem.ClearList();
+            CollectableObjectSystem.ClearList();
+            
             base.ExitScreen();
         }
         public override void MenuCancel(int selectedEntry)
@@ -182,71 +189,82 @@ namespace PaintTrek
 
             Item blueDiamond = new Item();
             blueDiamond.name = "Blue Diamond";
-            blueDiamond.texture = Globals.Content.Load<Texture2D>("CollectableObjects/blueDiamond");
+            blueDiamond.texture = GlobalTexture.blueDiamondTexture;
             blueDiamond.info = "Gives Speedy Attack \n      (+%60 Attaack Speed,+%0-150 Damage).";
             items.Add(blueDiamond);
 
             Item redDiamond = new Item();
             redDiamond.name = "Red Diamond";
-            redDiamond.texture = Globals.Content.Load<Texture2D>("CollectableObjects/redDiamond");
+            redDiamond.texture = GlobalTexture.redDiamondTexture;
             redDiamond.info = "Gives Power Attack \n    (+% 250-400 Damage).";
             items.Add(redDiamond);
 
             Item greenDiamond = new Item();
             greenDiamond.name = "Green Diamond";
-            greenDiamond.texture = Globals.Content.Load<Texture2D>("CollectableObjects/greenDiamond");
+            greenDiamond.texture = GlobalTexture.greenDiamondTexture;
             greenDiamond.info = "Gives Poison Attack \n     (%50 Slow Enemy Speed).";
             items.Add(greenDiamond);
 
             Item blackDiamond = new Item();
             blackDiamond.name = "Black Diamond";
-            blackDiamond.texture = Globals.Content.Load<Texture2D>("CollectableObjects/blackDiamond");
+            blackDiamond.texture = GlobalTexture.blackDiamondTexture;
             blackDiamond.info = "Gives Critical Attack \n       (+%33 Attack Speed,+%500-1000 Damage).";
             items.Add(blackDiamond);
 
             Item bubble = new Item();
             bubble.name = "Bubble";
-            bubble.texture = Globals.Content.Load<Texture2D>("CollectableObjects/bubble");
+            bubble.texture = GlobalTexture.bubbleTexture;
             bubble.info = "Gives Damage Block \n        (+50 Armor).";
             items.Add(bubble);
 
             Item wrench = new Item();
             wrench.name = "Wrench";
-            wrench.texture = Globals.Content.Load<Texture2D>("CollectableObjects/wrenchSpriteSheet");
+            wrench.texture = GlobalTexture.wrenchTexture;
             wrench.info = "Gives +20 HP.";
             items.Add(wrench);
 
             Item bouncingBall = new Item();
             bouncingBall.name = "Bouncing Ball";
-            bouncingBall.texture = Globals.Content.Load<Texture2D>("CollectableObjects/bouncingBallSupply");
+            bouncingBall.texture = GlobalTexture.bouncingFireCollectionTexture;
             bouncingBall.info = "Gives a bouncing fire \n       which has 500 HP and 20 damage.";
             items.Add(bouncingBall);
 
             Item diffusedFireSupply = new Item();
             diffusedFireSupply.name = "Diffused Fire Supply";
-            diffusedFireSupply.texture = Globals.Content.Load<Texture2D>("CollectableObjects/diffusedFireSupply");
+            diffusedFireSupply.texture = GlobalTexture.diffusedFireSupplyTexture;
             diffusedFireSupply.info = "Gives a diffused fire gun\n       which can shoot 8 bullet each time.";
             items.Add(diffusedFireSupply);
 
 
             Item rocketSupply = new Item();
             rocketSupply.name = "Rocket Supply";
-            rocketSupply.texture = Globals.Content.Load<Texture2D>("CollectableObjects/rocketSupply");
+            rocketSupply.texture = GlobalTexture.rocketSupplyTexture;
             rocketSupply.info = "Gives a guided rocket gun.\n";
             items.Add(rocketSupply);
 
             Item pixelSupply = new Item();
             pixelSupply.name = "Pixel Supply";
-            pixelSupply.texture = Globals.Content.Load<Texture2D>("CollectableObjects/pixelSupply");
+            pixelSupply.texture = GlobalTexture.pixelSupplyTexture;
             pixelSupply.info = "Gives an ability to be in pixelated mode.\n ";
             items.Add(pixelSupply);
 
             Item orbitalFireSupply = new Item();
             orbitalFireSupply.name = "Orbital Fire Supply";
-            orbitalFireSupply.texture = Globals.Content.Load<Texture2D>("CollectableObjects/orbitalFireSupply");
+            orbitalFireSupply.texture = GlobalTexture.orbitalFireSupplyTexture;
             orbitalFireSupply.info = "Gives orbital fire which moves around your ship\n ";
             items.Add(orbitalFireSupply);
 
+            Item tripleFireSupply = new Item();
+            tripleFireSupply.name = "Triple Fire Supply";
+            tripleFireSupply.texture = GlobalTexture.tripleFireSupplyTexture;
+            tripleFireSupply.info = "Gives a triple fire gun\n       which shoots 3 bullets at once.";
+            items.Add(tripleFireSupply);
+
+            Item waveGunSupply = new Item();
+            waveGunSupply.name = "Wave Gun Supply";
+            waveGunSupply.texture = GlobalTexture.waveGunSupplyTexture;
+            waveGunSupply.info = "Gives a wave gun\n       which shoots waves of energy.";
+            items.Add(waveGunSupply);
 
             return items;
         }

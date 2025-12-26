@@ -71,7 +71,7 @@ namespace PaintTrek
         /// </summary>
         public static string GetStats()
         {
-            string stats = "[BulletPool Stats]\n";
+            string stats = $"[BulletPool Stats] (GameSize: {Globals.GameSize.X}x{Globals.GameSize.Y})\n";
             foreach (var kvp in pools)
             {
                 int total = kvp.Value.Count;
@@ -87,6 +87,20 @@ namespace PaintTrek
                 }
                 
                 stats += $"{kvp.Key.Name}: Total={total}, Active={active}, Inactive={inactive}\n";
+                
+                // DEBUG: Show first 3 active bullets to find leaks
+                int shown = 0;
+                foreach (var bullet in kvp.Value)
+                {
+                    if ((bullet.alive || bullet.visible) && shown < 3)
+                    {
+                        stats += $"   -> [Active Sample] Pos:({bullet.position.X:F1}, {bullet.position.Y:F1}) " +
+                                 $"Vel:({bullet.velocity.X:F1}, {bullet.velocity.Y:F1}) " +
+                                 $"Rect:{bullet.destinationRectangle} " +
+                                 $"Vis:{bullet.visible} Alive:{bullet.alive}\n";
+                        shown++;
+                    }
+                }
             }
             return stats;
         }

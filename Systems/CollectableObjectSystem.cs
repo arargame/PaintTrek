@@ -23,6 +23,7 @@ namespace PaintTrek
         }
         public static void Add(CollectableObject o)
         {
+            // System.Diagnostics.Debug.WriteLine($"[CollectableObjectSystem] Adding {o.GetType().Name}");
             CollectableObjectSystem.collactableObjectList.Add(o);
             
             // Add to cache if Bubble

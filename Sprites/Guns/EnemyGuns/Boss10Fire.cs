@@ -55,5 +55,12 @@ namespace PaintTrek
             base.TakeDamage(another);
             Level.AddScore(this.GetPoint());
         }
+
+        public override void Reset(Sprite owner)
+        {
+            base.Reset(owner);
+            SetCharacterInfo("Boss 10 Fire", 50, 25, 10);
+            SetVelocity();
+        }
     }
 }

@@ -92,7 +92,15 @@ namespace PaintTrek
 
         public override void SetStartingPosition()
         {
-            position = new Vector2((float)Globals.Random.Next((int)(size.X / 2), (int)(Globals.GameSize.X - size.X / 2)), (float)Globals.Random.Next((int)(-Globals.GameSize.Y / 2), (int)(-size.Y)));
+            int minValX = (int)(size.X / 2);
+            int maxValX = (int)(Globals.GameSize.X - size.X / 2);
+            if (minValX >= maxValX) maxValX = minValX + 1;
+
+            int minValY = (int)(-Globals.GameSize.Y / 2);
+            int maxValY = (int)(-size.Y);
+            if (minValY >= maxValY) minValY = maxValY - 1;
+
+            position = new Vector2((float)Globals.Random.Next(minValX, maxValX), (float)Globals.Random.Next(minValY, maxValY));
         }
 
         private void RandomMovement()

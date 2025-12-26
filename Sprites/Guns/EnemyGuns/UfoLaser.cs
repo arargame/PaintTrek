@@ -58,5 +58,12 @@ namespace PaintTrek
         {
             base.Fire();
         }
+
+        public override void Reset(Sprite owner)
+        {
+            base.Reset(owner);
+            SetCharacterInfo("Ufo Laser", 10, 10, 10);
+            SetVelocity();
+        }
     }
 }

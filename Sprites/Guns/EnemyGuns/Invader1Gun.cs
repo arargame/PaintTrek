@@ -50,5 +50,12 @@ namespace PaintTrek
             base.TakeDamage(another);
             Level.AddScore(this.GetPoint());
         }
+
+        public override void Reset(Sprite owner)
+        {
+            base.Reset(owner);
+            SetCharacterInfo("Invader 1 Bullet", 10, 10, 10);
+            SetVelocity();
+        }
     }
 }
