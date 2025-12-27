@@ -140,20 +140,20 @@ namespace PaintTrek
 
                 int number = Globals.Random.Next(0, 100);
 
-                if (number <= 33)
+                if (number <= 50)
                 {
                     movementStyle = MovementStyle.Left;
                     //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Boss/snakeStoneSpriteSheetLeft"));
                     SetTexture(GlobalTexture.snakeStoneLeftTexture, 1, 3, 3, true);
                 }
-                else if (number > 33 && number <= 66)
+                else if (number > 50 && number <= 75)
                 {
                     movementStyle = MovementStyle.Up;
                     //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Boss/snakeStoneSpriteSheetUp"));
                     SetTexture(GlobalTexture.snakeStoneUpTexture, 3, 1, 3, true);
 
                 }
-                else if (number > 66)
+                else if (number > 75)
                 {
                     movementStyle = MovementStyle.Down;
                     //SetTextures(Globals.Content.Load<Texture2D>("Sprites/Boss/snakeStoneSpriteSheetDown"));
