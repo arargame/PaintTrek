@@ -92,16 +92,16 @@ namespace PaintTrek
 
             //    // Boss1'i hemen spawn et
             //    timeCursor = 2; // 2 saniye sonra
-            //    AddItem(ItemType.Ufo1);
-            //    AddItem(ItemType.Ufo2);
-            //    AddItem(ItemType.MrBrain);
-            //    AddItem(ItemType.Diamond);
-            //    AddItem(ItemType.Diamond);
-            //    AddItem(ItemType.Diamond);
-            //    AddItem(ItemType.Diamond);
-            //    AddItem(ItemType.Diamond);
-            //    AddItem(ItemType.Diamond);
-            //    AddItem(ItemType.Wrench);
+            //    AddItem(ItemType.Boss9);
+            //    //AddItem(ItemType.Ufo2);
+            //    //AddItem(ItemType.MrBrain);
+            //    //AddItem(ItemType.Diamond);
+            //    //AddItem(ItemType.Diamond);
+            //    //AddItem(ItemType.Diamond);
+            //    //AddItem(ItemType.Diamond);
+            //    //AddItem(ItemType.Diamond);
+            //    //AddItem(ItemType.Diamond);
+            //    //AddItem(ItemType.Wrench);
 
             //    Console.WriteLine($"[LevelBuilder] Test level built with {levelItems.Count} items");
             //    return; // Dosyadan okuma yapma

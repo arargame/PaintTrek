@@ -23,8 +23,10 @@ namespace PaintTrek
         InfoString infoString;
         List<SnakeStone> pieces;
 
-        int divisionTime;
 
+
+        int divisionTime;
+        int currentMoveInterval = 3;
         int counter;
 
         List<Vector2> steps;
@@ -47,7 +49,8 @@ namespace PaintTrek
             FetchStartingHealth(GetHealth());
             SetVelocity();
             movementStyle = MovementStyle.Starting;
-            time = new Time(3);
+            currentMoveInterval = 3;
+            time = new Time(currentMoveInterval);
             time.Activate();
 
             divisionTime = 15;
@@ -132,7 +135,7 @@ namespace PaintTrek
                 infoString.GetInfo("+" + 10 + " HP", this.position);
             }
 
-            if (time.GetCounter() == 3)
+            if (time.GetCounter() >= 3)
             {
                 divisionTime -= 3;
                 time = new Time(3);

@@ -99,7 +99,7 @@ namespace PaintTrek
             }
             if (movementStyle == MovementStyle.Down)
             {
-                if (position.Y >= Globals.GameSize.Y)
+                if (position.Y >= Globals.GameSize.Y - size.Y)
                 {
                     velocity = Vector2.Zero;
                     movementStyle = MovementStyle.Up;

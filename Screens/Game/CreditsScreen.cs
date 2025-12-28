@@ -10,6 +10,7 @@ namespace PaintTrek
     class CreditsScreen:GameScreen
     {
         List<string> credits = new List<string>();
+        DroppingLightSystem droppingLightSystem;
         List<string> keyLabels = new List<string>();
 
         public CreditsScreen() 
@@ -29,6 +30,8 @@ namespace PaintTrek
             screenTitle = "Credits Screen";
             Globals.Window.Title = screenTitle;
             
+            droppingLightSystem = new DroppingLightSystem();
+
             backButton = new BackButton("Back", this, true);
         }
 
@@ -40,6 +43,7 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
+            droppingLightSystem.Update();
         }
 
         public override void Draw()
@@ -49,8 +53,11 @@ namespace PaintTrek
 
             Globals.Graphics.GraphicsDevice.Clear(Color.Black);
 
+            droppingLightSystem.Draw();
+
             Globals.SpriteBatch.Begin();
             
+
             // Draw "Programming and Graphics :" in Beige
             Globals.SpriteBatch.DrawString(Globals.GameFont, "Programming and Graphics :", position, Color.Beige, 0, origin, 1f, SpriteEffects.None, 0);
             position.Y += Globals.GameFont.LineSpacing;

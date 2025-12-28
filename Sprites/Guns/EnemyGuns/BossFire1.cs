@@ -47,7 +47,7 @@ namespace PaintTrek
 
         public override void SetVelocity()
         {
-            velocity = new Vector2((-1) * Globals.Random.Next(7, 10), Globals.Random.Next(-2, 2));
+            velocity = new Vector2((-1) * Globals.Random.Next(7, 10), Globals.Random.Next(-3, 4));
             if (Globals.Graphics.IsFullScreen)
             {
                 velocity = new Vector2((velocity.X * 1280) / 800, (velocity.Y * 800) / 600);
