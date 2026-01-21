@@ -17,17 +17,25 @@ namespace PaintTrek
             Initialize();
             fileSystem = new FileSystem("game.save");
 
-            AddEntry(new MenuEntry("New Game",true,0));
-
             int[] array = fileSystem.LoadFile();
-            if (array != null || array.Length == 4) 
+            
+            bool continueActive = false;
+            // Check if save data exists and player passed level 1
+            if (array != null && array.Length >= 3) 
             {
-                if(array[2]<=1)
-                    AddEntry(new MenuEntry("Continue", false, 1));
-                else AddEntry(new MenuEntry("Continue", true, 1));
+                if(array[2] > 1)
+                    continueActive = true;
             }
-            else 
-            AddEntry(new MenuEntry("Continue", false, 1));
+
+            if (!continueActive)
+            {
+                AddEntry(new MenuEntry("New Game", true, 0));
+            }
+
+            if (continueActive)
+                AddEntry(new MenuEntry("Continue", true, 1));
+            else
+                AddEntry(new MenuEntry("Continue", false, 1));
             
 
 
@@ -89,10 +97,16 @@ namespace PaintTrek
                     ScreenManager.AddScreen(GameBoard.CreateNewGame());
                     break;
                 case 1:
-                    if (MenuEntries[selectedEntry].Enabled) 
+                    var continueEntry = MenuEntries.FirstOrDefault(e => e.entryNumber == 1);
+                    if (continueEntry != null && continueEntry.Enabled) 
                     {
                         ExitScreen();
                         ScreenManager.AddScreen(new ContinueScreen());
+                    }
+                    else if (continueEntry == null)
+                    { 
+                         // Fallback or defensive check
+                         System.Diagnostics.Debug.WriteLine("[MainMenu] Continue entry not found!");
                     }
                     break;
                 case 2:

@@ -122,22 +122,22 @@ namespace PaintTrek
 
             if(inputState.Cancel)
             {
-                MenuCancel(SelectedEntry);
+                MenuCancel(menuEntries[SelectedEntry].entryNumber);
             }
 
             if (inputState.MenuSelect)
             {
-                MenuSelect(SelectedEntry);
+                MenuSelect(menuEntries[SelectedEntry].entryNumber);
             }
 
             if (inputState.MenuLeft) 
             {
-                MenuLeft(SelectedEntry);
+                MenuLeft(menuEntries[SelectedEntry].entryNumber);
             }
 
             if(inputState.MenuRight)
             {
-                MenuRight(SelectedEntry);
+                MenuRight(menuEntries[SelectedEntry].entryNumber);
             }
 
             if(inputState.MenuUp)
@@ -170,10 +170,10 @@ namespace PaintTrek
 
                     if (menuEntries[i].clickableArea.IsOverlapped)
                     {
-                        if (selectedEntry != menuEntries[i].entryNumber)
+                        if (selectedEntry != i)
                             SoundManager.Play("menu-click");
 
-                        selectedEntry = menuEntries[i].entryNumber;
+                        selectedEntry = i;
                     }
                 }
             }
