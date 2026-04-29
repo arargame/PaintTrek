@@ -54,7 +54,7 @@ namespace PaintTrek
                 else
                 {
                     // Music enabled - play or resume
-                    if (levelSong.GetState().ToString() == "Stopped")
+                    if (levelSong.GetState().ToString() == "Stopped" && !Level.isPaused)
                         levelSong.Play();
                     else if (levelSong.GetState().ToString() == "Paused" && !Level.isPaused)
                         levelSong.Resume();

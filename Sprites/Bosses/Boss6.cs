@@ -31,7 +31,7 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
-            SetCharacterInfo("Boss 6", 2000, 15, 6000);
+            SetCharacterInfo("Boss 6", 2500, 15, 6000);
             FetchStartingHealth(GetHealth());
             SetVelocity();
             speedVariation = 2f;

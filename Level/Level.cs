@@ -60,8 +60,8 @@ namespace PaintTrek
             Initialize();
             Load();
             
-            // Start statistics session
-            StatisticsManager.Instance.StartSession(LevelCounter);
+            // İstatistikleri başlat
+            StatisticsManager.Instance.StartSession(LevelCounter, GameSettings.Instance.PlayerId);
         }
 
         ~Level() 

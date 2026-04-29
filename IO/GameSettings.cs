@@ -13,6 +13,7 @@ namespace PaintTrek
         public int MaxLevel { get; set; }
         public int MaxScore { get; set; }
         public int[] LevelScores { get; set; }
+        public Guid PlayerId { get; set; } = Guid.Empty;
         
         public bool SoundEffectsEnabled { get; set; }
         public bool MusicEnabled { get; set; }
@@ -30,6 +31,7 @@ namespace PaintTrek
             MaxLevel = 1;
             MaxScore = 0;
             LevelScores = new int[10];
+            PlayerId = Guid.Empty;
             
             SoundEffectsEnabled = true;
             MusicEnabled = true;
@@ -82,8 +84,9 @@ namespace PaintTrek
                 if (!File.Exists(filePath))
                 {
                     System.Diagnostics.Debug.WriteLine("[GameSettings] ⚠️ Save file not found, using defaults");
-                    System.Diagnostics.Debug.WriteLine($"[GameSettings] Expected location: {filePath}");
-                    isDirty = false;
+                    PlayerId = Guid.NewGuid(); // New player, new ID
+                    isDirty = true;
+                    Save(); // Save it immediately to lock the ID
                     return;
                 }
                 
@@ -97,16 +100,10 @@ namespace PaintTrek
                 MaxLevel = reader.ReadInt32();
                 MaxScore = reader.ReadInt32();
                 
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] Progress: Score={CurrentScore}, Level={CurrentLevel}, MaxLevel={MaxLevel}");
-                
                 for (int i = 0; i < 10; i++)
                 {
                     try { LevelScores[i] = reader.ReadInt32(); }
-                    catch (Exception ex) 
-                    { 
-                        LevelScores[i] = 0;
-                        System.Diagnostics.Debug.WriteLine($"[GameSettings] ⚠️ Error reading LevelScores[{i}]: {ex.Message}");
-                    }
+                    catch { LevelScores[i] = 0; }
                 }
                 
                 try
@@ -116,22 +113,37 @@ namespace PaintTrek
                     MenuSoundsEnabled = reader.ReadBoolean();
                     AutoAttack = reader.ReadBoolean();
                     IsFullScreen = reader.ReadBoolean();
-                    
-                    System.Diagnostics.Debug.WriteLine($"[GameSettings] Settings: Sound={SoundEffectsEnabled}, Music={MusicEnabled}, Menu={MenuSoundsEnabled}, AutoAttack={AutoAttack}, FullScreen={IsFullScreen}");
                 }
-                catch (Exception ex)
+                catch { }
+
+                // MIGRATION: Try to read PlayerId at the end of the file
+                try
                 {
-                    System.Diagnostics.Debug.WriteLine($"[GameSettings] ⚠️ Error reading settings (using defaults): {ex.Message}");
+                    if (stream.Position < stream.Length)
+                    {
+                        string idStr = reader.ReadString();
+                        if (Guid.TryParse(idStr, out Guid parsedId))
+                        {
+                            PlayerId = parsedId;
+                        }
+                    }
+                }
+                catch { }
+
+                // If still empty after migration attempt, generate new one
+                if (PlayerId == Guid.Empty)
+                {
+                    PlayerId = Guid.NewGuid();
+                    isDirty = true; // Mark as dirty to save it later
                 }
                 
                 isDirty = false;
                 sw.Stop();
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] ✅ Loaded successfully in {sw.ElapsedMilliseconds}ms");
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] ✅ Loaded successfully. PlayerId: {PlayerId}");
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[GameSettings] ❌ Load error: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] Stack trace: {ex.StackTrace}");
             }
             finally
             {
@@ -142,30 +154,20 @@ namespace PaintTrek
         
         public void Save()
         {
-            // Always save when explicitly called (removed isDirty check for debugging)
-            if (!isDirty)
-            {
-                System.Diagnostics.Debug.WriteLine("[GameSettings] ⚠️ Save called but not dirty - saving anyway for safety");
-            }
-            
             System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
             Stream stream = null;
             BinaryWriter writer = null;
             
             try
             {
-                // Use standard file system
                 string localFolder = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "PaintTrek");
                 
-                // Ensure directory exists
                 if (!Directory.Exists(localFolder))
                     Directory.CreateDirectory(localFolder);
                 
                 string filePath = Path.Combine(localFolder, "game.save");
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] Saving to: {filePath}");
-                
                 stream = File.Create(filePath);
                 writer = new BinaryWriter(stream);
                 
@@ -182,17 +184,18 @@ namespace PaintTrek
                 writer.Write(MenuSoundsEnabled);
                 writer.Write(AutoAttack);
                 writer.Write(IsFullScreen);
-                
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] Data: Score={CurrentScore}, Level={CurrentLevel}, Sound={SoundEffectsEnabled}, Music={MusicEnabled}, AutoAttack={AutoAttack}, FullScreen={IsFullScreen}");
+
+                // Append PlayerId at the end
+                if (PlayerId == Guid.Empty) PlayerId = Guid.NewGuid();
+                writer.Write(PlayerId.ToString());
                 
                 isDirty = false;
                 sw.Stop();
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] ✅ Saved successfully in {sw.ElapsedMilliseconds}ms");
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] ✅ Saved successfully. PlayerId: {PlayerId}");
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[GameSettings] ❌ Save error: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"[GameSettings] Stack trace: {ex.StackTrace}");
             }
             finally
             {
