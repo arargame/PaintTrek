@@ -14,6 +14,7 @@ namespace PaintTrek
         List<string> keyLabels = new List<string>();
 
         TextButton xButton;
+        TextButton fbButton;
         TextButton ytButton;
         TextButton ttButton;
 
@@ -40,15 +41,20 @@ namespace PaintTrek
 
             // Social Media Buttons - Center Bottom
             float buttonsY = 620;
-            float startX = (Globals.GameSize.X - 540) / 2; // (1280 - 540) / 2 = 370
+            float spacing = 170;
+            float totalW = spacing * 3 + 120; // estimate width
+            float startX = (Globals.GameSize.X - totalW) / 2;
             
             xButton = new TextButton("X (Twitter)", new Vector2(startX, buttonsY));
             xButton.SetOwnerScreen(this);
+
+            fbButton = new TextButton("Facebook", new Vector2(startX + spacing, buttonsY));
+            fbButton.SetOwnerScreen(this);
             
-            ytButton = new TextButton("YouTube", new Vector2(startX + 190, buttonsY));
+            ytButton = new TextButton("YouTube", new Vector2(startX + spacing * 2, buttonsY));
             ytButton.SetOwnerScreen(this);
             
-            ttButton = new TextButton("TikTok", new Vector2(startX + 380, buttonsY));
+            ttButton = new TextButton("TikTok", new Vector2(startX + spacing * 3, buttonsY));
             ttButton.SetOwnerScreen(this);
         }
 
@@ -63,6 +69,7 @@ namespace PaintTrek
             droppingLightSystem.Update();
 
             if (xButton != null) xButton.Update();
+            if (fbButton != null) fbButton.Update();
             if (ytButton != null) ytButton.Update();
             if (ttButton != null) ttButton.Update();
         }
@@ -102,6 +109,7 @@ namespace PaintTrek
             Globals.SpriteBatch.End();
 
             if (xButton != null) xButton.Draw();
+            if (fbButton != null) fbButton.Draw();
             if (ytButton != null) ytButton.Draw();
             if (ttButton != null) ttButton.Draw();
 
@@ -121,6 +129,18 @@ namespace PaintTrek
                 Android.App.Application.Context.StartActivity(intent);
 #else
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://x.com/arargamesstudio") { UseShellExecute = true });
+#endif
+            }
+
+            if (fbButton != null && fbButton.IsClicked)
+            {
+#if ANDROID
+                var uri = Android.Net.Uri.Parse("https://www.facebook.com/arargamesstudio");
+                var intent = new Android.Content.Intent(Android.Content.Intent.ActionView, uri);
+                intent.AddFlags(Android.Content.ActivityFlags.NewTask);
+                Android.App.Application.Context.StartActivity(intent);
+#else
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://www.facebook.com/arargamesstudio") { UseShellExecute = true });
 #endif
             }
 
