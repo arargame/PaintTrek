@@ -122,40 +122,43 @@ namespace PaintTrek
 
             if(inputState.Cancel)
             {
-                MenuCancel(menuEntries[SelectedEntry].entryNumber);
+                MenuCancel(menuEntries.Count > 0 ? menuEntries[SelectedEntry].entryNumber : -1);
             }
 
-            if (inputState.MenuSelect)
+            if (menuEntries.Count > 0)
             {
-                MenuSelect(menuEntries[SelectedEntry].entryNumber);
-            }
+                if (inputState.MenuSelect)
+                {
+                    MenuSelect(menuEntries[SelectedEntry].entryNumber);
+                }
 
-            if (inputState.MenuLeft) 
-            {
-                MenuLeft(menuEntries[SelectedEntry].entryNumber);
-            }
+                if (inputState.MenuLeft) 
+                {
+                    MenuLeft(menuEntries[SelectedEntry].entryNumber);
+                }
 
-            if(inputState.MenuRight)
-            {
-                MenuRight(menuEntries[SelectedEntry].entryNumber);
-            }
+                if(inputState.MenuRight)
+                {
+                    MenuRight(menuEntries[SelectedEntry].entryNumber);
+                }
 
-            if(inputState.MenuUp)
-            {
-                selectedEntry--;
+                if(inputState.MenuUp)
+                {
+                    selectedEntry--;
 
-                if (selectedEntry < 0)
-                    selectedEntry = menuEntries.Count - 1;
-                SoundManager.Play("menu-click");
-            }
+                    if (selectedEntry < 0)
+                        selectedEntry = menuEntries.Count - 1;
+                    SoundManager.Play("menu-click");
+                }
 
-            if(inputState.MenuDown)
-            {
-                selectedEntry++;
+                if(inputState.MenuDown)
+                {
+                    selectedEntry++;
 
-                if (selectedEntry >= menuEntries.Count)
-                    selectedEntry = 0;
-                SoundManager.Play("menu-click");
+                    if (selectedEntry >= menuEntries.Count)
+                        selectedEntry = 0;
+                    SoundManager.Play("menu-click");
+                }
             }
 
 
