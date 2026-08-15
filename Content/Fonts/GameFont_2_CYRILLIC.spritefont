@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  GameFont_2_CYRILLIC.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _CYRILLIC  (kk)
+  Kaynak  : NotoSansCyrillic-Merged.ttf
+  Karakter: 5 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansCyrillic-Merged</FontName>
+    <Size>20</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Regular</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x430;</Start>
+        <End>&#x430;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x437;</Start>
+        <End>&#x437;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x448;</Start>
+        <End>&#x448;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x49A;</Start>
+        <End>&#x49A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x49B;</Start>
+        <End>&#x49B;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

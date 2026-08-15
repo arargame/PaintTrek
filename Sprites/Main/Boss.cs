@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -52,9 +53,12 @@ namespace PaintTrek
             Vector2 p = new Vector2(hpIndicatorPosition.X, hpIndicatorPosition.Y);
             //(int)hpIndicatorPosition.X+i*2, (int)hpIndicatorPosition.Y
             //         Globals.SpriteBatch.Draw(hpTextureBg, new Rectangle((int)(p.X - Globals.GameFont.MeasureString("Boss :").X - 10), (int)(p.Y - Globals.GameFont.MeasureString("Boss :").Y / 3),(int) ((HpExecute()*5)+ (Globals.GameFont.MeasureString("Boss :").X + 10)),30), Color.White);
+            string bossLabel = Loc.T(LocKeys.Gameplay.Boss) + " :";
+            Vector2 labelSize = Globals.GameFont.MeasureString(bossLabel);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, bossLabel, new Vector2(p.X - labelSize.X - 10, p.Y - labelSize.Y / 3), Color.White);
+
             for (int i = 0; i < HpExecute(); i++)
             {
-                Globals.SpriteBatch.DrawString(Globals.GameFont, "Boss :", new Vector2(p.X - Globals.GameFont.MeasureString("Boss :").X - 10, p.Y - Globals.GameFont.MeasureString("Boss :").Y / 3), Color.White);
                 Globals.SpriteBatch.Draw(hpTexture, new Rectangle((int)p.X + i * 5, (int)p.Y, 1, 10), Color.White);
             }
             Globals.SpriteBatch.End();

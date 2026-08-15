@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  GameFont_1_THAI.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _THAI  (th)
+  Kaynak  : NotoSansThai-Merged.ttf
+  Karakter: 3 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansThai-Merged</FontName>
+    <Size>14</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Regular</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE17;</Start>
+        <End>&#xE17;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE22;</Start>
+        <End>&#xE22;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE44;</Start>
+        <End>&#xE44;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

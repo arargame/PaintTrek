@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -13,10 +14,7 @@ namespace PaintTrek
         DroppingLightSystem droppingLightSystem;
         List<string> keyLabels = new List<string>();
 
-        TextButton xButton;
-        TextButton fbButton;
-        TextButton ytButton;
-        TextButton ttButton;
+        List<TextButton> socialButtons = new List<TextButton>();
 
         public CreditsScreen() 
         {
@@ -37,25 +35,41 @@ namespace PaintTrek
             
             droppingLightSystem = new DroppingLightSystem();
 
-            backButton = new BackButton("Back", this, true);
+            backButton = new BackButton(Loc.T(LocKeys.Menu.Back), this, true);
 
             // Social Media Buttons - Center Bottom
             float buttonsY = 620;
-            float spacing = 170;
-            float totalW = spacing * 3 + 120; // estimate width
+            float iconSize = 64f;
+            float iconScale = 0.25f;
+            float spacing = 20f;
+            int totalLinks = PaintTrek.Shared.SocialMediaRegistry.Links.Count;
+            float totalW = (iconSize * totalLinks) + (spacing * (totalLinks - 1));
             float startX = (Globals.GameSize.X - totalW) / 2;
             
-            xButton = new TextButton("X (Twitter)", new Vector2(startX, buttonsY));
-            xButton.SetOwnerScreen(this);
+            socialButtons.Clear();
+            for (int i = 0; i < totalLinks; i++)
+            {
+                var link = PaintTrek.Shared.SocialMediaRegistry.Links[i];
+                var buttonPos = new Vector2(startX + i * (iconSize + spacing), buttonsY);
+                var btn = new TextButton("", buttonPos);
+                btn.IconTexture = Globals.Content.Load<Texture2D>(link.IconPath);
+                btn.IconScale = iconScale;
+                btn.SetOwnerScreen(this);
+                
+                string targetUrl = link.Url;
+                btn.Click += (s, e) => {
+                    try
+                    {
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(targetUrl) { UseShellExecute = true });
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Failed to open URL: {ex.Message}");
+                    }
+                };
 
-            fbButton = new TextButton("Facebook", new Vector2(startX + spacing, buttonsY));
-            fbButton.SetOwnerScreen(this);
-            
-            ytButton = new TextButton("YouTube", new Vector2(startX + spacing * 2, buttonsY));
-            ytButton.SetOwnerScreen(this);
-            
-            ttButton = new TextButton("TikTok", new Vector2(startX + spacing * 3, buttonsY));
-            ttButton.SetOwnerScreen(this);
+                socialButtons.Add(btn);
+            }
         }
 
         public override void UnloadContent()
@@ -68,10 +82,10 @@ namespace PaintTrek
             base.Update();
             droppingLightSystem.Update();
 
-            if (xButton != null) xButton.Update();
-            if (fbButton != null) fbButton.Update();
-            if (ytButton != null) ytButton.Update();
-            if (ttButton != null) ttButton.Update();
+            foreach (var btn in socialButtons)
+            {
+                btn.Update();
+            }
         }
 
         public override void Draw()
@@ -87,7 +101,7 @@ namespace PaintTrek
             
 
             // Draw "Programming and Graphics :" in Beige
-            Globals.SpriteBatch.DrawString(Globals.GameFont, "Programming and Graphics :", position, Color.Beige, 0, origin, 1f, SpriteEffects.None, 0);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, Loc.T(LocKeys.Credits.ProgrammingGraphics), position, Color.Beige, 0, origin, 1f, SpriteEffects.None, 0);
             position.Y += Globals.GameFont.LineSpacing;
             
             // Draw "    Koray Arar" in White
@@ -95,23 +109,24 @@ namespace PaintTrek
             position.Y += Globals.GameFont.LineSpacing * 2;
             
             // Draw "Musics :" in Beige
-            Globals.SpriteBatch.DrawString(Globals.GameFont, "Musics :", position, Color.Beige, 0, origin, 1f, SpriteEffects.None, 0);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, Loc.T(LocKeys.Credits.Musics), position, Color.Beige, 0, origin, 1f, SpriteEffects.None, 0);
             position.Y += Globals.GameFont.LineSpacing;
             
             // Draw "    Sahin Meric" in White
             Globals.SpriteBatch.DrawString(Globals.GameFont, "    Sahin Meric", position, Color.White, 0, origin, 1f, SpriteEffects.None, 0);
             
             // Draw "FOLLOW US :" in Beige
-            Vector2 followUsPos = new Vector2((Globals.GameSize.X - Globals.GameFont.MeasureString("FOLLOW US :").X) / 2, 550);
+            string followUsText = Loc.T(LocKeys.Credits.FollowUs);
+            Vector2 followUsPos = new Vector2((Globals.GameSize.X - Globals.GameFont.MeasureString(followUsText).X) / 2, 550);
             Vector2 originFollow = new Vector2(0, Globals.GameFont.LineSpacing / 2);
-            Globals.SpriteBatch.DrawString(Globals.GameFont, "FOLLOW US :", followUsPos, Color.Beige, 0, originFollow, 1f, SpriteEffects.None, 0);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, followUsText, followUsPos, Color.Beige, 0, originFollow, 1f, SpriteEffects.None, 0);
 
             Globals.SpriteBatch.End();
 
-            if (xButton != null) xButton.Draw();
-            if (fbButton != null) fbButton.Draw();
-            if (ytButton != null) ytButton.Draw();
-            if (ttButton != null) ttButton.Draw();
+            foreach (var btn in socialButtons)
+            {
+                btn.Draw();
+            }
 
             base.Draw();
         }
@@ -119,54 +134,6 @@ namespace PaintTrek
         public override void HandleInput()
         {
             base.HandleInput();
-
-            if (xButton != null && xButton.IsClicked)
-            {
-#if ANDROID
-                var uri = Android.Net.Uri.Parse("https://x.com/arargamesstudio");
-                var intent = new Android.Content.Intent(Android.Content.Intent.ActionView, uri);
-                intent.AddFlags(Android.Content.ActivityFlags.NewTask);
-                Android.App.Application.Context.StartActivity(intent);
-#else
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://x.com/arargamesstudio") { UseShellExecute = true });
-#endif
-            }
-
-            if (fbButton != null && fbButton.IsClicked)
-            {
-#if ANDROID
-                var uri = Android.Net.Uri.Parse("https://www.facebook.com/arargamesstudio");
-                var intent = new Android.Content.Intent(Android.Content.Intent.ActionView, uri);
-                intent.AddFlags(Android.Content.ActivityFlags.NewTask);
-                Android.App.Application.Context.StartActivity(intent);
-#else
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://www.facebook.com/arargamesstudio") { UseShellExecute = true });
-#endif
-            }
-
-            if (ytButton != null && ytButton.IsClicked)
-            {
-#if ANDROID
-                var uri = Android.Net.Uri.Parse("https://www.youtube.com/@koreaaria");
-                var intent = new Android.Content.Intent(Android.Content.Intent.ActionView, uri);
-                intent.AddFlags(Android.Content.ActivityFlags.NewTask);
-                Android.App.Application.Context.StartActivity(intent);
-#else
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://www.youtube.com/@koreaaria") { UseShellExecute = true });
-#endif
-            }
-
-            if (ttButton != null && ttButton.IsClicked)
-            {
-#if ANDROID
-                var uri = Android.Net.Uri.Parse("https://www.tiktok.com/@arargamesstudio");
-                var intent = new Android.Content.Intent(Android.Content.Intent.ActionView, uri);
-                intent.AddFlags(Android.Content.ActivityFlags.NewTask);
-                Android.App.Application.Context.StartActivity(intent);
-#else
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://www.tiktok.com/@arargamesstudio") { UseShellExecute = true });
-#endif
-            }
         }
 
         public override void ExitScreen()

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  GameFont_2_GEORGIAN.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _GEORGIAN  (ka)
+  Kaynak  : NotoSansGeorgian-Merged.ttf
+  Karakter: 7 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansGeorgian-Merged</FontName>
+    <Size>20</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Regular</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10D0;</Start>
+        <End>&#x10D0;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10D7;</Start>
+        <End>&#x10D7;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10D8;</Start>
+        <End>&#x10D8;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10DA;</Start>
+        <End>&#x10DA;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10E0;</Start>
+        <End>&#x10E0;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10E3;</Start>
+        <End>&#x10E3;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10E5;</Start>
+        <End>&#x10E5;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

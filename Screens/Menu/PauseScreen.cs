@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -47,11 +48,11 @@ namespace PaintTrek
             if (MenuEntries.Count > 0)
                 MenuEntries.Clear();
 
-            AddEntry(new MenuEntry("Resume Game", true, 0));
-            AddEntry(new MenuEntry("Restart", true, 1) );
-            AddEntry(new MenuEntry("Main Menu", true, 2));
-            AddEntry(new MenuEntry("Sound Settings", true, 3));
-            AddEntry(new MenuEntry("Quit Game", true, 4));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.ResumeGame), true, 0));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Restart), true, 1) );
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Gameplay.ReturnToMenu), true, 2));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.SoundSettings), true, 3));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.QuitGame), true, 4));
         }
 
         public override void MenuSelect(int selectedEntry)

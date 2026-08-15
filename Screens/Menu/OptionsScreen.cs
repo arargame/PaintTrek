@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using System.IO;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -24,29 +25,33 @@ namespace PaintTrek
             if (MenuEntries.Count > 0)
                 MenuEntries.Clear();
 
-            AddEntry(new MenuEntry("Controllers", true, 0));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Options.Controllers), true, 0));
             
-            AddEntry(new MenuEntry("Sound Settings", true, 1));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Options.SoundSettings), true, 1));
 
             // Resolution selection enabled
-            if(Globals.Graphics.IsFullScreen)
-                AddEntry(new MenuEntry("Resolution : 1280x800", true, 2));
+            string resOn = "1280x800";
+            string resOff = "800x600";
+            if (Globals.Graphics.IsFullScreen)
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.Resolution) + " : " + resOn, true, 2));
             else
-                AddEntry(new MenuEntry("Resolution : 800x600", true, 2));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.Resolution) + " : " + resOff, true, 2));
 
-            if(Globals.AutoAttack)
-                AddEntry(new MenuEntry("Auto-Attack : On", true, 3));
+            if (Globals.AutoAttack)
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.AutoAttack) + " : " + Loc.T(LocKeys.Sound.On), true, 3));
             else 
-                AddEntry(new MenuEntry("Auto-Attack : Off", true, 3));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.AutoAttack) + " : " + Loc.T(LocKeys.Sound.Off), true, 3));
             
-            if(Globals.DeveloperMode)
-                AddEntry(new MenuEntry("Developer Mode : On", true, 4));
+            if (Globals.DeveloperMode)
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.DeveloperMode) + " : " + Loc.T(LocKeys.Sound.On), true, 4));
             else 
-                AddEntry(new MenuEntry("Developer Mode : Off", true, 4));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.DeveloperMode) + " : " + Loc.T(LocKeys.Sound.Off), true, 4));
 
-            AddEntry(new MenuEntry("You Played the game "+TimeKeeper.time, true, 5));
+            AddEntry(new MenuEntry(string.Format(Loc.T(LocKeys.Options.TimePlayed), TimeKeeper.time), true, 5));
 
-            AddEntry(new MenuEntry("Back", true, 6));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Options.Language), true, 6));
+
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Back), true, 7));
         }
 
         public override void Initialize()
@@ -67,7 +72,7 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
-            MenuEntries[5].Text = "You Played the game " + TimeKeeper.time;
+            MenuEntries[5].Text = string.Format(Loc.T(LocKeys.Options.TimePlayed), TimeKeeper.time);
         }
 
         public override void Draw()
@@ -124,6 +129,12 @@ namespace PaintTrek
                     break;
 
                 case 6:
+                    // Language screen
+                    ExitScreen();
+                    ScreenManager.AddScreen(new LanguageScreen(typeof(OptionsScreen)));
+                    break;
+
+                case 7:
                     MenuCancel(SelectedEntry);
                     break;
 

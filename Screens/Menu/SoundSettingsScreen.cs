@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -28,29 +29,29 @@ namespace PaintTrek
 
             // Sound Effects
             if (Globals.SoundEffectsEnabled)
-                AddEntry(new MenuEntry("Sound Effects : On", true, 0));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Sound.SoundEffects) + " : " + Loc.T(LocKeys.Sound.On), true, 0));
             else 
-                AddEntry(new MenuEntry("Sound Effects : Off", true, 0));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Sound.SoundEffects) + " : " + Loc.T(LocKeys.Sound.Off), true, 0));
 
             // Musics
             if (Globals.MusicsEnabled)
-                AddEntry(new MenuEntry("Musics : On", true, 1));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Sound.Musics) + " : " + Loc.T(LocKeys.Sound.On), true, 1));
             else 
-                AddEntry(new MenuEntry("Musics : Off", true, 1));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Sound.Musics) + " : " + Loc.T(LocKeys.Sound.Off), true, 1));
 
             // Menu Sounds
             if (Globals.MenuSoundsEnabled)
-                AddEntry(new MenuEntry("Menu Sounds : On", true, 2));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Sound.MenuSounds) + " : " + Loc.T(LocKeys.Sound.On), true, 2));
             else 
-                AddEntry(new MenuEntry("Menu Sounds : Off", true, 2));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Sound.MenuSounds) + " : " + Loc.T(LocKeys.Sound.Off), true, 2));
 
-            AddEntry(new MenuEntry("Back", true, 3));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Back), true, 3));
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            screenTitle = "Sound Settings";
+            screenTitle = Loc.T(LocKeys.Sound.Title);
             Globals.Window.Title = screenTitle;
         }
 

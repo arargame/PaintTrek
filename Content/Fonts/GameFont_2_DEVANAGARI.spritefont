@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  GameFont_2_DEVANAGARI.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _DEVANAGARI  (mr, hi)
+  Kaynak  : NotoSansDevanagari-Shaped.ttf
+  Karakter: 5 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansDevanagari-Shaped</FontName>
+    <Size>20</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Regular</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE0C6;</Start>
+        <End>&#xE0C6;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE152;</Start>
+        <End>&#xE152;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1BB;</Start>
+        <End>&#xE1BB;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1E9;</Start>
+        <End>&#xE1E9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE2B5;</Start>
+        <End>&#xE2B5;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

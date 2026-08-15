@@ -269,6 +269,481 @@
 /processor:FontDescriptionProcessor
 /build:Fonts/MenuFont_2.spritefont
 
+#begin Fonts/GameFont_1_MODERN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_MODERN.spritefont
+
+#begin Fonts/GameFont_2_MODERN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_MODERN.spritefont
+
+#begin Fonts/MenuFont_1_MODERN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_MODERN.spritefont
+
+#begin Fonts/MenuFont_2_MODERN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_MODERN.spritefont
+
+#begin Fonts/demoFont_MODERN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_MODERN.spritefont
+
+#begin Fonts/demoFont_PIXEL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_PIXEL.spritefont
+
+#begin Fonts/GameFont_1_PIXEL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_PIXEL.spritefont
+
+#begin Fonts/GameFont_2_PIXEL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_PIXEL.spritefont
+
+#begin Fonts/MenuFont_1_PIXEL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_PIXEL.spritefont
+
+#begin Fonts/MenuFont_2_PIXEL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_PIXEL.spritefont
+
+#begin Fonts/demoFont_NOTO.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_NOTO.spritefont
+
+#begin Fonts/GameFont_1_NOTO.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_NOTO.spritefont
+
+#begin Fonts/GameFont_2_NOTO.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_NOTO.spritefont
+
+#begin Fonts/MenuFont_1_NOTO.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_NOTO.spritefont
+
+#begin Fonts/MenuFont_2_NOTO.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_NOTO.spritefont
+
+#begin Fonts/demoFont_GEORGIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_GEORGIAN.spritefont
+
+#begin Fonts/GameFont_1_GEORGIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_GEORGIAN.spritefont
+
+#begin Fonts/GameFont_2_GEORGIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_GEORGIAN.spritefont
+
+#begin Fonts/MenuFont_1_GEORGIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_GEORGIAN.spritefont
+
+#begin Fonts/MenuFont_2_GEORGIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_GEORGIAN.spritefont
+
+#begin Fonts/demoFont_THAI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_THAI.spritefont
+
+#begin Fonts/GameFont_1_THAI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_THAI.spritefont
+
+#begin Fonts/GameFont_2_THAI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_THAI.spritefont
+
+#begin Fonts/MenuFont_1_THAI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_THAI.spritefont
+
+#begin Fonts/MenuFont_2_THAI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_THAI.spritefont
+
+#begin Fonts/demoFont_ARABIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_ARABIC.spritefont
+
+#begin Fonts/GameFont_1_ARABIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_ARABIC.spritefont
+
+#begin Fonts/GameFont_2_ARABIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_ARABIC.spritefont
+
+#begin Fonts/MenuFont_1_ARABIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_ARABIC.spritefont
+
+#begin Fonts/MenuFont_2_ARABIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_ARABIC.spritefont
+
+#begin Fonts/demoFont_HEBREW.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_HEBREW.spritefont
+
+#begin Fonts/GameFont_1_HEBREW.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_HEBREW.spritefont
+
+#begin Fonts/GameFont_2_HEBREW.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_HEBREW.spritefont
+
+#begin Fonts/MenuFont_1_HEBREW.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_HEBREW.spritefont
+
+#begin Fonts/MenuFont_2_HEBREW.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_HEBREW.spritefont
+
+#begin Fonts/demoFont_ETHIOPIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_ETHIOPIC.spritefont
+
+#begin Fonts/GameFont_1_ETHIOPIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_ETHIOPIC.spritefont
+
+#begin Fonts/GameFont_2_ETHIOPIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_ETHIOPIC.spritefont
+
+#begin Fonts/MenuFont_1_ETHIOPIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_ETHIOPIC.spritefont
+
+#begin Fonts/MenuFont_2_ETHIOPIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_ETHIOPIC.spritefont
+
+#begin Fonts/demoFont_ARMENIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_ARMENIAN.spritefont
+
+#begin Fonts/GameFont_1_ARMENIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_ARMENIAN.spritefont
+
+#begin Fonts/GameFont_2_ARMENIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_ARMENIAN.spritefont
+
+#begin Fonts/MenuFont_1_ARMENIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_ARMENIAN.spritefont
+
+#begin Fonts/MenuFont_2_ARMENIAN.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_ARMENIAN.spritefont
+
+#begin Fonts/demoFont_CYRILLIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_CYRILLIC.spritefont
+
+#begin Fonts/GameFont_1_CYRILLIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_CYRILLIC.spritefont
+
+#begin Fonts/GameFont_2_CYRILLIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_CYRILLIC.spritefont
+
+#begin Fonts/MenuFont_1_CYRILLIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_CYRILLIC.spritefont
+
+#begin Fonts/MenuFont_2_CYRILLIC.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_CYRILLIC.spritefont
+
+#begin Fonts/demoFont_DEVANAGARI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_DEVANAGARI.spritefont
+
+#begin Fonts/GameFont_1_DEVANAGARI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_DEVANAGARI.spritefont
+
+#begin Fonts/GameFont_2_DEVANAGARI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_DEVANAGARI.spritefont
+
+#begin Fonts/MenuFont_1_DEVANAGARI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_DEVANAGARI.spritefont
+
+#begin Fonts/MenuFont_2_DEVANAGARI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_DEVANAGARI.spritefont
+
+#begin Fonts/demoFont_GUJARATI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_GUJARATI.spritefont
+
+#begin Fonts/GameFont_1_GUJARATI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_GUJARATI.spritefont
+
+#begin Fonts/GameFont_2_GUJARATI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_GUJARATI.spritefont
+
+#begin Fonts/MenuFont_1_GUJARATI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_GUJARATI.spritefont
+
+#begin Fonts/MenuFont_2_GUJARATI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_GUJARATI.spritefont
+
+#begin Fonts/demoFont_GURMUKHI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_GURMUKHI.spritefont
+
+#begin Fonts/GameFont_1_GURMUKHI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_GURMUKHI.spritefont
+
+#begin Fonts/GameFont_2_GURMUKHI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_GURMUKHI.spritefont
+
+#begin Fonts/MenuFont_1_GURMUKHI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_GURMUKHI.spritefont
+
+#begin Fonts/MenuFont_2_GURMUKHI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_GURMUKHI.spritefont
+
+#begin Fonts/demoFont_KANNADA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_KANNADA.spritefont
+
+#begin Fonts/GameFont_1_KANNADA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_KANNADA.spritefont
+
+#begin Fonts/GameFont_2_KANNADA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_KANNADA.spritefont
+
+#begin Fonts/MenuFont_1_KANNADA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_KANNADA.spritefont
+
+#begin Fonts/MenuFont_2_KANNADA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_KANNADA.spritefont
+
+#begin Fonts/demoFont_MALAYALAM.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_MALAYALAM.spritefont
+
+#begin Fonts/GameFont_1_MALAYALAM.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_MALAYALAM.spritefont
+
+#begin Fonts/GameFont_2_MALAYALAM.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_MALAYALAM.spritefont
+
+#begin Fonts/MenuFont_1_MALAYALAM.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_MALAYALAM.spritefont
+
+#begin Fonts/MenuFont_2_MALAYALAM.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_MALAYALAM.spritefont
+
+#begin Fonts/demoFont_SINHALA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_SINHALA.spritefont
+
+#begin Fonts/GameFont_1_SINHALA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_SINHALA.spritefont
+
+#begin Fonts/GameFont_2_SINHALA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_SINHALA.spritefont
+
+#begin Fonts/MenuFont_1_SINHALA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_SINHALA.spritefont
+
+#begin Fonts/MenuFont_2_SINHALA.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_SINHALA.spritefont
+
+#begin Fonts/demoFont_BENGALI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_BENGALI.spritefont
+
+#begin Fonts/GameFont_1_BENGALI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_BENGALI.spritefont
+
+#begin Fonts/GameFont_2_BENGALI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_BENGALI.spritefont
+
+#begin Fonts/MenuFont_1_BENGALI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_BENGALI.spritefont
+
+#begin Fonts/MenuFont_2_BENGALI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_BENGALI.spritefont
+
+#begin Fonts/demoFont_TELUGU.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_TELUGU.spritefont
+
+#begin Fonts/GameFont_1_TELUGU.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_TELUGU.spritefont
+
+#begin Fonts/GameFont_2_TELUGU.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_TELUGU.spritefont
+
+#begin Fonts/MenuFont_1_TELUGU.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_TELUGU.spritefont
+
+#begin Fonts/MenuFont_2_TELUGU.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_TELUGU.spritefont
+
+#begin Fonts/demoFont_TAMIL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/demoFont_TAMIL.spritefont
+
+#begin Fonts/GameFont_1_TAMIL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_1_TAMIL.spritefont
+
+#begin Fonts/GameFont_2_TAMIL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/GameFont_2_TAMIL.spritefont
+
+#begin Fonts/MenuFont_1_TAMIL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_1_TAMIL.spritefont
+
+#begin Fonts/MenuFont_2_TAMIL.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:Fonts/MenuFont_2_TAMIL.spritefont
+
 #begin Guns/basicEnemyBullet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -981,5 +1456,35 @@
 
 #begin Levels/level9.txt
 /copy:Levels/level9.txt
+
+#begin UI/XIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:UI/XIcon.png
+
+#begin UI/TikTokIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:UI/TikTokIcon.png
+
+#begin UI/YoutubeIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:UI/YoutubeIcon.png
+
+#begin UI/FacebookIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:UI/FacebookIcon.png
+
+#begin UI/InstagramIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:UI/InstagramIcon.png
+
+#begin UI/ThreadsIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:UI/ThreadsIcon.png
 
 

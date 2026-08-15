@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  GameFont_2_TAMIL.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _TAMIL  (ta)
+  Kaynak  : NotoSansTamil-Shaped.ttf
+  Karakter: 3 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansTamil-Shaped</FontName>
+    <Size>20</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Regular</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE06D;</Start>
+        <End>&#xE06D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE0CC;</Start>
+        <End>&#xE0CC;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE181;</Start>
+        <End>&#xE181;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

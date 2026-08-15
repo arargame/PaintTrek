@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  demoFont_NOTO.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _NOTO  (ko, vi)
+  Kaynak  : NotoSansCJKtc-Regular.otf
+  Karakter: 5 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansCJKtc-Regular</FontName>
+    <Size>14</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Bold</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x1EBF;</Start>
+        <End>&#x1EBF;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x1EC7;</Start>
+        <End>&#x1EC7;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xAD6D;</Start>
+        <End>&#xAD6D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xC5B4;</Start>
+        <End>&#xC5B4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xD55C;</Start>
+        <End>&#xD55C;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

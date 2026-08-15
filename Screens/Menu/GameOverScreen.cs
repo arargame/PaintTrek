@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -13,9 +14,9 @@ namespace PaintTrek
         public GameOverScreen()
         {
             Initialize();
-            AddEntry(new MenuEntry("Play Again,Your Score:" + Level.Score, true, 0) );
-            AddEntry(new MenuEntry("Return to Menu", true, 1));
-            AddEntry(new MenuEntry("Quit Game", true, 2));
+            AddEntry(new MenuEntry(string.Format(Loc.T(LocKeys.Gameplay.PlayAgain), Level.Score), true, 0) );
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Gameplay.ReturnToMenu), true, 1));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.QuitGame), true, 2));
             gameOverTexture = Globals.Content.Load<Texture2D>("Backgrounds/gameOver");
 
         }

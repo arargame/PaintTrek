@@ -20,6 +20,7 @@ namespace PaintTrek
         public bool MenuSoundsEnabled { get; set; }
         public bool AutoAttack { get; set; }
         public bool IsFullScreen { get; set; }
+        public string SelectedLanguage { get; set; } = "en";
         // DeveloperMode is runtime-only, not saved to file
         
         private bool isDirty = false;
@@ -38,6 +39,7 @@ namespace PaintTrek
             MenuSoundsEnabled = true;
             AutoAttack = false;
             IsFullScreen = true;
+            SelectedLanguage = "en";
             // DeveloperMode is not persisted
         }
         
@@ -127,8 +129,17 @@ namespace PaintTrek
                             PlayerId = parsedId;
                         }
                     }
+
+                    if (stream.Position < stream.Length)
+                    {
+                        SelectedLanguage = reader.ReadString();
+                    }
+                    else
+                    {
+                        SelectedLanguage = "en";
+                    }
                 }
-                catch { }
+                catch { SelectedLanguage = "en"; }
 
                 // If still empty after migration attempt, generate new one
                 if (PlayerId == Guid.Empty)
@@ -188,6 +199,7 @@ namespace PaintTrek
                 // Append PlayerId at the end
                 if (PlayerId == Guid.Empty) PlayerId = Guid.NewGuid();
                 writer.Write(PlayerId.ToString());
+                writer.Write(SelectedLanguage ?? "en");
                 
                 isDirty = false;
                 sw.Stop();
@@ -239,6 +251,7 @@ namespace PaintTrek
             CurrentLevel = 1;
             MaxLevel = 1;
             MaxScore = 0;
+            SelectedLanguage = "en";
             
             for (int i = 0; i < 10; i++)
                 LevelScores[i] = 0;
@@ -251,9 +264,9 @@ namespace PaintTrek
         
         // Ayarları güncelle (UI'dan çağrılacak)
         public void UpdateSettings(bool? soundEffects = null, bool? music = null, bool? menuSounds = null, 
-                                   bool? autoAttack = null, bool? fullScreen = null)
+                                   bool? autoAttack = null, bool? fullScreen = null, string? language = null)
         {
-            System.Diagnostics.Debug.WriteLine($"[GameSettings] 🔧 UpdateSettings called: Sound={soundEffects}, Music={music}, Menu={menuSounds}, Auto={autoAttack}, Full={fullScreen}");
+            System.Diagnostics.Debug.WriteLine($"[GameSettings] 🔧 UpdateSettings called: Sound={soundEffects}, Music={music}, Menu={menuSounds}, Auto={autoAttack}, Full={fullScreen}, Lang={language}");
             
             bool wasChanged = false;
             
@@ -293,6 +306,14 @@ namespace PaintTrek
             {
                 System.Diagnostics.Debug.WriteLine($"[GameSettings] FullScreen: {IsFullScreen} → {fullScreen.Value}");
                 IsFullScreen = fullScreen.Value;
+                isDirty = true;
+                wasChanged = true;
+            }
+
+            if (language != null && SelectedLanguage != language)
+            {
+                System.Diagnostics.Debug.WriteLine($"[GameSettings] SelectedLanguage: {SelectedLanguage} → {language}");
+                SelectedLanguage = language;
                 isDirty = true;
                 wasChanged = true;
             }

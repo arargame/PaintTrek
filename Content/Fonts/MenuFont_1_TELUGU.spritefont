@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  MenuFont_1_TELUGU.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _TELUGU  (te)
+  Kaynak  : NotoSansTelugu-Shaped.ttf
+  Karakter: 3 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansTelugu-Shaped</FontName>
+    <Size>16</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Regular</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE052;</Start>
+        <End>&#xE052;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE0E2;</Start>
+        <End>&#xE0E2;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE209;</Start>
+        <End>&#xE209;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

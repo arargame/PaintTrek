@@ -19,7 +19,7 @@ namespace PaintTrek
             get { return menuEntries; }
         }
 
-        int selectedEntry = 0;
+        protected int selectedEntry = 0;
 
         List<Vector2> position = new List<Vector2>();
 

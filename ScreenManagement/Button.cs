@@ -23,9 +23,30 @@ namespace PaintTrek
         protected Rectangle rect;
         public ClickableArea clickableArea; // Made public for owner screen registration
         protected SpriteFont font;
-        protected Color color;
+        public Color color;
+        public Color backgroundColor = Color.Transparent;
+        public bool hasBackground = false;
         protected Color hoverColor = Color.Yellow;
         protected bool isOverlapped;
+        protected float scale = 1.0f; // Font scale
+
+        // Icon Support
+        private Texture2D iconTexture;
+        public Texture2D IconTexture 
+        { 
+            get => iconTexture; 
+            set { iconTexture = value; RecalculatePosition(); } 
+        }
+        public Rectangle? IconSourceRect { get; set; }
+        
+        private float iconScale = 1.0f;
+        public float IconScale 
+        { 
+            get => iconScale; 
+            set { iconScale = value; RecalculatePosition(); } 
+        }
+        public Vector2 IconOffset { get; set; } = Vector2.Zero;
+        public bool IconOnLeft { get; set; } = true;
         
         protected Anchor anchor;
         protected Vector2 offset;
@@ -92,14 +113,19 @@ namespace PaintTrek
                 position = new Vector2(Globals.GameSize.X - offset.X, Globals.GameSize.Y - offset.Y);
             }
             
-            // Update rect and clickable area
+            // Update rect and clickable area - scale and icon into account
             if (font != null && text != null)
             {
-                Vector2 size = font.MeasureString(text);
-                rect = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+                Vector2 size = font.MeasureString(text) * scale;
+                float iconSpace = 0;
+                if (IconTexture != null)
+                {
+                    float iconW = IconSourceRect?.Width ?? IconTexture.Width;
+                    iconSpace = (iconW * IconScale) + 10; // Icon + 10px gap
+                }
+                rect = new Rectangle((int)position.X, (int)position.Y, (int)(size.X + iconSpace), (int)Math.Max(size.Y, (IconSourceRect?.Height ?? (IconTexture?.Height ?? 0)) * IconScale));
                 
                 // CRITICAL: Use SetRect which updates position and size internally
-                // This ensures ClickableArea.Update() rebuilds the rect correctly
                 if (clickableArea != null)
                     clickableArea.SetRect(rect);
             }
@@ -120,7 +146,45 @@ namespace PaintTrek
                     clickableArea.Draw(); // Show yellow debug rectangle
                     
                 Globals.SpriteBatch.Begin();
-                Globals.SpriteBatch.DrawString(font, text, position, color);
+
+                // Draw Background if enabled
+                if (hasBackground && Globals.SinglePixel != null)
+                {
+                    // Add some padding to the rect
+                    Rectangle bgRect = new Rectangle(rect.X - 10, rect.Y - 5, rect.Width + 20, rect.Height + 10);
+                    Globals.SpriteBatch.Draw(Globals.SinglePixel, bgRect, backgroundColor);
+                }
+
+                // Content (Icon + Text) logic
+                Vector2 drawPos = position;
+                float iconW = 0;
+                float iconH = 0;
+                if (IconTexture != null)
+                {
+                    iconW = (IconSourceRect?.Width ?? IconTexture.Width) * IconScale;
+                    iconH = (IconSourceRect?.Height ?? IconTexture.Height) * IconScale;
+                }
+
+                Vector2 textSize = font.MeasureString(text) * scale;
+                float contentHeight = Math.Max(textSize.Y, iconH);
+
+                if (IconTexture != null && IconOnLeft)
+                {
+                    Vector2 iconPos = new Vector2(drawPos.X + IconOffset.X, drawPos.Y + (contentHeight - iconH) / 2 + IconOffset.Y);
+                    Globals.SpriteBatch.Draw(IconTexture, iconPos, IconSourceRect, Color.White, 0f, Vector2.Zero, IconScale, SpriteEffects.None, 0f);
+                    drawPos.X += iconW + 10;
+                }
+
+                // Draw text with scale
+                Vector2 textFinalPos = new Vector2(drawPos.X, drawPos.Y + (contentHeight - textSize.Y) / 2);
+                Globals.SpriteBatch.DrawString(font, text, textFinalPos, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
+                if (IconTexture != null && !IconOnLeft)
+                {
+                    Vector2 iconPos = new Vector2(textFinalPos.X + textSize.X + 10 + IconOffset.X, drawPos.Y + (contentHeight - iconH) / 2 + IconOffset.Y);
+                    Globals.SpriteBatch.Draw(IconTexture, iconPos, IconSourceRect, Color.White, 0f, Vector2.Zero, IconScale, SpriteEffects.None, 0f);
+                }
+
                 Globals.SpriteBatch.End();
             }
         }

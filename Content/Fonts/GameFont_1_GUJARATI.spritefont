@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  GameFont_1_GUJARATI.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _GUJARATI  (gu)
+  Kaynak  : NotoSansGujarati-Shaped.ttf
+  Karakter: 4 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansGujarati-Shaped</FontName>
+    <Size>14</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Regular</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE03C;</Start>
+        <End>&#xE03C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE05B;</Start>
+        <End>&#xE05B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE09B;</Start>
+        <End>&#xE09B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE141;</Start>
+        <End>&#xE141;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

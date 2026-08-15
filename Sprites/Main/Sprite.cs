@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -334,6 +335,15 @@ namespace PaintTrek
         }
         public string GetName()
         {
+            if (string.IsNullOrEmpty(name)) return name;
+            
+            string locKey = "enemies." + name.Replace(" ", "").ToLower();
+            string localized = Loc.T(locKey);
+            if (localized != locKey)
+            {
+                return localized;
+            }
+            
             return name;
         }
 

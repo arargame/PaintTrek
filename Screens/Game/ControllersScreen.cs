@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -51,7 +52,7 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
-            screenTitle = "Controllers Screen";
+            screenTitle = Loc.T(LocKeys.Options.Controllers);
             Globals.Window.Title = screenTitle;
         }
 
@@ -121,33 +122,33 @@ namespace PaintTrek
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 250), Keyboard.GetState().IsKeyDown(Keys.P) || Keyboard.GetState().IsKeyDown(Keys.Escape), str2);
 
 #elif WINDOWS
-            str1 = "Press 'Space' or 'K' or Click Left To ";
-            str2 = "Fire";
+            str2 = Loc.T(LocKeys.Controllers.Fire);
+            str1 = string.Format(Loc.T(LocKeys.Controllers.PressSpaceK), str2);
             Globals.SpriteBatch.DrawString(font, str1, position, Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y), Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.K) || Mouse.GetState().LeftButton == ButtonState.Pressed, str2);
 
-            str1 = "Press 'W' or 'Up' To Move ";
-            str2 = "Up";
+            str2 = Loc.T(LocKeys.Controllers.Up);
+            str1 = string.Format(Loc.T(LocKeys.Controllers.PressW), str2);
             Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 50), Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 50), Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up), str2);
 
-            str1 = "Press 'S' or 'Down' To Move ";
-            str2 = "Down";
+            str2 = Loc.T(LocKeys.Controllers.Down);
+            str1 = string.Format(Loc.T(LocKeys.Controllers.PressS), str2);
             Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 100), Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 100), Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down), str2);
 
-            str1 = "Press 'A' or 'Left' To Move ";
-            str2 = "Left";
+            str2 = Loc.T(LocKeys.Controllers.Left);
+            str1 = string.Format(Loc.T(LocKeys.Controllers.PressA), str2);
             Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 150), Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 150), Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left), str2);
 
-            str1 = "Press 'D' or 'Right' To Move ";
-            str2 = "Right";
+            str2 = Loc.T(LocKeys.Controllers.Right);
+            str1 = string.Format(Loc.T(LocKeys.Controllers.PressD), str2);
             Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 200), Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 200), Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right), str2);
 
-            str1 = "Press 'P' or 'Esc' To ";
-            str2 = "Pause";
+            str2 = Loc.T(LocKeys.Controllers.Pause);
+            str1 = string.Format(Loc.T(LocKeys.Controllers.PressP), str2);
             Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 250), Color.White);
             DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 250), Keyboard.GetState().IsKeyDown(Keys.P) || Keyboard.GetState().IsKeyDown(Keys.Escape), str2);
 

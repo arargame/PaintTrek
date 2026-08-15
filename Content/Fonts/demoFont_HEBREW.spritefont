@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  demoFont_HEBREW.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _HEBREW  (he)
+  Kaynak  : NotoSansHebrew-Merged.ttf
+  Karakter: 5 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansHebrew-Merged</FontName>
+    <Size>14</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Bold</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D1;</Start>
+        <End>&#x5D1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D9;</Start>
+        <End>&#x5D9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5E2;</Start>
+        <End>&#x5E2;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5E8;</Start>
+        <End>&#x5E8;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5EA;</Start>
+        <End>&#x5EA;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

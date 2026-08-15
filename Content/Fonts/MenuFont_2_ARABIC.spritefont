@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  MenuFont_2_ARABIC.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _ARABIC  (ar, ur)
+  Kaynak  : NotoNaskhArabic-Merged.ttf
+  Karakter: 10 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoNaskhArabic-Merged</FontName>
+    <Size>20</Size>
+    <Spacing>2</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Regular</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFE8D;</Start>
+        <End>&#xFE8D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFE91;</Start>
+        <End>&#xFE91;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFE94;</Start>
+        <End>&#xFE94;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEA9;</Start>
+        <End>&#xFEA9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEAD;</Start>
+        <End>&#xFEAD;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEAE;</Start>
+        <End>&#xFEAE;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFECC;</Start>
+        <End>&#xFECC;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEDF;</Start>
+        <End>&#xFEDF;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEED;</Start>
+        <End>&#xFEED;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEF4;</Start>
+        <End>&#xFEF4;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

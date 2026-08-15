@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
-// using Microsoft.Xna.Framework.GamerServices; // Not available in MonoGame
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -29,20 +29,20 @@ namespace PaintTrek
 
             if (!continueActive)
             {
-                AddEntry(new MenuEntry("New Game", true, 0));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.NewGame), true, 0));
             }
 
             if (continueActive)
-                AddEntry(new MenuEntry("Continue", true, 1));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Continue), true, 1));
             else
-                AddEntry(new MenuEntry("Continue", false, 1));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Continue), false, 1));
             
 
 
-            AddEntry(new MenuEntry("Options", true, 2));
-            AddEntry(new MenuEntry("Extra", true, 3));
-            AddEntry(new MenuEntry("Credits", true, 4));
-            AddEntry(new MenuEntry("Exit", true, 5));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Options), true, 2));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Extra), true, 3));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Credits), true, 4));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Exit), true, 5));
 
         }
 

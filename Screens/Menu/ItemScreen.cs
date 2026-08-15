@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -106,11 +107,20 @@ namespace PaintTrek
 
             Globals.SpriteBatch.Begin();
             Vector2 infoPosition = new Vector2(Globals.GameSize.X * 0.1f, Globals.GameSize.Y * 0.35f);
-            Globals.SpriteBatch.DrawString(Globals.MenuFont, "Name :    ", infoPosition, Color.Beige);
-            Globals.SpriteBatch.DrawString(Globals.MenuFont, items[counter].name, new Vector2(infoPosition.X + Globals.MenuFont.MeasureString("Name :    ").X, infoPosition.Y), Color.White);
+            string namePrefix = Loc.T(LocKeys.Gameplay.Name) + " :    ";
+            string infoPrefix = Loc.T(LocKeys.Gameplay.Info) + " :    ";
             
-            Globals.SpriteBatch.DrawString(Globals.MenuFont, "Info :    ", new Vector2(infoPosition.X, infoPosition.Y + 50), Color.Beige);
-            Globals.SpriteBatch.DrawString(Globals.MenuFont, items[counter].info, new Vector2(infoPosition.X + Globals.MenuFont.MeasureString("Info :    ").X, infoPosition.Y + 50), Color.White);
+            string itemKeyBase = "items." + items[counter].name.Replace(" ", "").ToLower();
+            string localizedName = Loc.T(itemKeyBase + ".name");
+            string localizedInfo = Loc.T(itemKeyBase + ".info");
+
+            if (localizedName == itemKeyBase + ".name") localizedName = items[counter].name;
+            if (localizedInfo == itemKeyBase + ".info") localizedInfo = items[counter].info;
+
+            Globals.SpriteBatch.DrawString(Globals.MenuFont, namePrefix, infoPosition, Color.Beige);
+            Globals.SpriteBatch.DrawString(Globals.MenuFont, localizedName, new Vector2(infoPosition.X + Globals.MenuFont.MeasureString(namePrefix).X, infoPosition.Y), Color.White);
+            Globals.SpriteBatch.DrawString(Globals.MenuFont, infoPrefix, new Vector2(infoPosition.X, infoPosition.Y + 50), Color.Beige);
+            Globals.SpriteBatch.DrawString(Globals.MenuFont, localizedInfo, new Vector2(infoPosition.X + Globals.MenuFont.MeasureString(infoPrefix).X, infoPosition.Y + 50), Color.White);
             
             Globals.SpriteBatch.Draw(items[counter].texture, position, Color.White);
             Globals.SpriteBatch.End();

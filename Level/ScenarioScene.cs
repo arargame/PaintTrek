@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -44,10 +45,10 @@ namespace PaintTrek
                 // Dialog lines
                 dialogLines = new List<string>
                 {
-                    "Child: Mom, look what I drew! Do you like it?   ",
-                    "Mom: Very impressive! I love it!   ",
-                    "Child: I wish I could play with them...   ",
-                    "Mom: Everything you can imagine may become real\nin this world, sweetie. Never stop dreaming.   "
+                    Loc.T(LocKeys.Gameplay.StoryLine1),
+                    Loc.T(LocKeys.Gameplay.StoryLine2),
+                    Loc.T(LocKeys.Gameplay.StoryLine3),
+                    Loc.T(LocKeys.Gameplay.StoryLine4)
                 };
                 
                 str = dialogLines[0]; // Start with first dialog
@@ -95,7 +96,7 @@ namespace PaintTrek
                             {
                                 // Dialog complete, switch to main scenario
                                 dialogComplete = true;
-                                str = "Life is a game painted by the owner.\nYou just need to play and enjoy it...";
+                                str = Loc.T(LocKeys.Gameplay.StoryMain);
                                 charCounter = 0;
                                 time = 0; // Reset time for sc1-6 sequence
                             }
@@ -173,11 +174,12 @@ namespace PaintTrek
             if (isKeyForStarting)
             {
                 // Position Skip button at bottom-right corner
-                float skipWidth = Globals.GameFont.MeasureString("Skip>>").X;
-                float skipHeight = Globals.GameFont.MeasureString("Skip>>").Y;
+                string skipText = Loc.T(LocKeys.Gameplay.Skip);
+                float skipWidth = Globals.GameFont.MeasureString(skipText).X;
+                float skipHeight = Globals.GameFont.MeasureString(skipText).Y;
                 Vector2 skipPosition = new Vector2(Globals.GameSize.X - (skipWidth + 20), Globals.GameSize.Y - (skipHeight * 2));
                 
-                Globals.SpriteBatch.DrawString(Globals.GameFont, "Skip>>", skipPosition, Color.White);
+                Globals.SpriteBatch.DrawString(Globals.GameFont, skipText, skipPosition, Color.White);
                 Rectangle enterRect = new Rectangle((int)skipPosition.X, (int)skipPosition.Y, (int)skipWidth, (int)skipHeight);
                 clickableArea.SetRect(enterRect);
             }

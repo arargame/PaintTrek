@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  GameFont_2_ETHIOPIC.spritefont
+  OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
+  ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
+
+  Varyant : _ETHIOPIC  (am)
+  Kaynak  : NotoSansEthiopic-Merged.ttf
+  Karakter: 4 (ASCII 0x20-0x7E haric)
+-->
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
+  <Asset Type="Graphics:FontDescription">
+    <FontName>NotoSansEthiopic-Merged</FontName>
+    <Size>20</Size>
+    <Spacing>0</Spacing>
+    <UseKerning>true</UseKerning>
+    <Style>Regular</Style>
+    <DefaultCharacter>?</DefaultCharacter>
+    <CharacterRegions>
+      <CharacterRegion>
+        <Start>&#x20;</Start>
+        <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x121B;</Start>
+        <End>&#x121B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x122D;</Start>
+        <End>&#x122D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x129B;</Start>
+        <End>&#x129B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x12A0;</Start>
+        <End>&#x12A0;</End>
+      </CharacterRegion>
+    </CharacterRegions>
+  </Asset>
+</XnaContent>

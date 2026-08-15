@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -90,14 +91,16 @@ namespace PaintTrek
             Globals.Graphics.GraphicsDevice.Clear(Color.Black);
             Globals.SpriteBatch.Begin();
             Globals.SpriteBatch.Draw(transitionTexture, transTextureRect, Color.White);
-            Globals.SpriteBatch.DrawString(Globals.GameFont, "Level :" + Level.LevelCounter, new Vector2(Globals.GameSize.X / 2 - Globals.GameFont.MeasureString("Level :").X / 2, Globals.GameRect.Center.Y + Globals.GameSize.Y / 6), Color.White);
+            
+            string levelCounterLabel = string.Format(Loc.T(LocKeys.Gameplay.LevelCounter), Level.LevelCounter);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, levelCounterLabel, new Vector2(Globals.GameSize.X / 2 - Globals.GameFont.MeasureString(levelCounterLabel).X / 2, Globals.GameRect.Center.Y + Globals.GameSize.Y / 6), Color.White);
 
             Globals.SpriteBatch.Draw(loadBar, loadBarRect, Color.White);
 
             // Draw Tip
             if (currentTip != null)
             {
-                string text = "'" + currentTip.Text + "'";
+                string text = "'" + Loc.T(currentTip.LocKey) + "'";
                 float tipScale = 0.7f;
                 // Adjust wrap width for scale
                 string wrappedText = WrapText(Globals.GameFont, text, (Globals.GameSize.X * 0.8f) / tipScale);
@@ -117,9 +120,9 @@ namespace PaintTrek
 
             if (openingKeyForLevel)
             {
-                //Globals.SpriteBatch.DrawString(Globals.GameFont, "Enter to Continue", new Vector2(Globals.GameRect.Center.X - Globals.GameSize.X / 7, Globals.GameRect.Center.Y + Globals.GameSize.Y / 5), Color.White);
-                Globals.SpriteBatch.DrawString(Globals.GameFont, "Enter to Continue", new Vector2(Globals.GameSize.X / 2 - Globals.GameFont.MeasureString("Enter to Continue").X/2, Globals.GameRect.Center.Y + Globals.GameSize.Y / 5), Color.White);
-                enterRect = new Rectangle((int)(Globals.GameSize.X / 2 - Globals.GameFont.MeasureString("Enter to Continue").X / 2),(int)( Globals.GameRect.Center.Y + Globals.GameSize.Y / 5), (int)Globals.GameFont.MeasureString("Enter to Continue").X, (int)Globals.GameFont.MeasureString("Enter to Continue").Y);
+                string enterToContinueLabel = Loc.T(LocKeys.Gameplay.EnterToContinue);
+                Globals.SpriteBatch.DrawString(Globals.GameFont, enterToContinueLabel, new Vector2(Globals.GameSize.X / 2 - Globals.GameFont.MeasureString(enterToContinueLabel).X/2, Globals.GameRect.Center.Y + Globals.GameSize.Y / 5), Color.White);
+                enterRect = new Rectangle((int)(Globals.GameSize.X / 2 - Globals.GameFont.MeasureString(enterToContinueLabel).X / 2),(int)( Globals.GameRect.Center.Y + Globals.GameSize.Y / 5), (int)Globals.GameFont.MeasureString(enterToContinueLabel).X, (int)Globals.GameFont.MeasureString(enterToContinueLabel).Y);
                 clickableArea.SetRect(enterRect);
             }
             Globals.SpriteBatch.End();

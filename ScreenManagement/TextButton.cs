@@ -17,9 +17,8 @@ namespace PaintTrek
             this.text = text;
             this.position = position;
             
-            Vector2 size = font.MeasureString(text);
-            this.rect = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-            this.clickableArea = new ClickableArea(this.rect);
+            this.clickableArea = new ClickableArea(Rectangle.Empty);
+            RecalculatePosition();
         }
         
         // Set owner screen for clickable area

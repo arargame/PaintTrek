@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using PaintTrek.Shared.Statistics;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -34,6 +35,7 @@ namespace PaintTrek
         public Game1()
         {
             Globals.Graphics = new GraphicsDeviceManager(this);
+            Content = new LanguageAwareContentManager(Services, "Content");
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
@@ -107,6 +109,12 @@ namespace PaintTrek
             settings.Load(); // Explicitly load after ApplicationData is ready
             settings.SyncToGlobals();
             System.Diagnostics.Debug.WriteLine("[Game1] ✅ GameSettings loaded and synced to Globals");
+
+            // Initialize Localization System
+            System.Diagnostics.Debug.WriteLine("[Game1] 🌐 Initializing Localization...");
+            Loc.Initialize(
+                Languages.FromCode(settings.SelectedLanguage),
+                new TitleContainerStreamProvider());
             
             // Initialize graphics (defaults to fullscreen)
             graphicSettings = new GraphicSettings();

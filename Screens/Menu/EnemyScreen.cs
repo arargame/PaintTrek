@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 using Microsoft.Xna.Framework.Input;
 
 namespace PaintTrek
@@ -90,9 +91,13 @@ namespace PaintTrek
             {
                 Globals.SpriteBatch.Begin();
 
-                Globals.SpriteBatch.DrawString(Globals.GameFont, "Name :" + enemies[counter].GetName(), infoPosition, Color.White);
-                Globals.SpriteBatch.DrawString(Globals.GameFont, "Health :" + enemies[counter].GetHealth(), new Vector2(infoPosition.X, infoPosition.Y + 50), Color.White);
-                Globals.SpriteBatch.DrawString(Globals.GameFont, "Damage :" + (-1) * enemies[counter].GetDamage(), new Vector2(infoPosition.X, infoPosition.Y + 100), Color.White);
+                string nameLabel = Loc.T(LocKeys.Gameplay.Name) + " :" + enemies[counter].GetName();
+                string healthLabel = Loc.T(LocKeys.Gameplay.Health) + " :" + enemies[counter].GetHealth();
+                string damageLabel = Loc.T(LocKeys.Gameplay.Damage) + " :" + ((-1) * enemies[counter].GetDamage());
+
+                Globals.SpriteBatch.DrawString(Globals.GameFont, nameLabel, infoPosition, Color.White);
+                Globals.SpriteBatch.DrawString(Globals.GameFont, healthLabel, new Vector2(infoPosition.X, infoPosition.Y + 50), Color.White);
+                Globals.SpriteBatch.DrawString(Globals.GameFont, damageLabel, new Vector2(infoPosition.X, infoPosition.Y + 100), Color.White);
                 Globals.SpriteBatch.Draw(enemies[counter].GetTexture(),
                     position, enemies[counter].GetSourceRect(), Color.White, 0f, enemies[counter].GetOrigin(), new Vector2(1, 1), SpriteEffects.None, 0f);
                 Globals.SpriteBatch.End();
@@ -100,7 +105,7 @@ namespace PaintTrek
             else
             {
                 Globals.SpriteBatch.Begin();
-                Globals.SpriteBatch.DrawString(Globals.GameFont, "Sorry,there is no enemy to show.", infoPosition, Color.White);
+                Globals.SpriteBatch.DrawString(Globals.GameFont, Loc.T(LocKeys.Gameplay.NoEnemyToShow), infoPosition, Color.White);
                 Globals.SpriteBatch.End();
             }
             
