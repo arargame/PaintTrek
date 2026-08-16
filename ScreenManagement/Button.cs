@@ -138,6 +138,26 @@ namespace PaintTrek
             RecalculatePosition(); // Apply immediately
         }
 
+        private static Texture2D _singlePixelTexture;
+        private static Texture2D GetSinglePixel()
+        {
+            if (_singlePixelTexture == null || _singlePixelTexture.IsDisposed)
+            {
+                try
+                {
+                    _singlePixelTexture = Globals.Content.Load<Texture2D>("Textures/singlePixel");
+                }
+                catch
+                {
+                    // Fallback to programmatically generated 1x1 texture if content load fails
+                    var gd = Globals.Graphics.GraphicsDevice;
+                    _singlePixelTexture = new Texture2D(gd, 1, 1);
+                    _singlePixelTexture.SetData(new[] { Color.White });
+                }
+            }
+            return _singlePixelTexture;
+        }
+
         public virtual void Draw()
         {
             if (clickableArea != null)
@@ -148,11 +168,12 @@ namespace PaintTrek
                 Globals.SpriteBatch.Begin();
 
                 // Draw Background if enabled
-                if (hasBackground && Globals.SinglePixel != null)
+                var singlePixel = GetSinglePixel();
+                if (hasBackground && singlePixel != null)
                 {
                     // Add some padding to the rect
                     Rectangle bgRect = new Rectangle(rect.X - 10, rect.Y - 5, rect.Width + 20, rect.Height + 10);
-                    Globals.SpriteBatch.Draw(Globals.SinglePixel, bgRect, backgroundColor);
+                    Globals.SpriteBatch.Draw(singlePixel, bgRect, backgroundColor);
                 }
 
                 // Content (Icon + Text) logic
