@@ -14,6 +14,8 @@ namespace PaintTrek
         FileSystem fs;
         Texture2D pixel;
 
+        protected override bool UseInvertedMenuButtons => true;
+
         public PauseScreen(GameBoard gameBoard)
         {
             this.gameBoard = gameBoard;

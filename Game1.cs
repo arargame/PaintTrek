@@ -55,7 +55,8 @@ namespace PaintTrek
 
             Globals.Window = Window;
             Globals.Game = this;
-            // Globals.Window.AllowUserResizing = true;
+            Globals.PlatformServices = new WindowsStorePlatformServices();
+            Globals.Window.AllowUserResizing = true;
             Globals.Random = new Random();
             Globals.PreviousSpawnTime = TimeSpan.Zero;
             Globals.EnemySpawnTime = TimeSpan.FromSeconds(1.0f);
@@ -135,8 +136,9 @@ namespace PaintTrek
                 System.Diagnostics.Debug.WriteLine($"[Game1] Using default resolution (IsFullScreen: {Globals.Graphics.IsFullScreen})");
             }
             
-            // Initialize RenderTarget with GameSize
-            renderTarget = new RenderTarget2D(GraphicsDevice, (int)Globals.GameSize.X, (int)Globals.GameSize.Y);
+            // Initialize the virtual canvas from the live display before creating its render target.
+            ResolutionHelper.Initialize(GraphicsDevice);
+            RecreateRenderTarget();
             
             Loader.Load();
             timeKeeper = new TimeKeeper();
@@ -186,6 +188,8 @@ namespace PaintTrek
             Globals.GameTime = gameTime;
             Globals.GameRect = new Rectangle(0, 0, (int)Globals.GameSize.X, (int)Globals.GameSize.Y);
             Globals.IsActive = IsActive;
+            if (ResolutionHelper.EnsureCurrent(GraphicsDevice))
+                RecreateRenderTarget();
 
             // Manage mouse visibility: Always hide system cursor (we draw a custom one)
             IsMouseVisible = false;
@@ -236,57 +240,28 @@ namespace PaintTrek
 
         protected override void Draw(GameTime gameTime)
         {
-            if (Globals.Graphics.IsFullScreen)
+            // Always render the game to its fixed virtual canvas first. This keeps every existing
+            // screen, player movement and menu layout in the same coordinate space.
+            GraphicsDevice.SetRenderTarget(renderTarget);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            screenManager.Draw();
+
+            // Debug information belongs to the virtual canvas too, so it stays aligned with UI.
+            if (showDebugInfo)
             {
-                // FULLSCREEN MODE: Draw to RenderTarget and Scale Up
-                
-                // 1. Draw game to RenderTarget (1280x800)
-                GraphicsDevice.SetRenderTarget(renderTarget);
-                GraphicsDevice.Clear(Color.CornflowerBlue);
-
-                screenManager.Draw();
-                //clickableAreaSystem.Draw();
-
-                // 2. Switch back to BackBuffer (Screen)
-                GraphicsDevice.SetRenderTarget(null);
-                GraphicsDevice.Clear(Color.Black);
-
-                // 3. Calculate destination rectangle (Stretch to fit screen)
-                var viewport = GraphicsDevice.Viewport;
-                
-                // Stretch scaling (fills screen, ignores aspect ratio)
-                int width = viewport.Width;
-                int height = viewport.Height;
-                renderRect = new Rectangle(0, 0, width, height);
-
-                // 4. Draw RenderTarget to Screen
-                // Use LinearClamp for smoother upscaling (reduces pixelation)
-                Globals.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp);
-                Globals.SpriteBatch.Draw(renderTarget, renderRect, Color.White);
-                
-                // Draw debug info on top
-                if (showDebugInfo)
-                {
-                    DrawDebugInfo();
-                }
-                
+                Globals.SpriteBatch.Begin();
+                DrawDebugInfo();
                 Globals.SpriteBatch.End();
             }
-            else
-            {
-                // WINDOWED MODE: Draw directly to BackBuffer (No Scaling)
-                GraphicsDevice.Clear(Color.CornflowerBlue);
-                screenManager.Draw();
-                //clickableAreaSystem.Draw();
-                
-                // Draw debug info on top
-                if (showDebugInfo)
-                {
-                    Globals.SpriteBatch.Begin();
-                    DrawDebugInfo();
-                    Globals.SpriteBatch.End();
-                }
-            }
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.Black);
+            ResolutionHelper.EnsureCurrent(GraphicsDevice);
+            renderRect = ResolutionHelper.DestinationRectangle;
+
+            Globals.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp);
+            Globals.SpriteBatch.Draw(renderTarget, renderRect, Color.White);
+            Globals.SpriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -334,6 +309,22 @@ namespace PaintTrek
                 new Vector2(position.X, currentY), keyColor);
             Globals.SpriteBatch.DrawString(Globals.GameFont, fpsValue, 
                 new Vector2(position.X + Globals.GameFont.MeasureString(fpsKey).X, currentY), valueColor);
+            currentY += lineHeight;
+
+            string resolutionKey = "Resolution: ";
+            string resolutionValue = $"Actual {(int)Globals.ActualScreenSize.X}x{(int)Globals.ActualScreenSize.Y} | Virtual {(int)Globals.GameSize.X}x{(int)Globals.GameSize.Y}";
+            Globals.SpriteBatch.DrawString(Globals.GameFont, resolutionKey,
+                new Vector2(position.X, currentY), keyColor);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, resolutionValue,
+                new Vector2(position.X + Globals.GameFont.MeasureString(resolutionKey).X, currentY), valueColor);
+            currentY += lineHeight;
+
+            string presentationKey = "Presentation: ";
+            string presentationValue = $"Scale {ResolutionHelper.Scale:F3} | Viewport {ResolutionHelper.DestinationRectangle.Width}x{ResolutionHelper.DestinationRectangle.Height}";
+            Globals.SpriteBatch.DrawString(Globals.GameFont, presentationKey,
+                new Vector2(position.X, currentY), keyColor);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, presentationValue,
+                new Vector2(position.X + Globals.GameFont.MeasureString(presentationKey).X, currentY), valueColor);
             currentY += lineHeight;
             
             // Elapsed

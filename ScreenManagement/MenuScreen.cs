@@ -32,6 +32,8 @@ namespace PaintTrek
 
         DroppingLightSystem droppingLightSystem;
 
+        protected virtual bool UseInvertedMenuButtons => false;
+
         public override void Initialize()
         {
             Load();
@@ -73,11 +75,11 @@ namespace PaintTrek
             {
                 if (i == 0)
                 {
-                    position[i] = new Vector2(100,200);
+                    position[i] = new Vector2(150, 80);
                 }
                 else 
                 {
-                    position[i] = new Vector2(100,200+(i*30));
+                    position[i] = new Vector2(150, 80 + (i * 82.5f));
                 }
             }
 
@@ -100,7 +102,7 @@ namespace PaintTrek
             for (int i = 0; i < menuEntries.Count; i++)
             {
                 bool isSelected = (i == selectedEntry);
-                menuEntries[i].Draw(new Vector2(position[i].X,position[i].Y),isSelected);
+                menuEntries[i].Draw(new Vector2(position[i].X, position[i].Y), isSelected, UseInvertedMenuButtons);
             }
 
         }
@@ -115,6 +117,9 @@ namespace PaintTrek
 
             if (screenState != ScreenState.Active || inputState==null)
              return;
+
+            if (!ScreenManager.IsTopActiveMenu(this))
+                return;
 
             inputState.Update();
 

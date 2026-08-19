@@ -9,6 +9,8 @@ namespace PaintTrek
 {
     class ParallaxingBackground
     {
+        // A small overlap removes the transparent/bilinear edge seam between two scrolling tiles.
+        private const int TileOverlapPixels = 3;
 
         // The image representing the parallaxing background
         Texture2D texture;
@@ -38,17 +40,11 @@ namespace PaintTrek
                 this.speed = speed;
 
 
-                // If we divide the screen with the texture width then we can determine the number of tiles need.
-                // We add 1 to it so that we won't have a gap in the tiling
-                positions = new Vector2[screenWidth / texture.Width + 1];
-
-
-                // Set the initial positions of the parallaxing background
-                for (int i = 0; i < positions.Length; i++)
-                {
-                    // We need the tiles to be side by side to create a tiling effect
-                    positions[i] = new Vector2(i * texture.Width, 0);
-                }
+                // Every tile is scaled to the current virtual viewport. Two adjacent tiles cover
+                // the screen continuously, independently of the PNG's native width.
+                positions = new Vector2[2];
+                positions[0] = Vector2.Zero;
+                positions[1] = new Vector2(screenWidth, 0);
 
                 initialized = true;
             }
@@ -61,6 +57,8 @@ namespace PaintTrek
 
         public void Update()
         {
+            int screenWidth = (int)Globals.GameSize.X;
+
             // Update the positions of the background
             for (int i = 0; i < positions.Length; i++)
             {
@@ -69,22 +67,16 @@ namespace PaintTrek
                 // If the speed has the background moving to the left
                 if (speed <= 0)
                 {
-                    // Check the texture is out of view then put that texture at the end of the screen
-                    if (positions[i].X <= -texture.Width)
-                    {
-                        positions[i].X = texture.Width * (positions.Length - 1);
-                    }
+                    if (positions[i].X <= -screenWidth)
+                        positions[i].X = positions[1 - i].X + screenWidth;
                 }
 
 
                 // If the speed has the background moving to the right
                 else
                 {
-                    // Check if the texture is out of view then position it to the start of the screen
-                    if (positions[i].X >= texture.Width * (positions.Length - 1))
-                    {
-                        positions[i].X = -texture.Width;
-                    }
+                    if (positions[i].X >= screenWidth)
+                        positions[i].X = positions[1 - i].X - screenWidth;
                 }
             }
         }
@@ -93,8 +85,14 @@ namespace PaintTrek
         {
             for (int i = 0; i < positions.Length; i++)
             {
-                Globals.SpriteBatch.Begin();
-                Globals.SpriteBatch.Draw(texture, new Rectangle((int)positions[i].X, (int)positions[i].Y, (int)Globals.GameSize.X, (int)Globals.GameSize.Y), Color.White);
+                // PointClamp keeps the edge texels from being blended with transparent pixels.
+                // The 3px overlap makes the two destinations cover every virtual pixel.
+                Globals.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
+                Globals.SpriteBatch.Draw(texture, new Rectangle(
+                    (int)positions[i].X,
+                    (int)positions[i].Y,
+                    (int)Globals.GameSize.X + TileOverlapPixels,
+                    (int)Globals.GameSize.Y), Color.White);
                 Globals.SpriteBatch.End();
             }
         }

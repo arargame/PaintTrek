@@ -62,7 +62,7 @@ namespace PaintTrek
             }
         }
 
-        public void SetPosition(Vector2 position)
+        public override void SetPosition(Vector2 position)
         {
             this.position = position;
             this.rect = new Rectangle((int)position.X, (int)position.Y, (int)this.rect.Width, (int)this.rect.Height);

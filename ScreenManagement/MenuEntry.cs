@@ -9,6 +9,7 @@ namespace PaintTrek
 {
     class MenuEntry
     {
+        public MenuButton button;
 
         public bool Enabled;
         public string Text;
@@ -23,6 +24,7 @@ namespace PaintTrek
             entryNumber = 0;
             entryRect = Rectangle.Empty;
             clickableArea = new ClickableArea();
+            button = new MenuButton(Text, Vector2.Zero);
         }
 
         public MenuEntry(string text,bool enabled,int entryNumber) 
@@ -32,45 +34,27 @@ namespace PaintTrek
             this.entryNumber = entryNumber;
             this.entryRect = Rectangle.Empty;
             clickableArea = new ClickableArea();
+            button = new MenuButton(Text, Vector2.Zero);
         }
 
         public void Update() 
         {
-
+            button?.SetInfo(Text, new Vector2(entryRect.X, entryRect.Y), Enabled);
         }
 
-        public void Draw( Vector2 position, bool isSelected) 
+        public void Draw(Vector2 position, bool isSelected, bool inverted = false)
         {
-            Vector2 origin = new Vector2(0, Globals.MenuFont.LineSpacing / 2);
-
-            Color color = isSelected ? Color.Yellow : Color.White;
-            color = new Color((byte)color.R, (byte)color.G, (byte)color.B, (byte)255);
-
-            float pulsate = (float)(Math.Sin(Globals.GameTime.TotalGameTime.TotalSeconds * 3) + 1);
-            float scale = isSelected ? (1 + pulsate * 0.05f) : 1.0f;
-
-            SetEntryRect(new Vector2(position.X,position.Y-(origin.Y/2)));
-            clickableArea.Draw();
-
-            Globals.SpriteBatch.Begin();
-            if (Enabled)
-            {
-                Globals.SpriteBatch.DrawString(Globals.MenuFont, Text, position, color, 0, origin, scale, SpriteEffects.None, 0);
-            }
-            else
-            {
-                if (!isSelected)
-                    Globals.SpriteBatch.DrawString(Globals.MenuFont, Text, position, Color.Gray, 0, origin, scale, SpriteEffects.None, 0);
-                else
-                    Globals.SpriteBatch.DrawString(Globals.MenuFont, Text, position, color, 0, origin, scale, SpriteEffects.None, 0);
-            }
-            Globals.SpriteBatch.End();
+            button.SetInfo(Text, position, Enabled);
+            entryRect = button.ButtonRect;
+            clickableArea.SetRect(entryRect);
+            button.Draw(isSelected || clickableArea.IsOverlapped, inverted);
             
         }
 
         public void SetEntryRect(Vector2 position) 
         {
-            entryRect = new Rectangle((int)position.X,(int)position.Y,(int)Globals.MenuFont.MeasureString(this.Text).X,(int)Globals.MenuFont.MeasureString(this.Text).Y);
+            button.SetInfo(Text, position, Enabled);
+            entryRect = button.ButtonRect;
             clickableArea.SetRect(entryRect);
         }
 

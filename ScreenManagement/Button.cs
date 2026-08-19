@@ -62,6 +62,13 @@ namespace PaintTrek
             get { return rect; }
         }
 
+        public virtual void SetPosition(Vector2 newPosition)
+        {
+            position = newPosition;
+            anchor = Anchor.None;
+            RecalculatePosition();
+        }
+
         public Button()
         {
             color = Color.White;

@@ -44,7 +44,13 @@ namespace PaintTrek
         {
             for (int i = 0; i < screens.Count; i++)
             {
-                screens[i].Draw();
+                ScreenState state = screens[i].GetScreenState();
+                if (state == ScreenState.Inactive)
+                    continue;
+
+                // A paused GameBoard remains visible behind its pause menu; frozen menus do not.
+                if (state == ScreenState.Active || (state == ScreenState.Frozen && screens[i] is GameScreen))
+                    screens[i].Draw();
             }
 
             Globals.SpriteBatch.Begin();
@@ -96,9 +102,27 @@ namespace PaintTrek
             return screens;
         }
 
+        /// <summary>
+        /// Only the last active menu may consume menu input. This prevents a menu hidden behind
+        /// a dialog from also reacting to the same click or Enter press.
+        /// </summary>
+        internal static bool IsTopActiveMenu(Screen screen)
+        {
+            if (screens == null || screen == null)
+                return false;
+
+            for (int i = screens.Count - 1; i >= 0; i--)
+            {
+                if (screens[i] is MenuScreen && screens[i].GetScreenState() == ScreenState.Active)
+                    return ReferenceEquals(screens[i], screen);
+            }
+
+            return false;
+        }
+
         private void CheckScreenStatus() 
         {
-            for (int i = 0; i < screens.Count; i++)
+            for (int i = screens.Count - 1; i >= 0; i--)
             {
                 if(screens[i].GetScreenState()==ScreenState.Inactive)
                 {

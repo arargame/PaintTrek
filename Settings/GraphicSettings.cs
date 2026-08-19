@@ -32,9 +32,8 @@ namespace PaintTrek
             Globals.GameFont = Globals.Content.Load<SpriteFont>("Fonts/GameFont_1");
 
             Globals.Graphics.IsFullScreen = false;
-            Globals.GameSize = new Vector2(screenWidth, screenHeight);
-            Globals.Graphics.PreferredBackBufferWidth = (int)Globals.GameSize.X;
-            Globals.Graphics.PreferredBackBufferHeight = (int)Globals.GameSize.Y;
+            Globals.Graphics.PreferredBackBufferWidth = (int)screenWidth;
+            Globals.Graphics.PreferredBackBufferHeight = (int)screenHeight;
             Globals.Graphics.ApplyChanges();
 
             ExecuteAllRect();
@@ -63,6 +62,7 @@ namespace PaintTrek
         
         public static void MakeWindowed()
         {
+            // Keep the game canvas fixed. Only the presentation surface changes.
             ExecuteScreenSize(800, 600);
             
             // Recreate RenderTarget with new resolution

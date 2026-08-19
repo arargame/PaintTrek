@@ -39,19 +39,15 @@ namespace PaintTrek
 
             // Social Media Buttons - Center Bottom
             float buttonsY = 620;
-            float iconSize = 64f;
             float iconScale = 0.25f;
-            float spacing = 20f;
+            const float spacing = 18f;
             int totalLinks = PaintTrek.Shared.SocialMediaRegistry.Links.Count;
-            float totalW = (iconSize * totalLinks) + (spacing * (totalLinks - 1));
-            float startX = (Globals.GameSize.X - totalW) / 2;
             
             socialButtons.Clear();
             for (int i = 0; i < totalLinks; i++)
             {
                 var link = PaintTrek.Shared.SocialMediaRegistry.Links[i];
-                var buttonPos = new Vector2(startX + i * (iconSize + spacing), buttonsY);
-                var btn = new TextButton("", buttonPos);
+                var btn = new TextButton("", Vector2.Zero);
                 btn.IconTexture = Globals.Content.Load<Texture2D>(link.IconPath);
                 btn.IconScale = iconScale;
                 btn.SetOwnerScreen(this);
@@ -69,6 +65,16 @@ namespace PaintTrek
                 };
 
                 socialButtons.Add(btn);
+            }
+
+            // Icons differ in their source texture widths. Layout from the real clickable bounds
+            // instead of a guessed icon size so every pair gets the same visible gap.
+            float totalWidth = socialButtons.Sum(button => button.Rect.Width) + spacing * (socialButtons.Count - 1);
+            float currentX = (Globals.GameSize.X - totalWidth) / 2f;
+            foreach (var button in socialButtons)
+            {
+                button.SetPosition(new Vector2(currentX, buttonsY));
+                currentX += button.Rect.Width + spacing;
             }
         }
 
