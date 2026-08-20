@@ -32,7 +32,39 @@ namespace PaintTrek
 
         public override void Draw()
         {
+            DrawAbilityGlow();
             base.Draw();
+        }
+
+        private void DrawAbilityGlow()
+        {
+            Player playerOwner = owner as Player;
+            if (playerOwner == null || !alive || !visible || texture == null || texture.IsDisposed)
+                return;
+
+            Color glowColor;
+            switch (playerOwner.ability.GetSkill())
+            {
+                case Skills.PowerAttack:
+                    glowColor = new Color(255, 45, 30, 92);
+                    break;
+                case Skills.SpeedyAttack:
+                    glowColor = new Color(35, 145, 255, 82);
+                    break;
+                case Skills.PoisonAttack:
+                    glowColor = new Color(35, 255, 85, 86);
+                    break;
+                case Skills.CriticalAttack:
+                    glowColor = new Color(125, 80, 190, 94);
+                    break;
+                default:
+                    return;
+            }
+
+            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            Globals.SpriteBatch.Draw(texture, position, sourceRectangle, glowColor, rotation, origin,
+                scale * 1.65f, spriteEffect, layerDepth);
+            Globals.SpriteBatch.End();
         }
 
         private void CollisionDetectionWithEnemies()
