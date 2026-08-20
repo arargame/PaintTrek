@@ -71,6 +71,30 @@ namespace PaintTrek
         int itemIndex = 0;
 
         double timer;
+        double stageDuration;
+        string upcomingBossKey = string.Empty;
+
+        public float StageProgress
+        {
+            get
+            {
+                if (stageDuration <= 0d)
+                    return 0f;
+
+                // Reserve the final portion for the boss encounter instead of showing a completed bar on spawn.
+                if (!string.IsNullOrEmpty(upcomingBossKey))
+                {
+                    if (BossSystem.bossHasFallen)
+                        return 1f;
+
+                    return (float)Math.Min(0.9d, timer / stageDuration * 0.9d);
+                }
+
+                return (float)Math.Min(1d, timer / stageDuration);
+            }
+        }
+
+        public string UpcomingBossKey => upcomingBossKey;
 
         public LevelBuilder()
         {
@@ -455,6 +479,10 @@ namespace PaintTrek
             item.Type = type;
             item.Time = timeCursor;
             levelItems.Add(item);
+            stageDuration = Math.Max(stageDuration, item.Time);
+
+            if (type >= ItemType.Boss1 && type <= ItemType.Boss10)
+                upcomingBossKey = type.ToString();
         }
 
         private void SpawnItem(LevelItem levelItem)

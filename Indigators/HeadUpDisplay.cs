@@ -18,11 +18,13 @@ namespace PaintTrek
         double maxHealt;
         Vector2 scorePosition;
         MobileController mobileController;
+        LevelBuilder levelBuilder;
 
 
-        public HeadUpDisplay(Player player)
+        public HeadUpDisplay(Player player, LevelBuilder levelBuilder)
         {
             this.player = player;
+            this.levelBuilder = levelBuilder;
             healthBarTexture = Globals.Content.Load<Texture2D>("Textures/HealthBar");
             healthBarLine = Globals.Content.Load<Texture2D>("Textures/LoadBar");
             pixel = Globals.Content.Load<Texture2D>("Textures/singlePixel");
@@ -79,6 +81,7 @@ namespace PaintTrek
 
             //Score Drawing
             Globals.SpriteBatch.DrawString(Globals.GameFont, string.Format(Loc.T(LocKeys.Gameplay.Score), Level.Score), scorePosition, Color.Yellow);
+            DrawStageProgress();
 
             Globals.SpriteBatch.End();
 
@@ -87,6 +90,67 @@ namespace PaintTrek
             #endif
 
             mobileController.Draw();
+        }
+
+        private void DrawStageProgress()
+        {
+            int bossSize = 34;
+            int barWidth = Math.Min(420, Math.Max(180, (int)(Globals.GameSize.X * 0.42f)));
+            int barHeight = 10;
+            int contentWidth = barWidth + bossSize + 14;
+            int barX = ((int)Globals.GameSize.X - contentWidth) / 2;
+            int barY = (int)Globals.GameSize.Y - 44;
+            Rectangle outer = new Rectangle(barX, barY, barWidth, barHeight);
+            Rectangle inner = new Rectangle(barX + 1, barY + 1, barWidth - 2, barHeight - 2);
+            int fillWidth = (int)(inner.Width * levelBuilder.StageProgress);
+
+            Globals.SpriteBatch.Draw(pixel, outer, Color.White * 0.85f);
+            Globals.SpriteBatch.Draw(pixel, inner, Color.Black * 0.55f);
+            if (fillWidth > 0)
+                Globals.SpriteBatch.Draw(pixel, new Rectangle(inner.X, inner.Y, fillWidth, inner.Height), Color.White);
+
+            int percentage = (int)(levelBuilder.StageProgress * 100f);
+            string percentageText = percentage + "%";
+            Vector2 textSize = Globals.GameFont.MeasureString(percentageText);
+            Globals.SpriteBatch.DrawString(Globals.GameFont, percentageText,
+                new Vector2(barX + (barWidth - textSize.X) / 2, barY - textSize.Y - 4), Color.White);
+
+            DrawBossPreview(new Rectangle(outer.Right + 14, barY - (bossSize - barHeight) / 2, bossSize, bossSize));
+        }
+
+        private void DrawBossPreview(Rectangle destination)
+        {
+            Texture2D texture = GetBossPreviewTexture(out int columns, out int rows);
+            if (texture == null)
+                return;
+
+            int frameCount = columns * rows;
+            int frame = (int)(Globals.GameTime.TotalGameTime.TotalSeconds * 5d) % frameCount;
+            int frameWidth = texture.Width / columns;
+            int frameHeight = texture.Height / rows;
+            Rectangle source = new Rectangle((frame % columns) * frameWidth, (frame / columns) * frameHeight, frameWidth, frameHeight);
+            Globals.SpriteBatch.Draw(texture, destination, source, Color.White);
+        }
+
+        private Texture2D GetBossPreviewTexture(out int columns, out int rows)
+        {
+            columns = 1;
+            rows = 1;
+
+            switch (levelBuilder.UpcomingBossKey)
+            {
+                case "Boss1": columns = 3; return GlobalTexture.boss1Texture;
+                case "Boss2": columns = 5; return GlobalTexture.boss2Texture;
+                case "Boss3": columns = 6; return GlobalTexture.boss3Texture;
+                case "Boss4": rows = 3; return GlobalTexture.snakeStoneLeftTexture;
+                case "Boss5": columns = 4; return GlobalTexture.boss5Texture;
+                case "Boss6": columns = 3; return GlobalTexture.boss6Texture;
+                case "Boss7": rows = 5; return GlobalTexture.boss7Texture;
+                case "Boss8": columns = 3; return GlobalTexture.boss8Texture;
+                case "Boss9": columns = 3; rows = 2; return GlobalTexture.boss9Texture;
+                case "Boss10": columns = 4; rows = 2; return GlobalTexture.boss10Texture;
+                default: return null;
+            }
         }
 
   

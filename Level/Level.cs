@@ -99,7 +99,7 @@ namespace PaintTrek
             gunSystem = new GunSystem();
             bossSystem = new BossSystem();
             player = new Player();
-            HUD = new HeadUpDisplay(player);
+            HUD = new HeadUpDisplay(player, levelBuilder);
             explosionSystem = new ExplosionSystem();
             scenarioScene = new ScenarioScene();
             loadingScene = new LoadingScene();
