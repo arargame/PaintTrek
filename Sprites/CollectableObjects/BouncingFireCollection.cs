@@ -32,6 +32,7 @@ namespace PaintTrek
 
         public override void Update()
         {
+            base.Update();
             SimpleMovement(velocity);
 
             // Bouncing logic - check boundaries and reverse velocity
@@ -63,10 +64,6 @@ namespace PaintTrek
                 position.Y = Globals.GameSize.Y - size.Y / 2; // Prevent sticking to bottom
             }
 
-           // time -= Globals.GameTime.ElapsedGameTime.TotalSeconds;
-           // if (time <= 0) alive = false;
-
-            base.Update();
         }
 
         public override void Draw()

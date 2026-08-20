@@ -10,6 +10,7 @@ namespace PaintTrek
 {
     class Player : Sprite
     {
+        public static Player Instance { get; private set; }
         bool pixelatedMode;
         double pixelatedModeTime;
 
@@ -63,6 +64,7 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
+            Instance = this;
             SetName("Space Ship");
             SetHealth(100);
             startingHealth = GetHealth();

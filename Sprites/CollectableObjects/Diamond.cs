@@ -21,6 +21,12 @@ namespace PaintTrek
 
         bool isIncreasing;
         double maxScale;
+        Vector2 magnetVelocity;
+        Vector2 naturalVelocity;
+
+        public bool IsBeingPulled { get; private set; }
+
+        protected override bool UsesAutomaticMovement => false;
 
         public Diamond() 
         {
@@ -72,6 +78,11 @@ namespace PaintTrek
 
         public override void Update()
         {
+            float dt = Math.Min(0.05f, (float)Globals.GameTime.ElapsedGameTime.TotalSeconds);
+            magnetVelocity = Supply.StepMagnetMotion(magnetVelocity, naturalVelocity, position, dt, out bool isBeingPulled);
+            velocity = magnetVelocity * dt;
+            IsBeingPulled = isBeingPulled;
+
             base.Update();
             SimpleMovement(velocity);
             Rotate(angle);
@@ -122,11 +133,11 @@ namespace PaintTrek
 
         public override void SetVelocity()
         {
-            velocity = new Vector2(-(Globals.Random.Next(1,4)),0);
-            if (Globals.Graphics.IsFullScreen)
-            {
-                velocity = new Vector2((velocity.X * 1280) / 800, (velocity.Y * 800) / 600);
-            }
+            float travelSpeed = Globals.Random.Next(100, 201);
+            float sideSpeed = ((float)Globals.Random.NextDouble() * 2f - 1f) * Supply.SpawnSideSpeed;
+            naturalVelocity = new Vector2(-travelSpeed, 0f);
+            magnetVelocity = naturalVelocity + new Vector2(0f, sideSpeed);
+            velocity = Vector2.Zero;
         }
 
         private void RandomStyle()

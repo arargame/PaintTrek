@@ -12,6 +12,10 @@ namespace PaintTrek
     {
         Texture2D damageTexture; 
 
+        // Android moves collectables from its base class while desktop leaves movement to the
+        // concrete object. Magnet-controlled objects opt out so both platforms move once only.
+        protected virtual bool UsesAutomaticMovement => true;
+
         public override void Initialize()
         {
             base.Initialize();
