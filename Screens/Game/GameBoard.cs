@@ -16,6 +16,7 @@ namespace PaintTrek
         Level level;
         InfoSystem infoSystem;
         bool isGameActive;
+        bool housePromotionQueued;
 
         private GameBoard()
         {
@@ -101,6 +102,16 @@ namespace PaintTrek
         {
             if (screenState == ScreenState.Active)
             {
+                // A self-promotion is presented before every level. Freeze this board while the
+                // overlay is active so scenario/loading input cannot leak through to gameplay.
+                if (!housePromotionQueued)
+                {
+                    housePromotionQueued = true;
+                    screenState = ScreenState.Frozen;
+                    Globals.ShowCursor = true;
+                    ScreenManager.AddScreen(new HousePromotionScreen(this));
+                    return;
+                }
 
                 if (!Globals.IsActive && level.GetGameState() == GameState.Active)
                 {
@@ -229,6 +240,18 @@ namespace PaintTrek
             this.screenState = ScreenState.Active;
             isGameActive = true;
             Globals.ShowCursor = false;
+        }
+
+        internal void ResumeAfterHousePromotion()
+        {
+            if (screenState != ScreenState.Inactive)
+            {
+                // Capture the Continue click before the scenario/loading screen sees it on the
+                // following frame; otherwise a mouse click can also start the level immediately.
+                inputState.Update();
+                screenState = ScreenState.Active;
+                Globals.ShowCursor = false;
+            }
         }
 
     }

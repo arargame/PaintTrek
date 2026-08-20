@@ -36,17 +36,22 @@ namespace PaintTrek
             counter = 0;
 
             backButton = new BackButton("Back",this,true);
+            RegisterClickableArea(backButton.clickableArea);
 
             float fontHeight = Globals.GameFont.MeasureString("Previous").Y;
             // float yPos = Globals.GameSize.Y - (fontHeight * 2);
 
             previousButton = new TextButton("Previous", Vector2.Zero);
             previousButton.SetAnchor(Anchor.BottomLeft, new Vector2(50, fontHeight * 2));
+            previousButton.SetOwnerScreen(this);
+            RegisterClickableArea(previousButton.clickableArea);
 
             nextButton = new TextButton("Next", Vector2.Zero);
             // Next button X offset depends on Previous button width + 50 + 50 (margin)
             float prevWidth = Globals.GameFont.MeasureString("Previous").X;
             nextButton.SetAnchor(Anchor.BottomLeft, new Vector2(50 + prevWidth + 50, fontHeight * 2));
+            nextButton.SetOwnerScreen(this);
+            RegisterClickableArea(nextButton.clickableArea);
 
             previousButton.Click += new EventHandler(previousButton_Click);
             nextButton.Click += new EventHandler(nextButton_Click);
@@ -63,15 +68,20 @@ namespace PaintTrek
             if (nextButton != null) nextButton.Dispose();
             
             backButton = new BackButton("Back", this, true);
+            RegisterClickableArea(backButton.clickableArea);
 
             float fontHeight = Globals.GameFont.MeasureString("Previous").Y;
             
             previousButton = new TextButton("Previous", Vector2.Zero);
             previousButton.SetAnchor(Anchor.BottomLeft, new Vector2(50, fontHeight * 2));
+            previousButton.SetOwnerScreen(this);
+            RegisterClickableArea(previousButton.clickableArea);
 
             nextButton = new TextButton("Next", Vector2.Zero);
             float prevWidth = Globals.GameFont.MeasureString("Previous").X;
             nextButton.SetAnchor(Anchor.BottomLeft, new Vector2(50 + prevWidth + 50, fontHeight * 2));
+            nextButton.SetOwnerScreen(this);
+            RegisterClickableArea(nextButton.clickableArea);
 
             previousButton.Click += new EventHandler(previousButton_Click);
             nextButton.Click += new EventHandler(nextButton_Click);
@@ -86,7 +96,6 @@ namespace PaintTrek
 
         public override void Update()
         {
-            base.Update();
             base.Update();
             backButton.Update();
             previousButton.Update();
@@ -129,26 +138,18 @@ namespace PaintTrek
 
         public override void HandleInput()
         {
-            // Do NOT call base.HandleInput() to avoid unwanted sounds
-            // base.HandleInput(); 
+            // TextButton.Update dispatches mouse clicks once. The base handler keeps
+            // keyboard navigation and Escape behaviour without processing the click again.
+            base.HandleInput();
 
-            if (inputState == null) return;
-            inputState.Update();
+            if (inputState == null || !ScreenManager.IsTopActiveMenu(this))
+                return;
 
-            if (inputState.Cancel || backButton.IsClicked)
-            {
-                MenuCancel(0);
-            }
-
-            if (inputState.MenuLeft || previousButton.IsClicked)
-            {
+            if (inputState.MenuLeft)
                 MenuLeft(0);
-            }
 
-            if (inputState.MenuRight || nextButton.IsClicked)
-            {
+            if (inputState.MenuRight)
                 MenuRight(0);
-            }
         }
 
         void previousButton_Click(object sender, EventArgs e)

@@ -24,6 +24,7 @@ namespace PaintTrek
         Loader loader;
         RenderTarget2D renderTarget;
         Rectangle renderRect;
+        Texture2D debugPixel;
         
         // Statistics
         private StatisticsStorage statisticsStorage;
@@ -56,7 +57,9 @@ namespace PaintTrek
             Globals.Window = Window;
             Globals.Game = this;
             Globals.PlatformServices = new WindowsStorePlatformServices();
-            Globals.Window.AllowUserResizing = true;
+            // Store build uses one stable fullscreen presentation path. Individual screens still
+            // adapt to the monitor aspect ratio through ResolutionHelper.
+            Globals.Window.AllowUserResizing = false;
             Globals.Random = new Random();
             Globals.PreviousSpawnTime = TimeSpan.Zero;
             Globals.EnemySpawnTime = TimeSpan.FromSeconds(1.0f);
@@ -103,6 +106,7 @@ namespace PaintTrek
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.Content = Content;
             Globals.Window.Title = "Paint Trek";
+            debugPixel = Content.Load<Texture2D>("Textures/singlePixel");
             
             // Load GameSettings FIRST (ApplicationData.Current is now ready)
             System.Diagnostics.Debug.WriteLine("[Game1] 📂 Loading GameSettings...");
@@ -120,21 +124,14 @@ namespace PaintTrek
             // Initialize graphics (defaults to fullscreen)
             graphicSettings = new GraphicSettings();
             
-            // Override with saved resolution from GameSettings if different
-            if (!GameSettings.Instance.IsFullScreen && Globals.Graphics.IsFullScreen)
+            // Windowed mode was designed for the legacy fixed layouts and can crop modern
+            // dynamic-resolution screens. Desktop now always uses the fullscreen Store path.
+            if (!settings.IsFullScreen)
             {
-                GraphicSettings.MakeWindowed();
-                System.Diagnostics.Debug.WriteLine("[Game1] Applied windowed resolution from saved settings");
+                settings.UpdateSettings(fullScreen: true);
+                settings.Save();
             }
-            else if (GameSettings.Instance.IsFullScreen && !Globals.Graphics.IsFullScreen)
-            {
-                GraphicSettings.MakeFullScreen();
-                System.Diagnostics.Debug.WriteLine("[Game1] Applied fullscreen resolution from saved settings");
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine($"[Game1] Using default resolution (IsFullScreen: {Globals.Graphics.IsFullScreen})");
-            }
+            System.Diagnostics.Debug.WriteLine("[Game1] Fullscreen presentation enforced for desktop.");
             
             // Initialize the virtual canvas from the live display before creating its render target.
             ResolutionHelper.Initialize(GraphicsDevice);
@@ -251,6 +248,7 @@ namespace PaintTrek
             {
                 Globals.SpriteBatch.Begin();
                 DrawDebugInfo();
+                DrawClickableAreaDebugOverlay();
                 Globals.SpriteBatch.End();
             }
 
@@ -526,6 +524,42 @@ namespace PaintTrek
                 new Vector2(position.X, currentY), keyColor);
             Globals.SpriteBatch.DrawString(Globals.GameFont, devModeValue, 
                 new Vector2(position.X + Globals.GameFont.MeasureString(devModeKey).X, currentY), valueColor);
+        }
+
+        /// <summary>
+        /// Shows the exact virtual-space hitboxes used by mouse input. This is deliberately
+        /// drawn after all screens so a developer can compare the visible button and its
+        /// clickable rectangle one-to-one at any monitor resolution.
+        /// </summary>
+        private void DrawClickableAreaDebugOverlay()
+        {
+            if (debugPixel == null || ClickableAreaSystem.clickableAreas == null)
+                return;
+
+            foreach (ClickableArea area in ClickableAreaSystem.clickableAreas)
+            {
+                Rectangle rect = area.GetRect();
+                if (rect.Width <= 0 || rect.Height <= 0)
+                    continue;
+
+                bool isActive = area.OwnerScreen == null || area.OwnerScreen.GetScreenState() == ScreenState.Active;
+                Color color = !isActive ? Color.DimGray : area.IsClicked ? Color.Red : area.IsOverlapped ? Color.Yellow : Color.Lime;
+                DrawRectangleOutline(rect, color * (isActive ? 0.9f : 0.45f), 2);
+            }
+
+            if (screenManager?.inputState != null)
+            {
+                Rectangle mouseRect = screenManager.inputState.cursorRect;
+                DrawRectangleOutline(mouseRect, Color.Cyan, 1);
+            }
+        }
+
+        private void DrawRectangleOutline(Rectangle rect, Color color, int thickness)
+        {
+            Globals.SpriteBatch.Draw(debugPixel, new Rectangle(rect.X, rect.Y, rect.Width, thickness), color);
+            Globals.SpriteBatch.Draw(debugPixel, new Rectangle(rect.X, rect.Bottom - thickness, rect.Width, thickness), color);
+            Globals.SpriteBatch.Draw(debugPixel, new Rectangle(rect.X, rect.Y, thickness, rect.Height), color);
+            Globals.SpriteBatch.Draw(debugPixel, new Rectangle(rect.Right - thickness, rect.Y, thickness, rect.Height), color);
         }
 
         protected override void OnExiting(object sender, ExitingEventArgs args)

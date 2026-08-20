@@ -41,7 +41,7 @@ namespace PaintTrek
             logoOpacity = 0;
             isAlive = true;
 
-            tradeMarkSpritePosition = new Vector2((Globals.GameSize.X / 2) - gameFont.MeasureString("Arar Game Studio.2010").X / 2, (Globals.GameSize.Y / 2) + (logoTexture.Height * (1.3f) / 3));
+            tradeMarkSpritePosition = new Vector2((Globals.GameSize.X / 2) - gameFont.MeasureString("Arar Games Studio.2010").X / 2, (Globals.GameSize.Y / 2) + (logoTexture.Height * (1.3f) / 3));
             logoRect = new Rectangle((int)Globals.GameSize.X / 2 - logoTexture.Width / 2, (int)Globals.GameSize.Y / 2 - logoTexture.Height / 2, logoTexture.Width, logoTexture.Height);
 
             time = 0;
@@ -104,7 +104,7 @@ namespace PaintTrek
 
                 if (logoOpacity > 100)
                 {
-                    Globals.SpriteBatch.DrawString(gameFont, "Arar Game Studio.2010", tradeMarkSpritePosition, Color.White);
+                    Globals.SpriteBatch.DrawString(gameFont, "Arar Games Studio.2010", tradeMarkSpritePosition, Color.White);
                 }
             }
             else 

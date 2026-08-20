@@ -45,6 +45,7 @@ namespace PaintTrek
             base.Initialize();
 
             backButton = new BackButton("Back", this, true);
+            RegisterClickableArea(backButton.clickableArea);
 
             screenTitle = "Music Screen";
             Globals.Window.Title = screenTitle;
@@ -71,6 +72,8 @@ namespace PaintTrek
             for (int i = 0; i < clickableAreas.Length; i++)
             {
                 clickableAreas[i] = new ClickableArea();
+                clickableAreas[i].OwnerScreen = this;
+                RegisterClickableArea(clickableAreas[i]);
             }
         }
 
@@ -169,18 +172,29 @@ namespace PaintTrek
         {
             base.HandleInput();
 
+            if (inputState == null || !ScreenManager.IsTopActiveMenu(this))
+                return;
+
             InputState input = inputState;
-            if (input.currentKeyboardState.IsKeyDown(Keys.Right))
+            previous = false;
+            next = false;
+
+            if (input.MenuRight)
             {
+                MenuRight(0);
+                LoadTexture();
                 next = true;
             }
-            else next = false;
 
-            if (input.currentKeyboardState.IsKeyDown(Keys.Left))
+            if (input.MenuLeft)
             {
+                MenuLeft(0);
+                LoadTexture();
                 previous = true;
             }
-            else previous = false;
+
+            if (input.MenuSelect)
+                MenuSelect(0);
 
 
             for (int i = 0; i < clickableAreas.Length; i++)
@@ -208,12 +222,8 @@ namespace PaintTrek
 
                 if (clickableAreas[i].IsOverlapped)
                 {
-
                     if (i == 0) previous = true;
-                    else previous = false;
-
                     if (i == 3) next = true;
-                    else next = false;
                 }
             }
         }

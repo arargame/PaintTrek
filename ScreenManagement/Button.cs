@@ -169,9 +169,6 @@ namespace PaintTrek
         {
             if (clickableArea != null)
             {
-                if (Globals.DebugMode)
-                    clickableArea.Draw(); // Show yellow debug rectangle
-                    
                 Globals.SpriteBatch.Begin();
 
                 // Draw Background if enabled

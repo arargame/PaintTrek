@@ -18,6 +18,7 @@ namespace PaintTrek
         private const int MaxVisibleEntries = 10;
         private const int EntryHeight = 40;
         private Texture2D pixel;
+        private BackButton backButton;
 
         // Dil geçişi sırasında gösterilecek kısa bekleme ekranı
         private LanguageCode? pendingLanguage;
@@ -35,6 +36,8 @@ namespace PaintTrek
             base.Initialize();
             screenTitle = "Language Screen";
             Globals.Window.Title = screenTitle;
+            backButton = new BackButton("Back", this, true);
+            RegisterClickableArea(backButton.clickableArea);
         }
 
         public override void Load()
@@ -131,6 +134,8 @@ namespace PaintTrek
                 }
                 return;
             }
+
+            backButton?.Update();
 
             // Seçili kaydırma görünümünü sınırla
             if (selectedEntry < scrollOffset)
@@ -235,6 +240,8 @@ namespace PaintTrek
             }
 
             Globals.SpriteBatch.End();
+
+            backButton?.Draw();
         }
 
         public override void HandleInput()
@@ -271,6 +278,12 @@ namespace PaintTrek
             base.MenuCancel(selectedEntry);
             ExitScreen();
             ScreenManager.AddScreen(new OptionsScreen());
+        }
+
+        public override void UnloadContent()
+        {
+            base.UnloadContent();
+            backButton?.Dispose();
         }
     }
 }

@@ -52,14 +52,19 @@ namespace PaintTrek
             Globals.SpriteBatch.Begin();
 
             Color background = inverted
-                ? (selectedOrHovered ? new Color(225, 225, 225) : Color.White * 0.92f)
+                ? (selectedOrHovered ? Color.Black : Color.White * 0.92f)
                 : (!Enabled ? Color.Black * 0.35f : selectedOrHovered ? Color.White : Color.Black * 0.72f);
             Globals.SpriteBatch.Draw(fillTexture, ButtonRect, background);
 
-            Color textColor = !Enabled ? Color.Gray : (inverted || selectedOrHovered) ? Color.Black : Color.White;
+            Color textColor = !Enabled ? Color.Gray : inverted
+                ? (selectedOrHovered ? Color.White : Color.Black)
+                : (selectedOrHovered ? Color.Black : Color.White);
             Vector2 textPosition = position + padding;
             Globals.SpriteBatch.DrawString(font, text, textPosition, textColor, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            DrawBorder(inverted ? Color.Black * 0.55f : selectedOrHovered ? Color.Black * 0.55f : Color.White * 0.45f, selectedOrHovered ? 2 : 1);
+            Color borderColor = inverted
+                ? (selectedOrHovered ? Color.White * 0.8f : Color.Black * 0.55f)
+                : (selectedOrHovered ? Color.Black * 0.55f : Color.White * 0.45f);
+            DrawBorder(borderColor, selectedOrHovered ? 2 : 1);
             Globals.SpriteBatch.End();
         }
 

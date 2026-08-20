@@ -10,9 +10,6 @@ namespace PaintTrek
 {
     class OptionsScreen:MenuScreen
     {
-        // Track the screen mode when entering options to detect changes
-        private bool wasFullScreenOnEntry;
-
         public OptionsScreen() 
         {
             Initialize();
@@ -29,29 +26,21 @@ namespace PaintTrek
             
             AddEntry(new MenuEntry(Loc.T(LocKeys.Options.SoundSettings), true, 1));
 
-            // Resolution selection enabled
-            string resOn = "1280x800";
-            string resOff = "800x600";
-            if (Globals.Graphics.IsFullScreen)
-                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.Resolution) + " : " + resOn, true, 2));
-            else
-                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.Resolution) + " : " + resOff, true, 2));
-
             if (Globals.AutoAttack)
-                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.AutoAttack) + " : " + Loc.T(LocKeys.Sound.On), true, 3));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.AutoAttack) + " : " + Loc.T(LocKeys.Sound.On), true, 2));
             else 
-                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.AutoAttack) + " : " + Loc.T(LocKeys.Sound.Off), true, 3));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.AutoAttack) + " : " + Loc.T(LocKeys.Sound.Off), true, 2));
             
             if (Globals.DeveloperMode)
-                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.DeveloperMode) + " : " + Loc.T(LocKeys.Sound.On), true, 4));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.DeveloperMode) + " : " + Loc.T(LocKeys.Sound.On), true, 3));
             else 
-                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.DeveloperMode) + " : " + Loc.T(LocKeys.Sound.Off), true, 4));
+                AddEntry(new MenuEntry(Loc.T(LocKeys.Options.DeveloperMode) + " : " + Loc.T(LocKeys.Sound.Off), true, 3));
 
-            AddEntry(new MenuEntry(string.Format(Loc.T(LocKeys.Options.TimePlayed), TimeKeeper.time), true, 5));
+            AddEntry(new MenuEntry(string.Format(Loc.T(LocKeys.Options.TimePlayed), TimeKeeper.time), true, 4));
 
-            AddEntry(new MenuEntry(Loc.T(LocKeys.Options.Language), true, 6));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Options.Language), true, 5));
 
-            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Back), true, 7));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Back), true, 6));
         }
 
         public override void Initialize()
@@ -60,8 +49,6 @@ namespace PaintTrek
             screenTitle = "Options Screen";
             Globals.Window.Title = screenTitle;
             
-            // Remember the initial fullscreen state
-            wasFullScreenOnEntry = Globals.Graphics.IsFullScreen;
         }
 
         public override void Load()
@@ -72,7 +59,7 @@ namespace PaintTrek
         public override void Update()
         {
             base.Update();
-            MenuEntries[5].Text = string.Format(Loc.T(LocKeys.Options.TimePlayed), TimeKeeper.time);
+            MenuEntries[4].Text = string.Format(Loc.T(LocKeys.Options.TimePlayed), TimeKeeper.time);
         }
 
         public override void Draw()
@@ -98,43 +85,29 @@ namespace PaintTrek
                     break;
 
                 case 2:
-                    // Toggle resolution between 1280x800 and 800x600
-                    if (Globals.Graphics.IsFullScreen)
-                    {
-                        GraphicSettings.MakeWindowed();
-                    }
-                    else
-                    {
-                        GraphicSettings.MakeFullScreen();
-                    }
-                    GameSettings.Instance.UpdateSettings(fullScreen: Globals.Graphics.IsFullScreen);
-                    LoadMenuEntries();
-                    break;
-
-                case 3:
                     Globals.AutoAttack = !Globals.AutoAttack;
                     GameSettings.Instance.UpdateSettings(autoAttack: Globals.AutoAttack);
                     LoadMenuEntries();
                     break;
 
-                case 4:
+                case 3:
                     Globals.DeveloperMode = !Globals.DeveloperMode;
                     // DeveloperMode is runtime-only, not saved
                     LoadMenuEntries();
                     break;
 
-                case 5:
+                case 4:
                     // Play time display - do nothing
                     LoadMenuEntries();
                     break;
 
-                case 6:
+                case 5:
                     // Language screen
                     ExitScreen();
                     ScreenManager.AddScreen(new LanguageScreen(typeof(OptionsScreen)));
                     break;
 
-                case 7:
+                case 6:
                     MenuCancel(SelectedEntry);
                     break;
 
@@ -147,25 +120,11 @@ namespace PaintTrek
         {
             if(selectedEntry==2)
             {
-                // Toggle resolution with left arrow
-                if (Globals.Graphics.IsFullScreen)
-                {
-                    GraphicSettings.MakeWindowed();
-                }
-                else
-                {
-                    GraphicSettings.MakeFullScreen();
-                }
-                GameSettings.Instance.UpdateSettings(fullScreen: Globals.Graphics.IsFullScreen);
-                LoadMenuEntries();
-            }
-            else if(selectedEntry==3)
-            {
                 Globals.AutoAttack = !Globals.AutoAttack;
                 GameSettings.Instance.UpdateSettings(autoAttack: Globals.AutoAttack);
                 LoadMenuEntries();
             }
-            else if(selectedEntry==4)
+            else if(selectedEntry==3)
             {
                 Globals.DeveloperMode = !Globals.DeveloperMode;
                 // DeveloperMode is runtime-only, not saved
@@ -177,25 +136,11 @@ namespace PaintTrek
         {
             if (selectedEntry == 2)
             {
-                // Toggle resolution with right arrow
-                if (Globals.Graphics.IsFullScreen)
-                {
-                    GraphicSettings.MakeWindowed();
-                }
-                else
-                {
-                    GraphicSettings.MakeFullScreen();
-                }
-                GameSettings.Instance.UpdateSettings(fullScreen: Globals.Graphics.IsFullScreen);
-                LoadMenuEntries();
-            }
-            else if (selectedEntry == 3)
-            {
                 Globals.AutoAttack = !Globals.AutoAttack;
                 GameSettings.Instance.UpdateSettings(autoAttack: Globals.AutoAttack);
                 LoadMenuEntries();
             }
-            else if (selectedEntry == 4)
+            else if (selectedEntry == 3)
             {
                 Globals.DeveloperMode = !Globals.DeveloperMode;
                 // DeveloperMode is runtime-only, not saved

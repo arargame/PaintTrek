@@ -64,6 +64,16 @@
 /processor:TextureProcessor
 /build:Backgrounds/bgLayer4(800,600).png
 
+#begin SelfAds/BlockedIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:SelfAds/BlockedIcon.png
+
+#begin SelfAds/PaintTrekIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:SelfAds/PaintTrekIcon.png
+
 #begin Backgrounds/bgLayer5(1280,800).png
 /importer:TextureImporter
 /processor:TextureProcessor

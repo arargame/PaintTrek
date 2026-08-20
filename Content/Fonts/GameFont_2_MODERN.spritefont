@@ -20,6 +20,14 @@
         <Start>&#256;</Start>
         <End>&#383;</End>
       </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#601;</Start>
+        <End>&#601;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#699;</Start>
+        <End>&#699;</End>
+      </CharacterRegion>
     </CharacterRegions>
   </Asset>
 </XnaContent>

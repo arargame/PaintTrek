@@ -134,6 +134,7 @@ namespace PaintTrek
             {
                 if (inputState.MenuSelect)
                 {
+                    SoundManager.Play("menu-back");
                     MenuSelect(menuEntries[SelectedEntry].entryNumber);
                 }
 
@@ -173,6 +174,7 @@ namespace PaintTrek
                 {
                     if(menuEntries[i].clickableArea.IsClicked)
                     {
+                        SoundManager.Play("menu-back");
                         MenuSelect(menuEntries[i].entryNumber);
                     }
 

@@ -34,6 +34,7 @@ namespace PaintTrek
             enemies = ListCreator();
             counter = 0;
             backButton = new BackButton("Back",this,true);
+            RegisterClickableArea(backButton.clickableArea);
             
             float fontHeight = Globals.GameFont.MeasureString("Previous").Y;
             
@@ -136,6 +137,15 @@ namespace PaintTrek
         public override void HandleInput()
         {
             base.HandleInput();
+
+            if (inputState == null || !ScreenManager.IsTopActiveMenu(this))
+                return;
+
+            if (inputState.MenuLeft)
+                MenuLeft(0);
+
+            if (inputState.MenuRight)
+                MenuRight(0);
         }
         
         void previousButton_Click(object sender, EventArgs e)

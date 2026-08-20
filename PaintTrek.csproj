@@ -85,9 +85,15 @@
     <Content Include="Assets\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Localization\**\*.json">
+    <Content Include="..\PaintTrek.Shared\Localization\Resources\**\*.json">
+      <Link>Content\Localization\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Localization JSON has one canonical source in PaintTrek.Shared. Legacy local files
+         remain in the repository temporarily but are intentionally excluded from output. -->
+    <Content Remove="Content\Localization\**\*.json" />
   </ItemGroup>
   <ItemGroup>
     <!-- Exclude Android project Content to prevent build warnings -->

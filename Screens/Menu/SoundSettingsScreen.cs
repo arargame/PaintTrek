@@ -14,6 +14,8 @@ namespace PaintTrek
         private Type callerType;
         private GameBoard gameBoard;
 
+        protected override bool UseInvertedMenuButtons => callerType == typeof(PauseScreen);
+
         public SoundSettingsScreen(Type callerType = null, GameBoard gameBoard = null)
         {
             this.callerType = callerType;
