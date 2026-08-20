@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -59,12 +60,19 @@ namespace PaintTrek
 
                             enemy.TakeDamage(this);
 
-                            SoundManager.Play("hit");
+            SoundManager.Play("hit");
 
-                            if (GetHealth() <= 0)
-                                alive = false;
+            Player playerOwner = owner as Player;
+            if (playerOwner != null && playerOwner.ability.GetSkill() == Skills.CriticalAttack)
+            {
+                playerOwner.ShowFloatingMessage(Loc.T(LocKeys.Gameplay.CriticalHit), enemy.position, Color.Red);
+                ScreenShake.Trigger();
+            }
 
-                            if (this.owner != null && (this.owner as Player).ability.GetSkill() == Skills.PoisonAttack)
+            if (GetHealth() <= 0)
+                alive = false;
+
+            if (playerOwner != null && playerOwner.ability.GetSkill() == Skills.PoisonAttack)
                             {
                                 SlowMovement(enemy);
                             }

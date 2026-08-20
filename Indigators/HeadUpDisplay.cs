@@ -94,6 +94,9 @@ namespace PaintTrek
 
         private void DrawStageProgress()
         {
+            if (BossSystem.bossList != null && BossSystem.bossList.Count > 0)
+                return;
+
             int bossSize = 34;
             int barWidth = Math.Min(420, Math.Max(180, (int)(Globals.GameSize.X * 0.42f)));
             int barHeight = 10;

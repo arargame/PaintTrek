@@ -100,7 +100,10 @@ namespace PaintTrek
             // Draw Tip
             if (currentTip != null)
             {
-                string text = "'" + Loc.T(currentTip.LocKey) + "'";
+                string localizedTip = Loc.T(currentTip.LocKey);
+                if (currentTip.LocKey == LocKeys.Tips.Tip17)
+                    localizedTip = string.Format(localizedTip, Loc.T(LocKeys.Gameplay.HP));
+                string text = "'" + localizedTip + "'";
                 float tipScale = 0.7f;
                 // Adjust wrap width for scale
                 string wrappedText = WrapText(Globals.GameFont, text, (Globals.GameSize.X * 0.8f) / tipScale);

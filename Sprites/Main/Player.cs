@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 using PaintTrek.Shared.Statistics;
 
 namespace PaintTrek
@@ -109,6 +110,17 @@ namespace PaintTrek
             base.Draw();
             infoString.Draw();
             ability.Draw();
+        }
+
+        public void ShowFloatingMessage(string message, Vector2 at, Color color)
+        {
+            infoString.GetInfo(message, at, color);
+        }
+
+        public void RewardEnemyDefeat(Vector2 at)
+        {
+            SetHealth(1);
+            ShowFloatingMessage(string.Format(Loc.T(LocKeys.Gameplay.EnemyDefeatedHealth), 1, Loc.T(LocKeys.Gameplay.HP)), at, Color.LimeGreen);
         }
 
         public void HandleInput(InputState input)
@@ -421,26 +433,33 @@ namespace PaintTrek
 
                             if (co is Bubble)
                             {
-                                (co as Bubble).AssaignOwner(this);
+                                Bubble bubble = co as Bubble;
+                                if (bubble.GetOwner() == null)
+                                {
+                                    bubble.AssaignOwner(this);
+                                    ShowFloatingMessage(Loc.T("items.bubble.name"), co.position, Color.Cyan);
+                                }
                                 continue;
                             }
                             else
                             {
                                 if (co is Diamond)
                                 {
-                                    infoString.GetInfo(co.GetPoint() + " Points", co.position);
-                                    ability = new Ability(co as Diamond, this);
+                                    Diamond diamond = co as Diamond;
+                                    Style style = diamond.ShowStyle();
+                                    ShowDiamondMessage(style, co.position);
+                                    ability = new Ability(diamond, this);
                                 }
                                 else if (co is PixelSupply)
                                 {
                                     (co as PixelSupply).ChangePlayer(this);
 
                                     SetTexture(Globals.Content.Load<Texture2D>("Sprites/Ship/pixelShipSpriteSheet"), 4, 2, 8, true);
-
+                                    ShowFloatingMessage(Loc.T("items.pixelsupply.name"), co.position, Color.Magenta);
                                 }
                                 else if (co is Wrench)
                                 {
-                                    infoString.GetInfo((co as Wrench).GiveHealth() + " Health", co.position);
+                                    ShowFloatingMessage("+" + (co as Wrench).GiveHealth() + " " + Loc.T(LocKeys.Gameplay.HP), co.position, Color.LimeGreen);
                                     this.SetHealth((co as Wrench).GiveHealth());
                                 }
                                 else if (co is BouncingFireCollection)
@@ -449,26 +468,32 @@ namespace PaintTrek
                                     // bf.Activate();
                                     //  bf.Fire();
                                     secondGun.AddGun(new BouncingFire(this), Globals.Random.Next(2, 7));
+                                    ShowFloatingMessage(Loc.T("items.bouncingball.name"), co.position, Color.Orange);
                                 }
                                 else if (co is RocketSupply)
                                 {
                                     secondGun.AddGun(new Rocket(this), Globals.Random.Next(50, 50+Level.LevelCounter*10));
+                                    ShowFloatingMessage(Loc.T("items.rocketsupply.name"), co.position, Color.OrangeRed);
                                 }
                                 else if(co is TripleFireSupply)
                                 {
                                     secondGun.AddGun(new TripleFire(this),Globals.Random.Next(50,50+Level.LevelCounter*10));
+                                    ShowFloatingMessage(Loc.T("items.triplefiresupply.name"), co.position, Color.Gold);
                                 }
                                 else if(co is OrbitalFireSupply)
                                 {
                                     secondGun.AddGun(new OrbitalFire(this),Globals.Random.Next(20,50));
+                                    ShowFloatingMessage(Loc.T("items.orbitalfiresupply.name"), co.position, Color.Cyan);
                                 }
                                 else if (co is DiffusedFireSupply)
                                 {
                                     secondGun.AddGun(new DiffusedPlayerFire(this), Globals.Random.Next(50, 50+Level.LevelCounter*10));
+                                    ShowFloatingMessage(Loc.T("items.diffusedfiresupply.name"), co.position, Color.Yellow);
                                 }
                                 else if(co is WaveGunSupply)
                                 {
                                     secondGun.AddGun(new WaveGun(this),Globals.Random.Next(50,80));
+                                    ShowFloatingMessage(Loc.T("items.wavegunsupply.name"), co.position, Color.CornflowerBlue);
                                 }
                                 Level.AddScore(co.GetPoint());
                                 TakeDamage(co);
@@ -484,6 +509,18 @@ namespace PaintTrek
             #endregion
 
 
+        }
+
+        private void ShowDiamondMessage(Style style, Vector2 at)
+        {
+            if (style == Style.Red)
+                ShowFloatingMessage(Loc.T(LocKeys.Gameplay.PowerAttack), at, Color.Red);
+            else if (style == Style.Green)
+                ShowFloatingMessage(Loc.T(LocKeys.Gameplay.PoisonAttack), at, Color.LimeGreen);
+            else if (style == Style.Blue)
+                ShowFloatingMessage(Loc.T(LocKeys.Gameplay.SpeedyAttack), at, Color.DeepSkyBlue);
+            else if (style == Style.Black)
+                ShowFloatingMessage(Loc.T(LocKeys.Gameplay.CriticalAttack), at, Color.White);
         }
 
 

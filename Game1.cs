@@ -224,6 +224,7 @@ namespace PaintTrek
             lastKeyboardState = keyState;
 
             screenManager.Update();
+            ScreenShake.Update(gameTime);
             timeKeeper.Update();
             clickableAreaSystem.Update();
             
@@ -258,7 +259,12 @@ namespace PaintTrek
             renderRect = ResolutionHelper.DestinationRectangle;
 
             Globals.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp);
-            Globals.SpriteBatch.Draw(renderTarget, renderRect, Color.White);
+            Rectangle shakenRenderRect = new Rectangle(
+                renderRect.X + (int)ScreenShake.Offset.X,
+                renderRect.Y + (int)ScreenShake.Offset.Y,
+                renderRect.Width,
+                renderRect.Height);
+            Globals.SpriteBatch.Draw(renderTarget, shakenRenderRect, Color.White);
             Globals.SpriteBatch.End();
 
             base.Draw(gameTime);

@@ -50,8 +50,15 @@ namespace PaintTrek
 
         public void GetInfo(string info, Vector2 position)
         {
+            GetInfo(info, position, Color.Yellow);
+        }
+
+        public void GetInfo(string info, Vector2 position, Color messageColor)
+        {
             this.str = info;
             this.position = position;
+            this.color = messageColor;
+            this.alpha = 255;
             SetActive();
         }
 

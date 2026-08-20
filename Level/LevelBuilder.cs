@@ -81,15 +81,6 @@ namespace PaintTrek
                 if (stageDuration <= 0d)
                     return 0f;
 
-                // Reserve the final portion for the boss encounter instead of showing a completed bar on spawn.
-                if (!string.IsNullOrEmpty(upcomingBossKey))
-                {
-                    if (BossSystem.bossHasFallen)
-                        return 1f;
-
-                    return (float)Math.Min(0.9d, timer / stageDuration * 0.9d);
-                }
-
                 return (float)Math.Min(1d, timer / stageDuration);
             }
         }

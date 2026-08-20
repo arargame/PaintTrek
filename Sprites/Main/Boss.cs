@@ -99,7 +99,11 @@ namespace PaintTrek
         {
             texture = damageTexture;
             isTakingDamage = true;
+            double healthBefore = GetHealth();
             SetHealth(-10.0);
+
+            if (healthBefore > 0 && GetHealth() <= 0 && another is PlayerBullet playerBullet && playerBullet.owner is Player playerOwner)
+                playerOwner.RewardEnemyDefeat(position);
         }
 
         public override void Kill()

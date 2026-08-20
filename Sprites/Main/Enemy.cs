@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 using PaintTrek.Shared.Statistics;
 
 namespace PaintTrek
@@ -120,6 +121,11 @@ namespace PaintTrek
                     enemyType: this.GetType().Name,
                     weaponUsed: weaponUsed
                 );
+
+                PlayerBullet playerBullet = another as PlayerBullet;
+                Player playerOwner = playerBullet?.owner as Player;
+                if (playerOwner != null)
+                    playerOwner.RewardEnemyDefeat(position);
             }
         }
 
