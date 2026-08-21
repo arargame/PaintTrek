@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -44,10 +45,10 @@ namespace PaintTrek
             mpSystem = new MediaPlayerSystem();
             base.Initialize();
 
-            backButton = new BackButton("Back", this, true);
+            backButton = new BackButton(Loc.T(LocKeys.Menu.Back), this, true);
             RegisterClickableArea(backButton.clickableArea);
 
-            screenTitle = "Music Screen";
+            screenTitle = Loc.T(LocKeys.Sound.Musics);
             Globals.Window.Title = screenTitle;
 
             counter = 0;
@@ -101,8 +102,6 @@ namespace PaintTrek
 
             SetTitle();
 
-            //if(musics.Count>0)
-            //state = musics[activeMusicNumber].soundEffectInstance.State;
             state = mpSystem.GetState();
 
             // Check if musics are disabled
@@ -116,25 +115,22 @@ namespace PaintTrek
                 }
             }
 
-            if (state.ToString() =="Paused" )
-                floatingWord = "Paused";
+            if (state.ToString() == "Paused")
+                floatingWord = Loc.T(LocKeys.Sound.Paused);
             else if (state.ToString() == "Playing")
             {
-                floatingWord = "Playing";
-                // Eğer müzikler kapalıysa belirt
+                floatingWord = Loc.T(LocKeys.Sound.Playing);
                 if (!Globals.MusicsEnabled)
-                    floatingWord += " (Musics: Off)";
+                    floatingWord += Loc.T(LocKeys.Sound.MusicsOff);
             }
             else
             {
-                floatingWord = "Stopped";
-                // Eğer müzikler kapalıysa belirt
+                floatingWord = Loc.T(LocKeys.Sound.Stopped);
                 if (!Globals.MusicsEnabled)
-                    floatingWord += " (Musics: Off)";
+                    floatingWord += Loc.T(LocKeys.Sound.MusicsOff);
             }
 
             ControlColors();
-
         }
 
         public override void Draw()

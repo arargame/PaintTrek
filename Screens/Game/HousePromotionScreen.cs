@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -48,14 +49,14 @@ namespace PaintTrek
             this.gameBoard = gameBoard;
             promotion = (Globals.Random ?? new Random()).Next(2) == 0
                 ? new Promotion(
-                    "BLOCKED: PIXEL PANZER",
-                    "Defend the city with your tank, build your skills, and chase the next high score.",
+                    Loc.T(LocKeys.Promo.TitlePanzer),
+                    Loc.T(LocKeys.Promo.DescPanzer),
                     "SelfAds/BlockedIcon",
                     "https://play.google.com/store/apps/details?id=com.arargames.blocked",
                     new Color(250, 153, 38))
                 : new Promotion(
-                    "PAINT TREK",
-                    "A colorful arcade shooter with hand-drawn worlds, bosses, and fast score chasing.",
+                    Loc.T(LocKeys.Promo.TitlePaintTrek),
+                    Loc.T(LocKeys.Promo.DescPaintTrek),
                     "SelfAds/PaintTrekIcon",
                     "https://play.google.com/store/apps/details?id=com.arargame.PaintTrek.Android",
                     new Color(61, 156, 255));
@@ -66,7 +67,7 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
-            screenTitle = "Discover Arar Games";
+            screenTitle = Loc.T(LocKeys.Promo.ScreenTitle);
             Globals.Window.Title = screenTitle;
 
             int width = (int)Globals.GameSize.X;
@@ -133,7 +134,7 @@ namespace PaintTrek
             string description = WrapText(promotion.Description, cardRect.Right - textX - 25, 0.72f);
             Globals.SpriteBatch.DrawString(gameFont, description, new Vector2(textX, textY), Color.LightGray, 0f, Vector2.Zero, 0.72f, SpriteEffects.None, 0f);
 
-            string tapHint = "CLICK THE CARD TO VIEW ON GOOGLE PLAY";
+            string tapHint = Loc.T(LocKeys.Promo.TapHint);
             Vector2 hintSize = gameFont.MeasureString(tapHint) * 0.52f;
             Globals.SpriteBatch.DrawString(gameFont, tapHint, new Vector2(cardRect.Center.X - hintSize.X / 2, cardRect.Bottom - 39), Color.Gold, 0f, Vector2.Zero, 0.52f, SpriteEffects.None, 0f);
 
@@ -145,7 +146,7 @@ namespace PaintTrek
             {
                 Globals.SpriteBatch.Draw(pixel, playRect, playArea.IsOverlapped ? Color.White : promotion.Accent);
                 DrawBorder(playRect, 2, Color.White * 0.8f);
-                string continueText = "CONTINUE";
+                string continueText = Loc.T(LocKeys.Promo.Continue);
                 Vector2 textSize = gameFont.MeasureString(continueText) * 0.58f;
                 Globals.SpriteBatch.DrawString(gameFont, continueText, new Vector2(playRect.Center.X - textSize.X / 2, playRect.Center.Y - textSize.Y / 2), playArea.IsOverlapped ? Color.Black : Color.White, 0f, Vector2.Zero, 0.58f, SpriteEffects.None, 0f);
             }

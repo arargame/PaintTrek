@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -34,7 +35,7 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
-            screenTitle = "Select Level";
+            screenTitle = Loc.T(LocKeys.Menu.SelectLevel);
             Globals.Window.Title = screenTitle;
 
             levelCards = new List<LevelCard>();
@@ -155,7 +156,7 @@ namespace PaintTrek
                 card.Draw();
             }
             
-            string title = "SELECT LEVEL";
+            string title = Loc.T(LocKeys.Menu.SelectLevel);
             if (selectedCardIndex >= 0 && selectedCardIndex < levelCards.Count)
             {
                 title += " (" + levelCards[selectedCardIndex].LevelNumber + ")";
@@ -168,7 +169,7 @@ namespace PaintTrek
             Globals.SpriteBatch.DrawString(Globals.GameFont, title, titlePos, Color.White);
 
             // Draw "Press ESC to Back" hint
-            string backHint = "Press ESC to Back";
+            string backHint = Loc.T(LocKeys.Menu.PressEscToBack);
             Vector2 hintSize = Globals.GameFont.MeasureString(backHint);
              Vector2 hintPos = new Vector2(
                 (Globals.GameSize.X - hintSize.X) / 2,

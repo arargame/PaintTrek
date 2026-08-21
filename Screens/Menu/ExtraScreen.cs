@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -10,10 +11,10 @@ namespace PaintTrek
     {
         public ExtraScreen() 
         {
-            AddEntry(new MenuEntry("Items", true, 0));
-            AddEntry(new MenuEntry("Enemies", true, 1));
-            AddEntry(new MenuEntry("Musics", true, 2));
-            AddEntry(new MenuEntry("Back", true, 3));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Items), true, 0));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Enemies), true, 1));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Musics), true, 2));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Back), true, 3));
 
             Initialize();
         }
@@ -21,7 +22,7 @@ namespace PaintTrek
         public override void Initialize()
         {
             base.Initialize();
-            screenTitle = "Extra Screen";
+            screenTitle = Loc.T(LocKeys.Menu.Extra);
             Globals.Window.Title = screenTitle;
         }
 

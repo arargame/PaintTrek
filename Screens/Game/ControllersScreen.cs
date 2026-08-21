@@ -41,7 +41,7 @@ namespace PaintTrek
             foreColor = Color.Blue;
             position = new Vector2(Globals.GameSize.X / 3, Globals.GameSize.Y * 0.1f);
             mobileController = new MobileController();
-            backButton = new BackButton("Back", this, true); // Initialize back button (enabled)
+            backButton = new BackButton(Loc.T(LocKeys.Menu.Back), this, true); // Initialize back button (enabled)
         }
 
         ~ControllersScreen()

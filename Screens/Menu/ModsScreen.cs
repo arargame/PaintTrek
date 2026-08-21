@@ -83,18 +83,18 @@ namespace PaintTrek
             title = SelectedEntry switch { 0 => Loc.T(LocKeys.Mods.EndlessMode), 1 => Loc.T(LocKeys.Mods.UfoInvasion), _ => Loc.T(LocKeys.Mods.AgainstAllBosses) };
             if (SelectedEntry == 0)
             {
-                description = "The trek continues beyond the known universe.";
-                rules = "• 100 enemies per wave\n• A random boss closes every wave\n• Difficulty rises by 2% each wave\n• Survive as long as possible";
+                description = Loc.T(LocKeys.Mods.EndlessDesc);
+                rules = Loc.T(LocKeys.Mods.EndlessRules);
             }
             else if (SelectedEntry == 1)
             {
-                description = "A focused invasion of space invaders and UFOs.";
-                rules = "• 100 enemies per wave\n• UFO and Invader enemies only\n• Boss 7 closes every wave\n• Enemy health rises by 5% each wave";
+                description = Loc.T(LocKeys.Mods.UfoDesc);
+                rules = Loc.T(LocKeys.Mods.UfoRules);
             }
             else
             {
-                description = "Every boss has gathered to stop the trek.";
-                rules = "• Wave 1 begins with Boss 1\n• Bosses continue through Boss 10\n• The boss cycle restarts after wave 10\n• Boss health rises by 10% each cycle";
+                description = Loc.T(LocKeys.Mods.BossesDesc);
+                rules = Loc.T(LocKeys.Mods.BossesRules);
             }
             Vector2 playSize = Globals.GameFont.MeasureString(Loc.T(LocKeys.Menu.NewGame));
             playButton.SetPosition(new Vector2(rightPanel.Right - playSize.X - 78, detailRect.Bottom - playSize.Y - 34));

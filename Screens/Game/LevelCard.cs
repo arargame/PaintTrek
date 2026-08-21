@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -134,7 +135,7 @@ namespace PaintTrek
             // Text Rendering
             if (font != null)
             {
-                string text = "Level " + LevelNumber;
+                string text = string.Format(Loc.T(LocKeys.Gameplay.LevelCounter), LevelNumber);
                 Vector2 textSize = font.MeasureString(text);
                 Vector2 textPos = new Vector2(
                     drawRect.X + (drawRect.Width - textSize.X) / 2,
@@ -143,17 +144,14 @@ namespace PaintTrek
                 
                 Color textColor = Color.White;
                 if (!IsLocked) textColor = Color.Yellow;
-                if (IsSelected) textColor = Color.Black; // Contrast against Yellow background if tinted? 
-                // Wait, tinting texture completely Yellow might look bad. 
-                // Let's stick to White text for better visibility usually. 
                 if (IsSelected && !IsLocked && texture != null) textColor = Color.Gold;
 
                 Globals.SpriteBatch.DrawString(font, text, textPos, textColor);
                 
-            // Score
+                // Score
                 if (!IsLocked && LevelScore > 0)
                 {
-                    string scoreText = "Score: " + LevelScore;
+                    string scoreText = string.Format(Loc.T(LocKeys.Gameplay.Score), LevelScore);
                     Vector2 scoreSize = font.MeasureString(scoreText);
                     Vector2 scorePos = new Vector2(
                         drawRect.X + (drawRect.Width - scoreSize.X) / 2,
