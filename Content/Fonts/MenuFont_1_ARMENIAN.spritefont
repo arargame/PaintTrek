@@ -6,7 +6,7 @@
 
   Varyant : _ARMENIAN  (hy)
   Kaynak  : NotoSansArmenian-Merged.ttf
-  Karakter: 6 (ASCII 0x20-0x7E haric)
+  Karakter: 78 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -22,16 +22,236 @@
         <End>&#x7E;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x531;</Start>
+        <End>&#x531;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x532;</Start>
+        <End>&#x532;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x533;</Start>
+        <End>&#x533;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x534;</Start>
+        <End>&#x534;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x535;</Start>
+        <End>&#x535;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x536;</Start>
+        <End>&#x536;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x537;</Start>
+        <End>&#x537;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x538;</Start>
+        <End>&#x538;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x539;</Start>
+        <End>&#x539;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x53A;</Start>
+        <End>&#x53A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x53B;</Start>
+        <End>&#x53B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x53C;</Start>
+        <End>&#x53C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x53D;</Start>
+        <End>&#x53D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x53E;</Start>
+        <End>&#x53E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x53F;</Start>
+        <End>&#x53F;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x540;</Start>
         <End>&#x540;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x541;</Start>
+        <End>&#x541;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x542;</Start>
+        <End>&#x542;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x543;</Start>
+        <End>&#x543;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x544;</Start>
+        <End>&#x544;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x545;</Start>
+        <End>&#x545;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x546;</Start>
+        <End>&#x546;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x547;</Start>
+        <End>&#x547;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x548;</Start>
+        <End>&#x548;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x549;</Start>
+        <End>&#x549;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x54A;</Start>
+        <End>&#x54A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x54B;</Start>
+        <End>&#x54B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x54C;</Start>
+        <End>&#x54C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x54D;</Start>
+        <End>&#x54D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x54E;</Start>
+        <End>&#x54E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x54F;</Start>
+        <End>&#x54F;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x550;</Start>
+        <End>&#x550;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x551;</Start>
+        <End>&#x551;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x552;</Start>
+        <End>&#x552;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x554;</Start>
+        <End>&#x554;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x555;</Start>
+        <End>&#x555;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x556;</Start>
+        <End>&#x556;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x55D;</Start>
+        <End>&#x55D;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x561;</Start>
         <End>&#x561;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x562;</Start>
+        <End>&#x562;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x563;</Start>
+        <End>&#x563;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x564;</Start>
+        <End>&#x564;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x565;</Start>
         <End>&#x565;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x566;</Start>
+        <End>&#x566;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x567;</Start>
+        <End>&#x567;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x568;</Start>
+        <End>&#x568;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x569;</Start>
+        <End>&#x569;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x56A;</Start>
+        <End>&#x56A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x56B;</Start>
+        <End>&#x56B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x56C;</Start>
+        <End>&#x56C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x56D;</Start>
+        <End>&#x56D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x56E;</Start>
+        <End>&#x56E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x56F;</Start>
+        <End>&#x56F;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x570;</Start>
+        <End>&#x570;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x571;</Start>
+        <End>&#x571;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x572;</Start>
+        <End>&#x572;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x573;</Start>
+        <End>&#x573;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x574;</Start>
+        <End>&#x574;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x575;</Start>
@@ -42,8 +262,76 @@
         <End>&#x576;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x577;</Start>
+        <End>&#x577;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x578;</Start>
+        <End>&#x578;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x579;</Start>
+        <End>&#x579;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x57A;</Start>
+        <End>&#x57A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x57B;</Start>
+        <End>&#x57B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x57C;</Start>
+        <End>&#x57C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x57D;</Start>
+        <End>&#x57D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x57E;</Start>
+        <End>&#x57E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x57F;</Start>
+        <End>&#x57F;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x580;</Start>
         <End>&#x580;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x581;</Start>
+        <End>&#x581;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x582;</Start>
+        <End>&#x582;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x583;</Start>
+        <End>&#x583;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x584;</Start>
+        <End>&#x584;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x585;</Start>
+        <End>&#x585;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x586;</Start>
+        <End>&#x586;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x587;</Start>
+        <End>&#x587;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x589;</Start>
+        <End>&#x589;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

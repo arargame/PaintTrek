@@ -33,34 +33,24 @@ namespace PaintTrek
             base.Initialize();
             enemies = ListCreator();
             counter = 0;
-            backButton = new BackButton("Back",this,true);
+            backButton = new BackButton(Loc.T(LocKeys.Menu.Back),this,true);
             RegisterClickableArea(backButton.clickableArea);
-            
-            float fontHeight = Globals.GameFont.MeasureString("Previous").Y;
-            
-            previousButton = new TextButton("Previous", Vector2.Zero);
+
+            float fontHeight = Globals.GameFont.MeasureString(Loc.T(LocKeys.Menu.Previous)).Y;
+
+            previousButton = new TextButton(Loc.T(LocKeys.Menu.Previous), Vector2.Zero);
             previousButton.SetAnchor(Anchor.BottomLeft, new Vector2(50, fontHeight * 2));
             previousButton.SetOwnerScreen(this);
             RegisterClickableArea(previousButton.clickableArea);
 
-            nextButton = new TextButton("Next", Vector2.Zero);
-            float prevWidth = Globals.GameFont.MeasureString("Previous").X;
+            nextButton = new TextButton(Loc.T(LocKeys.Menu.Next), Vector2.Zero);
+            float prevWidth = Globals.GameFont.MeasureString(Loc.T(LocKeys.Menu.Previous)).X;
             nextButton.SetAnchor(Anchor.BottomLeft, new Vector2(50 + prevWidth + 50, fontHeight * 2));
             nextButton.SetOwnerScreen(this);
             RegisterClickableArea(nextButton.clickableArea);
 
             previousButton.Click += new EventHandler(previousButton_Click);
             nextButton.Click += new EventHandler(nextButton_Click);
-        }
-
-        public override void Load()
-        {
-            base.Load();
-        }
-
-        public override void UnloadContent()
-        {
-            base.UnloadContent();
         }
 
         public override void Update()

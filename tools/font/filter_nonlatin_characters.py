@@ -10,6 +10,9 @@ import json
 import os
 import sys
 
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import rtl_shaper as arabic_shaper
 
@@ -55,8 +58,8 @@ FONT_FILES = {
 # Ancak diğer tüm dil aileleri için spritefont üretilir.
 VARIANTS = {
     "_PIXEL": {
-        "langs": ["zh-CN", "zh-TW", "ja", "ru", "pl", "bg", "el", "sr", "uk", "mk", "be"],
-        "names": ["简体中文", "繁體中文", "日本語", "Русский", "Polski", "Български", "Ελληνικά", "Српски", "Українська", "Македонски", "Беларуская"],
+        "langs": ["zh-CN", "zh-TW", "ja"],
+        "names": ["简体中文", "繁體中文", "日本語"],
         "fonts": {
             "GameFont_1_PIXEL.spritefont": dict(font=ZPIX, size="14", spacing="0", style="Regular"),
             "GameFont_2_PIXEL.spritefont": dict(font=ZPIX, size="20", spacing="0", style="Regular"),
@@ -144,14 +147,25 @@ VARIANTS = {
         },
     },
     "_CYRILLIC": {
-        "langs": ["kk"],
-        "names": ["Қазақша"],
+        "langs": ["ru", "bg", "sr", "uk", "mk", "be", "kk"],
+        "names": ["Русский", "Български", "Српски", "Українська", "Македонски", "Беларуская", "Қазақша"],
         "fonts": {
             "GameFont_1_CYRILLIC.spritefont": dict(font=CYRILLIC, size="14", spacing="0", style="Regular"),
             "GameFont_2_CYRILLIC.spritefont": dict(font=CYRILLIC, size="20", spacing="0", style="Regular"),
             "MenuFont_1_CYRILLIC.spritefont": dict(font=CYRILLIC, size="16", spacing="2", style="Regular"),
             "MenuFont_2_CYRILLIC.spritefont": dict(font=CYRILLIC, size="20", spacing="2", style="Regular"),
             "demoFont_CYRILLIC.spritefont":   dict(font=CYRILLIC, size="14", spacing="0", style="Bold"),
+        },
+    },
+    "_MODERN": {
+        "langs": ["tr", "et", "fr", "de", "es", "es-419", "pt-BR", "pt-PT", "it", "fi", "sv", "da", "nl", "no", "is", "cs", "hu", "ro", "sk", "sl", "sq", "hr", "bs", "ca", "lt", "lv", "pl", "az", "uz", "ku", "el"],
+        "names": ["Türkçe", "Eesti", "Français", "Deutsch", "Español", "Português", "Ελληνικά"],
+        "fonts": {
+            "GameFont_1_MODERN.spritefont": dict(font=LATO, size="14", spacing="0", style="Regular"),
+            "GameFont_2_MODERN.spritefont": dict(font=LATO, size="20", spacing="0", style="Regular"),
+            "MenuFont_1_MODERN.spritefont": dict(font=LATO, size="16", spacing="2", style="Regular"),
+            "MenuFont_2_MODERN.spritefont": dict(font=LATO, size="20", spacing="2", style="Regular"),
+            "demoFont_MODERN.spritefont": dict(font=LATO, size="14", spacing="0", style="Bold"),
         },
     },
 }
@@ -199,11 +213,20 @@ XML_TEMPLATE = """<?xml version="1.0" encoding="utf-8"?>
 </XnaContent>
 """
 
-def load_indic_map(content_dir, map_file):
-    path = os.path.join(content_dir, *INDIC_MAP_SUBDIR, map_file)
-    if not os.path.exists(path):
+def load_indic_map(loc_dir, map_file):
+    paths = [
+        os.path.join(loc_dir, "shaping", map_file),
+        os.path.join(os.path.dirname(loc_dir), "shaping", map_file),
+        os.path.join(os.path.dirname(loc_dir), *INDIC_MAP_SUBDIR, map_file)
+    ]
+    target_path = None
+    for p in paths:
+        if os.path.exists(p):
+            target_path = p
+            break
+    if target_path is None:
         return None
-    with open(path, "r", encoding="utf-8-sig") as fh:
+    with open(target_path, "r", encoding="utf-8-sig") as fh:
         payload = json.load(fh)
     mapping = payload.get("map") or {}
     return (mapping, payload.get("_meta", {}).get("maxKeyLength", 0)) if mapping else None
@@ -284,7 +307,7 @@ def main():
     desktop_root = os.path.abspath(os.path.join(here, "..", ".."))
     android_root = os.path.abspath(os.path.join(desktop_root, "..", "PaintTrek.Android"))
 
-    loc_dir = os.path.join(desktop_root, "Content", "Localization")
+    loc_dir = os.path.abspath(os.path.join(desktop_root, "..", "PaintTrek.Shared", "Localization", "Resources"))
     desktop_fonts_dir = os.path.join(desktop_root, "Content", "Fonts")
     android_fonts_dir = os.path.join(android_root, "Content", "Fonts")
 
@@ -308,7 +331,7 @@ def main():
 
         indic = None
         if "indic_map" in variant and has_indic:
-            indic = load_indic_map(os.path.dirname(loc_dir), variant["indic_map"])
+            indic = load_indic_map(loc_dir, variant["indic_map"])
             if indic is None:
                 print(f"\n[{suffix}]  ATLANDI — esleme tablosu yok: {variant['indic_map']}")
                 continue

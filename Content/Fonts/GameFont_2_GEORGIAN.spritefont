@@ -6,7 +6,7 @@
 
   Varyant : _GEORGIAN  (ka)
   Kaynak  : NotoSansGeorgian-Merged.ttf
-  Karakter: 7 (ASCII 0x20-0x7E haric)
+  Karakter: 32 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -26,6 +26,30 @@
         <End>&#x10D0;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x10D1;</Start>
+        <End>&#x10D1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10D2;</Start>
+        <End>&#x10D2;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10D3;</Start>
+        <End>&#x10D3;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10D4;</Start>
+        <End>&#x10D4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10D5;</Start>
+        <End>&#x10D5;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10D6;</Start>
+        <End>&#x10D6;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x10D7;</Start>
         <End>&#x10D7;</End>
       </CharacterRegion>
@@ -34,20 +58,96 @@
         <End>&#x10D8;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x10D9;</Start>
+        <End>&#x10D9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x10DA;</Start>
         <End>&#x10DA;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10DB;</Start>
+        <End>&#x10DB;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10DC;</Start>
+        <End>&#x10DC;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10DD;</Start>
+        <End>&#x10DD;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10DE;</Start>
+        <End>&#x10DE;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10DF;</Start>
+        <End>&#x10DF;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x10E0;</Start>
         <End>&#x10E0;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x10E1;</Start>
+        <End>&#x10E1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10E2;</Start>
+        <End>&#x10E2;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x10E3;</Start>
         <End>&#x10E3;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x10E4;</Start>
+        <End>&#x10E4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x10E5;</Start>
         <End>&#x10E5;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10E6;</Start>
+        <End>&#x10E6;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10E7;</Start>
+        <End>&#x10E7;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10E8;</Start>
+        <End>&#x10E8;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10E9;</Start>
+        <End>&#x10E9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10EA;</Start>
+        <End>&#x10EA;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10EB;</Start>
+        <End>&#x10EB;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10EC;</Start>
+        <End>&#x10EC;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10ED;</Start>
+        <End>&#x10ED;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10EE;</Start>
+        <End>&#x10EE;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x10EF;</Start>
+        <End>&#x10EF;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

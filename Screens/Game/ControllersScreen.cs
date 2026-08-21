@@ -123,34 +123,22 @@ namespace PaintTrek
 
 #elif WINDOWS
             str2 = Loc.T(LocKeys.Controllers.Fire);
-            str1 = string.Format(Loc.T(LocKeys.Controllers.PressSpaceK), str2);
-            Globals.SpriteBatch.DrawString(font, str1, position, Color.White);
-            DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y), Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.K) || Mouse.GetState().LeftButton == ButtonState.Pressed, str2);
+            DrawDesktopRow(0, Loc.T(LocKeys.Controllers.PressSpaceK), str2, Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.K) || Mouse.GetState().LeftButton == ButtonState.Pressed);
 
             str2 = Loc.T(LocKeys.Controllers.Up);
-            str1 = string.Format(Loc.T(LocKeys.Controllers.PressW), str2);
-            Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 50), Color.White);
-            DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 50), Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up), str2);
+            DrawDesktopRow(1, Loc.T(LocKeys.Controllers.PressW), str2, Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up));
 
             str2 = Loc.T(LocKeys.Controllers.Down);
-            str1 = string.Format(Loc.T(LocKeys.Controllers.PressS), str2);
-            Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 100), Color.White);
-            DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 100), Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down), str2);
+            DrawDesktopRow(2, Loc.T(LocKeys.Controllers.PressS), str2, Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down));
 
             str2 = Loc.T(LocKeys.Controllers.Left);
-            str1 = string.Format(Loc.T(LocKeys.Controllers.PressA), str2);
-            Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 150), Color.White);
-            DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 150), Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left), str2);
+            DrawDesktopRow(3, Loc.T(LocKeys.Controllers.PressA), str2, Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left));
 
             str2 = Loc.T(LocKeys.Controllers.Right);
-            str1 = string.Format(Loc.T(LocKeys.Controllers.PressD), str2);
-            Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 200), Color.White);
-            DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 200), Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right), str2);
+            DrawDesktopRow(4, Loc.T(LocKeys.Controllers.PressD), str2, Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right));
 
             str2 = Loc.T(LocKeys.Controllers.Pause);
-            str1 = string.Format(Loc.T(LocKeys.Controllers.PressP), str2);
-            Globals.SpriteBatch.DrawString(font, str1, new Vector2(position.X, position.Y + 250), Color.White);
-            DrawKey(new Vector2(position.X + font.MeasureString(str1).X, position.Y + 250), Keyboard.GetState().IsKeyDown(Keys.P) || Keyboard.GetState().IsKeyDown(Keys.Escape), str2);
+            DrawDesktopRow(5, Loc.T(LocKeys.Controllers.PressP), str2, Keyboard.GetState().IsKeyDown(Keys.P) || Keyboard.GetState().IsKeyDown(Keys.Escape));
 
 #else
             #error The platform is not specified or is unsupported by this game.
@@ -161,6 +149,21 @@ namespace PaintTrek
             // Draw sprites and back button after main UI
             spriteSystem.Draw();
             backButton.Draw(); // Render back button last so it appears on top
+        }
+
+        private void DrawDesktopRow(int row, string template, string label, bool pressed)
+        {
+            float startX = Globals.GameSize.X * 0.08f;
+            Vector2 rowPosition = new Vector2(startX, position.Y + row * 50);
+            string prompt = string.Format(template, string.Empty).Trim().TrimEnd(':');
+            float keyWidth = Math.Max(font.MeasureString(label).X * 2f, 70f);
+            float keyX = Globals.GameSize.X - keyWidth - Globals.GameSize.X * 0.04f;
+            float availableWidth = keyX - rowPosition.X - 15f;
+            float promptWidth = Math.Max(1f, font.MeasureString(prompt).X);
+            float textScale = Math.Min(1f, availableWidth / promptWidth);
+            textScale = Math.Max(0.50f, textScale);
+            Globals.SpriteBatch.DrawString(font, prompt, rowPosition, Color.White, 0f, Vector2.Zero, textScale, SpriteEffects.None, 0f);
+            DrawKey(new Vector2(keyX, rowPosition.Y), pressed, label);
         }
 
         public override void HandleInput()

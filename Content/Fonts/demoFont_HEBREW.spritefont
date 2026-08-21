@@ -6,7 +6,7 @@
 
   Varyant : _HEBREW  (he)
   Kaynak  : NotoSansHebrew-Merged.ttf
-  Karakter: 5 (ASCII 0x20-0x7E haric)
+  Karakter: 37 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -22,24 +22,152 @@
         <End>&#x7E;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x5B0;</Start>
+        <End>&#x5B0;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5B4;</Start>
+        <End>&#x5B4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5B5;</Start>
+        <End>&#x5B5;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5B6;</Start>
+        <End>&#x5B6;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5B7;</Start>
+        <End>&#x5B7;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5B8;</Start>
+        <End>&#x5B8;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5B9;</Start>
+        <End>&#x5B9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5BC;</Start>
+        <End>&#x5BC;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5C1;</Start>
+        <End>&#x5C1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D0;</Start>
+        <End>&#x5D0;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x5D1;</Start>
         <End>&#x5D1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D2;</Start>
+        <End>&#x5D2;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D3;</Start>
+        <End>&#x5D3;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D4;</Start>
+        <End>&#x5D4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D5;</Start>
+        <End>&#x5D5;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D6;</Start>
+        <End>&#x5D6;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D7;</Start>
+        <End>&#x5D7;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5D8;</Start>
+        <End>&#x5D8;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x5D9;</Start>
         <End>&#x5D9;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x5DA;</Start>
+        <End>&#x5DA;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5DB;</Start>
+        <End>&#x5DB;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5DC;</Start>
+        <End>&#x5DC;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5DD;</Start>
+        <End>&#x5DD;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5DE;</Start>
+        <End>&#x5DE;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5DF;</Start>
+        <End>&#x5DF;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5E0;</Start>
+        <End>&#x5E0;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5E1;</Start>
+        <End>&#x5E1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x5E2;</Start>
         <End>&#x5E2;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5E3;</Start>
+        <End>&#x5E3;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5E4;</Start>
+        <End>&#x5E4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5E5;</Start>
+        <End>&#x5E5;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5E6;</Start>
+        <End>&#x5E6;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x5E7;</Start>
+        <End>&#x5E7;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x5E8;</Start>
         <End>&#x5E8;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x5E9;</Start>
+        <End>&#x5E9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x5EA;</Start>
         <End>&#x5EA;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x200E;</Start>
+        <End>&#x200E;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

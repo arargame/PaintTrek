@@ -6,7 +6,7 @@
 
   Varyant : _THAI  (th)
   Kaynak  : NotoSansThai-Merged.ttf
-  Karakter: 3 (ASCII 0x20-0x7E haric)
+  Karakter: 54 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -22,16 +22,220 @@
         <End>&#x7E;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xE01;</Start>
+        <End>&#xE01;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE02;</Start>
+        <End>&#xE02;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE04;</Start>
+        <End>&#xE04;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE06;</Start>
+        <End>&#xE06;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE07;</Start>
+        <End>&#xE07;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE08;</Start>
+        <End>&#xE08;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE09;</Start>
+        <End>&#xE09;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE0A;</Start>
+        <End>&#xE0A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE0B;</Start>
+        <End>&#xE0B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE12;</Start>
+        <End>&#xE12;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE13;</Start>
+        <End>&#xE13;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE14;</Start>
+        <End>&#xE14;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE15;</Start>
+        <End>&#xE15;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE16;</Start>
+        <End>&#xE16;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xE17;</Start>
         <End>&#xE17;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE18;</Start>
+        <End>&#xE18;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE19;</Start>
+        <End>&#xE19;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1A;</Start>
+        <End>&#xE1A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1B;</Start>
+        <End>&#xE1B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1C;</Start>
+        <End>&#xE1C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1E;</Start>
+        <End>&#xE1E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1F;</Start>
+        <End>&#xE1F;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE20;</Start>
+        <End>&#xE20;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE21;</Start>
+        <End>&#xE21;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE22;</Start>
         <End>&#xE22;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xE23;</Start>
+        <End>&#xE23;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE25;</Start>
+        <End>&#xE25;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE27;</Start>
+        <End>&#xE27;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE28;</Start>
+        <End>&#xE28;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE29;</Start>
+        <End>&#xE29;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE2A;</Start>
+        <End>&#xE2A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE2B;</Start>
+        <End>&#xE2B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE2D;</Start>
+        <End>&#xE2D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE30;</Start>
+        <End>&#xE30;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE31;</Start>
+        <End>&#xE31;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE32;</Start>
+        <End>&#xE32;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE33;</Start>
+        <End>&#xE33;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE34;</Start>
+        <End>&#xE34;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE35;</Start>
+        <End>&#xE35;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE36;</Start>
+        <End>&#xE36;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE37;</Start>
+        <End>&#xE37;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE38;</Start>
+        <End>&#xE38;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE39;</Start>
+        <End>&#xE39;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE40;</Start>
+        <End>&#xE40;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE41;</Start>
+        <End>&#xE41;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE42;</Start>
+        <End>&#xE42;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE43;</Start>
+        <End>&#xE43;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xE44;</Start>
         <End>&#xE44;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE46;</Start>
+        <End>&#xE46;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE47;</Start>
+        <End>&#xE47;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE48;</Start>
+        <End>&#xE48;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE49;</Start>
+        <End>&#xE49;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE4A;</Start>
+        <End>&#xE4A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE4C;</Start>
+        <End>&#xE4C;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>
