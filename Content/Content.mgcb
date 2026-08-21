@@ -1497,4 +1497,19 @@
 /processor:TextureProcessor
 /build:UI/ThreadsIcon.png
 
+#begin Textures/EndlessBanner.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Textures/EndlessBanner.png
+
+#begin Textures/UfoBanner.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Textures/UfoBanner.png
+
+#begin Textures/AgainstAllBossesBanner.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Textures/AgainstAllBossesBanner.png
+
 

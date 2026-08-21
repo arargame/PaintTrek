@@ -39,9 +39,9 @@ namespace PaintTrek
             
 
 
-            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Options), true, 2));
-            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Extra), true, 3));
-            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Mods), true, 4));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Mods), true, 2));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Options), true, 3));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Extra), true, 4));
             AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Credits), true, 5));
             AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Exit), true, 6));
 
@@ -113,15 +113,15 @@ namespace PaintTrek
                     break;
                 case 2:
                     ExitScreen();
-                    ScreenManager.AddScreen(new OptionsScreen());
+                    ScreenManager.AddScreen(new ModsScreen());
                     break;
                 case 3:
                     ExitScreen();
-                    ScreenManager.AddScreen(new ExtraScreen());
+                    ScreenManager.AddScreen(new OptionsScreen());
                     break;
                 case 4:
                     ExitScreen();
-                    ScreenManager.AddScreen(new ModsScreen());
+                    ScreenManager.AddScreen(new ExtraScreen());
                     break;
                 case 5:
                     ExitScreen();

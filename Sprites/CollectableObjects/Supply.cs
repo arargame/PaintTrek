@@ -76,6 +76,29 @@ namespace PaintTrek
         }
 
         /// <summary>
+        /// Lets specialised supplies define their travel vector without bypassing the magnet
+        /// integrator.  Velocity remains a frame displacement; this value is units/second.
+        /// </summary>
+        protected void SetNaturalVelocity(Vector2 value)
+        {
+            naturalVelocity = value;
+            magnetVelocity = value;
+            velocity = Vector2.Zero;
+        }
+
+        protected void ReverseNaturalVelocityX()
+        {
+            naturalVelocity.X = -naturalVelocity.X;
+            magnetVelocity.X = -magnetVelocity.X;
+        }
+
+        protected void ReverseNaturalVelocityY()
+        {
+            naturalVelocity.Y = -naturalVelocity.Y;
+            magnetVelocity.Y = -magnetVelocity.Y;
+        }
+
+        /// <summary>
         /// The Blocked magnet model: constant radial acceleration plus light damping toward the
         /// natural travel vector. Existing side momentum produces a stable spiral instead of a
         /// rigid straight-line pull.

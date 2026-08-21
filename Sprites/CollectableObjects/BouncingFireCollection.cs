@@ -39,28 +39,28 @@ namespace PaintTrek
             // Left boundary
             if (position.X - size.X / 2 <= 0)
             {
-                velocity.X *= -1;
+                ReverseNaturalVelocityX();
                 position.X = size.X / 2; // Prevent sticking to edge
             }
 
             // Right boundary
             if (position.X + size.X / 2 >= Globals.GameSize.X)
             {
-                velocity.X *= -1;
+                ReverseNaturalVelocityX();
                 position.X = Globals.GameSize.X - size.X / 2;
             }
 
             // Top boundary
             if (position.Y - size.Y / 2 <= 0)
             {
-                velocity.Y *= -1;
+                ReverseNaturalVelocityY();
                 position.Y = size.Y / 2;
             }
 
             // Bottom boundary - THIS WAS THE BUG!
             if (position.Y + size.Y / 2 >= Globals.GameSize.Y)
             {
-                velocity.Y *= -1;
+                ReverseNaturalVelocityY();
                 position.Y = Globals.GameSize.Y - size.Y / 2; // Prevent sticking to bottom
             }
 
@@ -72,12 +72,9 @@ namespace PaintTrek
         }
         public override void SetVelocity()
         {
-            // Add random Y velocity for bouncing effect
-            velocity = new Vector2(-Globals.Random.Next(1,3), Globals.Random.Next(-2, 3));
-            if (Globals.Graphics.IsFullScreen)
-            {
-                velocity = new Vector2((velocity.X * 1280) / 800, (velocity.Y * 800) / 600);
-            }
+            // Supply.Update integrates this velocity with delta time and magnet pull.  The old
+            // -1/-2 per-frame assignment overwrote that vector and left the ball almost static.
+            SetNaturalVelocity(new Vector2(-Globals.Random.Next(135, 191), Globals.Random.Next(-85, 86)));
         }
        /* public int GiveTime()
         {
@@ -86,7 +83,7 @@ namespace PaintTrek
 
         public override void SetStartingPosition()
         {
-            position = new Vector2(Globals.Random.Next((int)(Globals.GameSize.X + size.X / 4), (int)(Globals.GameSize.X * 2)), Globals.Random.Next((int)size.X,(int)(Globals.GameSize.Y-size.Y)));
+            position = new Vector2(Globals.Random.Next((int)Globals.GameSize.X, (int)(Globals.GameSize.X * 1.5f)), Globals.Random.Next((int)size.X,(int)(Globals.GameSize.Y-size.Y)));
         }
         internal static BouncingFireCollection GetCollactableBouncingBall()
         {
