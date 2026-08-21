@@ -24,6 +24,10 @@ namespace PaintTrek
 
         public static void Add(Boss o)
         {
+            // A new boss starts a fresh encounter.  Snake boss segments use this
+            // flag to despawn after their own boss dies, so it must not leak from
+            // the previous Boss Rush wave.
+            bossHasFallen = false;
             BossSystem.bossList.Add(o);
         }
         public static void Remove(Boss o)

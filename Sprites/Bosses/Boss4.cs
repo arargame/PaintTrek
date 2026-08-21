@@ -56,16 +56,17 @@ namespace PaintTrek
             divisionTime = 15;
             pieces = new List<SnakeStone>();
 
-            pieces.Add(new SnakeStone());
-            pieces.Add(new SnakeStone());
-            pieces.Add(new SnakeStone());
-            pieces.Add(new SnakeStone());
+            AddSegment();
+            AddSegment();
+            AddSegment();
+            AddSegment();
 
             timeKeeper = Time.TotalGameTime();
 
             counter = 0;
 
             steps = new List<Vector2>();
+            SeedSegmentTrail();
 
             infoString = new InfoString();
         }
@@ -95,15 +96,7 @@ namespace PaintTrek
 
 
 
-                if (steps.Count >= pieces.Count)
-                {
-                    int k = pieces.Count - 1;
-                    for (int i = steps.Count - pieces.Count; i < steps.Count - 1; i++)
-                    {
-                        pieces[k].position = steps[i];
-                        k--;
-                    }
-                }
+                UpdateSegmentPositions();
             }
 
             infoString.Update();
@@ -130,7 +123,7 @@ namespace PaintTrek
             if (divisionTime <= 0)
             {
                 divisionTime = 15;
-                pieces.Add(new SnakeStone());
+                AddSegment();
                 SetHealth(10);
                 infoString.GetInfo("+" + 10 + " HP", this.position);
             }
@@ -230,6 +223,40 @@ namespace PaintTrek
         public override void SetVelocity()
         {
             base.SetVelocity();
+        }
+
+        private void AddSegment()
+        {
+            SnakeStone segment = new SnakeStone(isBossSegment: true);
+            pieces.Add(segment);
+
+            // Segments are enemies too, so their constructor gives them a random
+            // spawn point. Put them on the snake immediately instead of allowing
+            // a frame of detached movement.
+            if (steps != null && steps.Count > 1)
+                UpdateSegmentPositions();
+            else
+                segment.position = position + new Vector2(size.X * pieces.Count, 0);
+        }
+
+        private void SeedSegmentTrail()
+        {
+            for (int i = pieces.Count; i >= 0; i--)
+                steps.Add(position + new Vector2(size.X * i, 0));
+
+            UpdateSegmentPositions();
+        }
+
+        private void UpdateSegmentPositions()
+        {
+            for (int i = 0; i < pieces.Count; i++)
+            {
+                int stepIndex = steps.Count - 2 - i;
+                if (stepIndex < 0)
+                    break;
+
+                pieces[i].position = steps[stepIndex];
+            }
         }
 
         internal static Boss4 GetBoss4()

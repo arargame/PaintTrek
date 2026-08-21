@@ -9,8 +9,16 @@ namespace PaintTrek
 {
     class SnakeStone : Enemy
     {
+        private readonly bool isBossSegment;
+
         public SnakeStone()
+            : this(false)
         {
+        }
+
+        internal SnakeStone(bool isBossSegment)
+        {
+            this.isBossSegment = isBossSegment;
             Initialize();
         }
 
@@ -47,6 +55,16 @@ namespace PaintTrek
         public override void Draw()
         {
             base.Draw();
+        }
+
+        public override void Kill()
+        {
+            // A snake boss wraps around the arena. Its tail can briefly be outside
+            // the game rectangle while following the head, which is not an escape.
+            if (isBossSegment)
+                return;
+
+            base.Kill();
         }
 
         public override void SetVelocity()
