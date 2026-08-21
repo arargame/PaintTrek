@@ -74,7 +74,12 @@ namespace PaintTrek
             if (LevelCounter == 1)
                 Score = 0;
 
-            if (Level.LevelCounter == 1)
+            if (Globals.IsWaveMode)
+            {
+                gameState = GameState.Active;
+                EndlessManager.Instance.Reset();
+            }
+            else if (Level.LevelCounter == 1)
                 gameState = GameState.Scenario;
             else
                 gameState = GameState.Loading;
@@ -152,13 +157,16 @@ namespace PaintTrek
                 levelSoundtrack.Update();
                 explosionSystem.Update();
 
-                exitDoor.Update();
+                if (Globals.IsWaveMode)
+                    EndlessManager.Instance.Update();
+                else
+                    exitDoor.Update();
 
                 HUD.Update();
 
                 OnGameOver();
 
-                if (exitDoor.IsOpen() )
+                if (!Globals.IsWaveMode && exitDoor.IsOpen() )
                 {
                     if (!canExit && player.CollisionWithExitDoor(exitDoor))
                     {
@@ -167,7 +175,7 @@ namespace PaintTrek
                     }
                 }
 
-                if (canExit)
+                if (!Globals.IsWaveMode && canExit)
                 {
                     timeToExit -= Globals.GameTime.ElapsedGameTime.TotalSeconds;
                 }

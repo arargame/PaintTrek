@@ -102,8 +102,8 @@ VARIANTS = {
         },
     },
     "_ARABIC": {
-        "langs": ["ar", "ur"],
-        "names": ["العربية", "اردو"],
+        "langs": ["ar", "ur", "fa"],
+        "names": ["العربية", "اردو", "فارسی"],
         "shape_arabic": True,
         "fonts": {
             "GameFont_1_ARABIC.spritefont": dict(font=ARABIC, size="14", spacing="0", style="Regular"),

@@ -106,6 +106,9 @@ namespace PaintTrek
             // Check if this damage killed the enemy
             if (healthBefore > 0 && GetHealth() <= 0)
             {
+                if (Globals.IsWaveMode && !(this is Boss))
+                    EndlessManager.Instance.NotifyEnemyKilled();
+
                 // Record kill statistics with weapon info
                 string weaponUsed = "Unknown";
                 if (another is PlayerBullet)
@@ -126,6 +129,19 @@ namespace PaintTrek
                 Player playerOwner = playerBullet?.owner as Player;
                 if (playerOwner != null)
                     playerOwner.RewardEnemyDefeat(position);
+            }
+        }
+
+        public override void SetCharacterInfo(string name, double health, double damage, int point)
+        {
+            base.SetCharacterInfo(name, health, damage, point);
+            if (Globals.CurrentMode == GameMode.AgainstAllBosses && this is Boss)
+                SetHealth(GetHealth() * EndlessManager.Instance.BossRushHealthMultiplier - GetHealth());
+            else if (Globals.CurrentMode == GameMode.Endless || Globals.CurrentMode == GameMode.UfoInvasion)
+            {
+                float scale = EndlessManager.Instance.DifficultyScaling;
+                SetHealth(GetHealth() * scale - GetHealth());
+                SetDamage(damage * scale);
             }
         }
 

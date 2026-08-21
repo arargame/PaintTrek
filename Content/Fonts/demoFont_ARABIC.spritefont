@@ -4,9 +4,9 @@
   OTOMATIK URETILDI — tools/font/filter_nonlatin_characters.py
   ELLE DUZENLEME. Dil eklendiginde/degistiginde scripti yeniden calistir.
 
-  Varyant : _ARABIC  (ar, ur)
+  Varyant : _ARABIC  (ar, ur, fa)
   Kaynak  : NotoNaskhArabic-Merged.ttf
-  Karakter: 122 (ASCII 0x20-0x7E haric)
+  Karakter: 130 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -30,6 +30,10 @@
         <End>&#x61F;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x64B;</Start>
+        <End>&#x64B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x679;</Start>
         <End>&#x679;</End>
       </CharacterRegion>
@@ -48,6 +52,10 @@
       <CharacterRegion>
         <Start>&#x691;</Start>
         <End>&#x691;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x698;</Start>
+        <End>&#x698;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x6A9;</Start>
@@ -84,6 +92,10 @@
       <CharacterRegion>
         <Start>&#x200B;</Start>
         <End>&#x200B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x200C;</Start>
+        <End>&#x200C;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFE80;</Start>
@@ -168,6 +180,10 @@
       <CharacterRegion>
         <Start>&#xFE98;</Start>
         <End>&#xFE98;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFE99;</Start>
+        <End>&#xFE99;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFE9B;</Start>
@@ -306,6 +322,10 @@
         <End>&#xFEBD;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xFEBE;</Start>
+        <End>&#xFEBE;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xFEBF;</Start>
         <End>&#xFEBF;</End>
       </CharacterRegion>
@@ -314,12 +334,20 @@
         <End>&#xFEC0;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xFEC2;</Start>
+        <End>&#xFEC2;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xFEC3;</Start>
         <End>&#xFEC3;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFEC4;</Start>
         <End>&#xFEC4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEC6;</Start>
+        <End>&#xFEC6;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFEC8;</Start>
@@ -448,6 +476,10 @@
       <CharacterRegion>
         <Start>&#xFEE8;</Start>
         <End>&#xFEE8;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEE9;</Start>
+        <End>&#xFEE9;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFEEA;</Start>

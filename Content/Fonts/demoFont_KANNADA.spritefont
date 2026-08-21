@@ -6,7 +6,7 @@
 
   Varyant : _KANNADA  (kn)
   Kaynak  : NotoSansKannada-Shaped.ttf
-  Karakter: 308 (ASCII 0x20-0x7E haric)
+  Karakter: 307 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -932,10 +932,6 @@
       <CharacterRegion>
         <Start>&#xE18C;</Start>
         <End>&#xE18C;</End>
-      </CharacterRegion>
-      <CharacterRegion>
-        <Start>&#xE192;</Start>
-        <End>&#xE192;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE196;</Start>

@@ -448,6 +448,8 @@ namespace PaintTrek
 
         public void Update()
         {
+            if (Globals.IsWaveMode) return;
+
             timer += Globals.GameTime.ElapsedGameTime.TotalSeconds;
             Globals.XX = timer;
  

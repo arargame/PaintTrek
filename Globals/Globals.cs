@@ -9,6 +9,14 @@ using PaintTrek.Shared.Platform;
 
 namespace PaintTrek
 {
+    public enum GameMode
+    {
+        Normal,
+        Endless,
+        UfoInvasion,
+        AgainstAllBosses
+    }
+
     class Globals
     {
         public static ContentManager Content;
@@ -26,6 +34,8 @@ namespace PaintTrek
         public static GameWindow Window;
         public static Game Game;
         public static IGamePlatformServices PlatformServices;
+        public static GameMode CurrentMode = GameMode.Normal;
+        public static bool IsWaveMode => CurrentMode != GameMode.Normal;
         public static bool exitGame;
         public static bool firstTimeYouPlay;
 

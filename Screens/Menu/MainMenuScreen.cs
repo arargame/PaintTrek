@@ -41,8 +41,9 @@ namespace PaintTrek
 
             AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Options), true, 2));
             AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Extra), true, 3));
-            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Credits), true, 4));
-            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Exit), true, 5));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Mods), true, 4));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Credits), true, 5));
+            AddEntry(new MenuEntry(Loc.T(LocKeys.Menu.Exit), true, 6));
 
         }
 
@@ -91,6 +92,7 @@ namespace PaintTrek
             {
                 case 0:
                     ExitScreen();
+                    Globals.CurrentMode = GameMode.Normal;
                     Level.LevelCounter = 1;
                     Level.Score = 0;
                     // Create new game with singleton pattern
@@ -119,9 +121,13 @@ namespace PaintTrek
                     break;
                 case 4:
                     ExitScreen();
-                    ScreenManager.AddScreen(new CreditsScreen());
+                    ScreenManager.AddScreen(new ModsScreen());
                     break;
                 case 5:
+                    ExitScreen();
+                    ScreenManager.AddScreen(new CreditsScreen());
+                    break;
+                case 6:
                     MenuCancel(SelectedEntry);
                     break;
                 default:

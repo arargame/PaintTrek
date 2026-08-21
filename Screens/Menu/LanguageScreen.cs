@@ -16,9 +16,12 @@ namespace PaintTrek
         private readonly Dictionary<ScriptFamily, SpriteFont> familyFonts = new();
         private int scrollOffset = 0;
         private const int MaxVisibleEntries = 10;
-        private const int EntryHeight = 40;
+        private const int EntryHeight = 48;
+        private const int EntryGap = 14;
+        private const int HorizontalPadding = 32;
         private Texture2D pixel;
         private BackButton backButton;
+        private int languageButtonWidth;
 
         // Dil geçişi sırasında gösterilecek kısa bekleme ekranı
         private LanguageCode? pendingLanguage;
@@ -36,7 +39,7 @@ namespace PaintTrek
             base.Initialize();
             screenTitle = "Language Screen";
             Globals.Window.Title = screenTitle;
-            backButton = new BackButton("Back", this, true);
+            backButton = new BackButton(Loc.T(LocKeys.Menu.Back), this, true);
             RegisterClickableArea(backButton.clickableArea);
         }
 
@@ -77,6 +80,7 @@ namespace PaintTrek
             }
 
             LoadMenuEntries();
+            CalculateButtonWidth();
 
             // Seçili dili başlangıçta listenin odağına al
             for (int i = 0; i < Languages.Selectable.Length; i++)
@@ -102,12 +106,27 @@ namespace PaintTrek
             for (int i = 0; i < Languages.Selectable.Length; i++)
             {
                 var info = Languages.Selectable[i];
-                bool current = info.Language == Loc.Current;
-                string label = current ? "> " + info.DisplayName : info.DisplayName;
+                string label = info.DisplayName;
 
                 var entry = new MenuEntry(label, true, i);
                 AddEntry(entry);
             }
+        }
+
+        private void CalculateButtonWidth()
+        {
+            float widestLabel = 0;
+            foreach (var info in Languages.Selectable)
+            {
+                SpriteFont font = Globals.MenuFont;
+                if (familyFonts.TryGetValue(info.Family, out var familyFont)) font = familyFont;
+                widestLabel = Math.Max(widestLabel, font.MeasureString(info.DisplayName).X);
+            }
+
+            // All buttons use the longest language label plus equal in-button padding.
+            // This keeps the list content-driven instead of tying it to screen percentage.
+            languageButtonWidth = (int)Math.Ceiling(widestLabel + HorizontalPadding * 2);
+            languageButtonWidth = Math.Min(languageButtonWidth, (int)Globals.GameSize.X - 160);
         }
 
         public override void Update()
@@ -158,11 +177,9 @@ namespace PaintTrek
                     SpriteFont font = Globals.MenuFont;
                     if (familyFonts.TryGetValue(info.Family, out var f)) font = f;
 
-                    Vector2 textSize = font.MeasureString(entry.Text);
-                    int x = (int)(Globals.GameSize.X / 2 - textSize.X / 2 - 20);
-                    int y = (int)(startY + (i - scrollOffset) * EntryHeight - 5);
-                    
-                    entry.clickableArea.SetRect(new Rectangle(x, y, (int)(textSize.X + 40), EntryHeight));
+                    int x = (int)(Globals.GameSize.X / 2 - languageButtonWidth / 2);
+                    int y = (int)(startY + (i - scrollOffset) * (EntryHeight + EntryGap));
+                    entry.clickableArea.SetRect(new Rectangle(x, y, languageButtonWidth, EntryHeight));
                 }
                 else
                 {
@@ -199,17 +216,24 @@ namespace PaintTrek
                 if (familyFonts.TryGetValue(info.Family, out var f)) font = f;
 
                 string text = entry.Text;
+                Rectangle rect = entry.clickableArea.GetRect();
+                bool selected = i == selectedEntry || entry.clickableArea.IsOverlapped;
+                Color textColor = selected ? Color.Black : (info.Language == Loc.Current ? Color.Yellow : Color.White);
+                Color borderColor = selected ? Color.Gold : Color.White * 0.8f;
+                Globals.SpriteBatch.Draw(pixel, rect, selected ? Color.White : Color.Black * 0.85f);
+                Globals.SpriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, rect.Width, 2), borderColor);
+                Globals.SpriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Bottom - 2, rect.Width, 2), borderColor);
+                Globals.SpriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, 2, rect.Height), borderColor);
+                Globals.SpriteBatch.Draw(pixel, new Rectangle(rect.Right - 2, rect.Y, 2, rect.Height), borderColor);
                 Vector2 textSize = font.MeasureString(text);
-                Vector2 pos = new Vector2(Globals.GameSize.X / 2 - textSize.X / 2, startY + (i - scrollOffset) * EntryHeight);
-
-                Color color = (i == selectedEntry) ? Color.Gold : (info.Language == Loc.Current ? Color.Yellow : Color.White);
-                Globals.SpriteBatch.DrawString(font, text, pos, color);
+                Vector2 pos = new Vector2(rect.Center.X - textSize.X / 2, rect.Center.Y - textSize.Y / 2);
+                Globals.SpriteBatch.DrawString(font, text, pos, textColor);
             }
 
             // Scrollbar (Dikey Kaydırma Çubuğu) Çizimi
             if (MenuEntries.Count > MaxVisibleEntries && pixel != null)
             {
-                float barHeight = MaxVisibleEntries * EntryHeight;
+                float barHeight = MaxVisibleEntries * (EntryHeight + EntryGap) - EntryGap;
                 float barWidth = 6;
                 float barX = Globals.GameSize.X - 50;
                 float barY = startY;
@@ -223,12 +247,6 @@ namespace PaintTrek
 
                 Globals.SpriteBatch.Draw(pixel, new Rectangle((int)barX, (int)thumbY, (int)barWidth, (int)thumbHeight), Color.CornflowerBlue);
             }
-
-            // Geri tuşu kılavuzu
-            string backHint = Loc.T(LocKeys.Menu.PressEscToBack);
-            Vector2 backSize = Globals.MenuFont.MeasureString(backHint);
-            Vector2 backPos = new Vector2(Globals.GameSize.X / 2 - backSize.X / 2, Globals.GameSize.Y - 80);
-            Globals.SpriteBatch.DrawString(Globals.MenuFont, backHint, backPos, Color.Gray * 0.8f);
 
             // Dil geçişi sırasında siyah örtü çiz
             if (pendingLanguage.HasValue && pixel != null)

@@ -259,7 +259,7 @@ namespace PaintTrek
              SpriteSystem.Remove(this);
         }
 
-        public void SetCharacterInfo(string name, double health, double damage, int point)
+        public virtual void SetCharacterInfo(string name, double health, double damage, int point)
         {
             SetName(name);
             this.health = health;

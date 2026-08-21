@@ -10,6 +10,7 @@ namespace PaintTrek
 {
     abstract class Boss : Enemy
     {
+        private bool waveKillReported;
         Texture2D hpTexture;
         Texture2D hpTextureBg;
         Vector2 hpIndicatorPosition;
@@ -41,6 +42,11 @@ namespace PaintTrek
 
             if (!alive)
             {
+                if (Globals.IsWaveMode && !waveKillReported)
+                {
+                    waveKillReported = true;
+                    EndlessManager.Instance.NotifyBossKilled();
+                }
                 BossSystem.Remove(this);
             }
 

@@ -81,6 +81,13 @@ namespace PaintTrek
 
             //Score Drawing
             Globals.SpriteBatch.DrawString(Globals.GameFont, string.Format(Loc.T(LocKeys.Gameplay.Score), Level.Score), scorePosition, Color.Yellow);
+            if (Globals.IsWaveMode)
+            {
+                string wave = string.Format(Loc.T(LocKeys.Gameplay.Wave), EndlessManager.Instance.WaveNumber);
+                Vector2 waveSize = Globals.GameFont.MeasureString(wave);
+                Globals.SpriteBatch.DrawString(Globals.GameFont, wave,
+                    new Vector2(Globals.GameSize.X - waveSize.X - 24, scorePosition.Y + waveSize.Y + 12), Color.Cyan);
+            }
             DrawStageProgress();
 
             Globals.SpriteBatch.End();
@@ -94,6 +101,9 @@ namespace PaintTrek
 
         private void DrawStageProgress()
         {
+            if (Globals.IsWaveMode)
+                return;
+
             if (BossSystem.bossList != null && BossSystem.bossList.Count > 0)
                 return;
 
