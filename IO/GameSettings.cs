@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using PaintTrek.Shared.Localization;
 
 namespace PaintTrek
 {
@@ -20,8 +21,20 @@ namespace PaintTrek
         public bool MenuSoundsEnabled { get; set; }
         public bool AutoAttack { get; set; }
         public bool IsFullScreen { get; set; }
-        public string SelectedLanguage { get; set; } = "en";
-        // DeveloperMode is runtime-only, not saved to file
+        public string SelectedLanguage { get; set; }
+        
+        private static string GetDefaultSystemLanguage()
+        {
+            try
+            {
+                LanguageCode detected = LanguageDetector.Detect();
+                string code = Languages.CodeOf(detected);
+                if (!string.IsNullOrWhiteSpace(code))
+                    return code;
+            }
+            catch { }
+            return "en";
+        }
         
         private bool isDirty = false;
         
@@ -39,7 +52,7 @@ namespace PaintTrek
             MenuSoundsEnabled = true;
             AutoAttack = false;
             IsFullScreen = true;
-            SelectedLanguage = "en";
+            SelectedLanguage = GetDefaultSystemLanguage();
             // DeveloperMode is not persisted
         }
         
@@ -132,14 +145,18 @@ namespace PaintTrek
 
                     if (stream.Position < stream.Length)
                     {
-                        SelectedLanguage = reader.ReadString();
+                        string savedLang = reader.ReadString();
+                        if (!string.IsNullOrWhiteSpace(savedLang))
+                            SelectedLanguage = savedLang;
+                        else
+                            SelectedLanguage = GetDefaultSystemLanguage();
                     }
                     else
                     {
-                        SelectedLanguage = "en";
+                        SelectedLanguage = GetDefaultSystemLanguage();
                     }
                 }
-                catch { SelectedLanguage = "en"; }
+                catch { SelectedLanguage = GetDefaultSystemLanguage(); }
 
                 // If still empty after migration attempt, generate new one
                 if (PlayerId == Guid.Empty)
