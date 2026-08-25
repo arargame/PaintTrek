@@ -17,6 +17,23 @@ namespace PaintTrek
         double lifeSpan;
         Texture2D monogameTexture;
         double time;
+        double splashElapsedSeconds;
+        bool launchCountRecorded;
+
+        private double PhaseDuration
+        {
+            get
+            {
+#if DEBUG
+                return 1.0;
+#else
+                int launchCount = Math.Max(1, GameSettings.Instance.InitSplashLaunchCount);
+                return Math.Max(1.0, 5.0 - (launchCount - 1));
+#endif
+            }
+        }
+
+        private double TotalDuration => PhaseDuration * 2.0;
 
         public StartingScreen() 
         {
@@ -45,6 +62,8 @@ namespace PaintTrek
             logoRect = new Rectangle((int)Globals.GameSize.X / 2 - logoTexture.Width / 2, (int)Globals.GameSize.Y / 2 - logoTexture.Height / 2, logoTexture.Width, logoTexture.Height);
 
             time = 0;
+            splashElapsedSeconds = 0;
+            launchCountRecorded = false;
         }
 
         public override void Load()
@@ -68,6 +87,16 @@ namespace PaintTrek
 
                 time++;
 
+                if (!launchCountRecorded)
+                {
+                    launchCountRecorded = true;
+                    GameSettings.Instance.InitSplashLaunchCount++;
+                    GameSettings.Instance.MarkDirty();
+                    GameSettings.Instance.Save();
+                }
+
+                splashElapsedSeconds += Globals.GameTime.ElapsedGameTime.TotalSeconds;
+
                 if (logoOpacity < 255)
                 {
                     logoOpacity++;
@@ -77,11 +106,9 @@ namespace PaintTrek
                 {
                     lifeSpan += Globals.GameTime.ElapsedGameTime.TotalSeconds;
                 }
-                else
-                {
-                    if (time >= 500)
+
+                if (splashElapsedSeconds >= TotalDuration)
                     isAlive = false;
-                }
 
                 if (isAlive == false)
                 {
@@ -98,7 +125,7 @@ namespace PaintTrek
 
             Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.NonPremultiplied);
 
-            if (time < 300)
+            if (splashElapsedSeconds < PhaseDuration)
             {
                 Globals.SpriteBatch.Draw(logoTexture, logoRect, new Color((byte)255, (byte)255, (byte)255, (byte)logoOpacity));
 

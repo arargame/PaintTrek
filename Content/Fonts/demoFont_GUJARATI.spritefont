@@ -6,7 +6,7 @@
 
   Varyant : _GUJARATI  (gu)
   Kaynak  : NotoSansGujarati-Shaped.ttf
-  Karakter: 272 (ASCII 0x20-0x7E haric)
+  Karakter: 273 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -44,6 +44,10 @@
       <CharacterRegion>
         <Start>&#xACD;</Start>
         <End>&#xACD;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE000;</Start>

@@ -6,7 +6,7 @@
 
   Varyant : _THAI  (th)
   Kaynak  : NotoSansThai-Merged.ttf
-  Karakter: 54 (ASCII 0x20-0x7E haric)
+  Karakter: 55 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -236,6 +236,10 @@
       <CharacterRegion>
         <Start>&#xE4C;</Start>
         <End>&#xE4C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

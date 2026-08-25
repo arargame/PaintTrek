@@ -6,7 +6,7 @@
 
   Varyant : _MALAYALAM  (ml)
   Kaynak  : NotoSansMalayalam-Shaped.ttf
-  Karakter: 361 (ASCII 0x20-0x7E haric)
+  Karakter: 363 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -72,6 +72,10 @@
       <CharacterRegion>
         <Start>&#x200C;</Start>
         <End>&#x200C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE000;</Start>
@@ -1172,6 +1176,10 @@
       <CharacterRegion>
         <Start>&#xE1D6;</Start>
         <End>&#xE1D6;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1D7;</Start>
+        <End>&#xE1D7;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE1D8;</Start>

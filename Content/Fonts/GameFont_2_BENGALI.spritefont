@@ -6,7 +6,7 @@
 
   Varyant : _BENGALI  (bn)
   Kaynak  : NotoSansBengali-Shaped.ttf
-  Karakter: 225 (ASCII 0x20-0x7E haric)
+  Karakter: 233 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -72,6 +72,34 @@
       <CharacterRegion>
         <Start>&#x9CD;</Start>
         <End>&#x9CD;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xA21;</Start>
+        <End>&#xA21;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xA2C;</Start>
+        <End>&#xA2C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xA30;</Start>
+        <End>&#xA30;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xA32;</Start>
+        <End>&#xA32;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xA40;</Start>
+        <End>&#xA40;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xA4B;</Start>
+        <End>&#xA4B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE000;</Start>
@@ -212,6 +240,10 @@
       <CharacterRegion>
         <Start>&#xE032;</Start>
         <End>&#xE032;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE033;</Start>
+        <End>&#xE033;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE035;</Start>

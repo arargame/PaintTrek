@@ -6,7 +6,7 @@
 
   Varyant : _KANNADA  (kn)
   Kaynak  : NotoSansKannada-Shaped.ttf
-  Karakter: 307 (ASCII 0x20-0x7E haric)
+  Karakter: 314 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -20,6 +20,18 @@
       <CharacterRegion>
         <Start>&#x20;</Start>
         <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xA82;</Start>
+        <End>&#xA82;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xA97;</Start>
+        <End>&#xA97;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xAC0;</Start>
+        <End>&#xAC0;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xC82;</Start>
@@ -76,6 +88,10 @@
       <CharacterRegion>
         <Start>&#x200C;</Start>
         <End>&#x200C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE000;</Start>
@@ -252,6 +268,10 @@
       <CharacterRegion>
         <Start>&#xE04D;</Start>
         <End>&#xE04D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE04F;</Start>
+        <End>&#xE04F;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE050;</Start>
@@ -762,6 +782,10 @@
         <End>&#xE143;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xE144;</Start>
+        <End>&#xE144;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xE145;</Start>
         <End>&#xE145;</End>
       </CharacterRegion>
@@ -932,6 +956,10 @@
       <CharacterRegion>
         <Start>&#xE18C;</Start>
         <End>&#xE18C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE192;</Start>
+        <End>&#xE192;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE196;</Start>

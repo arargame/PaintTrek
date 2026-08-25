@@ -6,7 +6,7 @@
 
   Varyant : _CYRILLIC  (ru, bg, sr, uk, mk, be, kk)
   Kaynak  : NotoSansCyrillic-Merged.ttf
-  Karakter: 108 (ASCII 0x20-0x7E haric)
+  Karakter: 113 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -32,6 +32,22 @@
       <CharacterRegion>
         <Start>&#xE8;</Start>
         <End>&#xE8;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x391;</Start>
+        <End>&#x391;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x39A;</Start>
+        <End>&#x39A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x3A1;</Start>
+        <End>&#x3A1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x3A4;</Start>
+        <End>&#x3A4;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x401;</Start>
@@ -452,6 +468,10 @@
       <CharacterRegion>
         <Start>&#x201E;</Start>
         <End>&#x201E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

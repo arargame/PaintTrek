@@ -6,7 +6,7 @@
 
   Varyant : _SINHALA  (si)
   Kaynak  : NotoSansSinhala-Shaped.ttf
-  Karakter: 253 (ASCII 0x20-0x7E haric)
+  Karakter: 256 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -56,6 +56,14 @@
       <CharacterRegion>
         <Start>&#xDDD;</Start>
         <End>&#xDDD;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xDDE;</Start>
+        <End>&#xDDE;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE000;</Start>
@@ -372,6 +380,10 @@
       <CharacterRegion>
         <Start>&#xE083;</Start>
         <End>&#xE083;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE085;</Start>
+        <End>&#xE085;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE089;</Start>

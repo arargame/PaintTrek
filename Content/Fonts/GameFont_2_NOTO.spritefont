@@ -6,7 +6,7 @@
 
   Varyant : _NOTO  (ko, vi)
   Kaynak  : NotoSansCJKtc-Regular.otf
-  Karakter: 413 (ASCII 0x20-0x7E haric)
+  Karakter: 430 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -32,6 +32,10 @@
       <CharacterRegion>
         <Start>&#xC2;</Start>
         <End>&#xC2;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xCA;</Start>
+        <End>&#xCA;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xCD;</Start>
@@ -174,6 +178,10 @@
         <End>&#x1EA3;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x1EA4;</Start>
+        <End>&#x1EA4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x1EA5;</Start>
         <End>&#x1EA5;</End>
       </CharacterRegion>
@@ -224,6 +232,10 @@
       <CharacterRegion>
         <Start>&#x1EB9;</Start>
         <End>&#x1EB9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x1EBA;</Start>
+        <End>&#x1EBA;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x1EBB;</Start>
@@ -330,6 +342,10 @@
         <End>&#x1EDF;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x1EE1;</Start>
+        <End>&#x1EE1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x1EE3;</Start>
         <End>&#x1EE3;</End>
       </CharacterRegion>
@@ -384,6 +400,10 @@
       <CharacterRegion>
         <Start>&#x1EF9;</Start>
         <End>&#x1EF9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x2026;</Start>
@@ -448,6 +468,10 @@
       <CharacterRegion>
         <Start>&#xACB0;</Start>
         <End>&#xACB0;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xACBD;</Start>
+        <End>&#xACBD;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xACC4;</Start>
@@ -946,6 +970,10 @@
         <End>&#xC0C8;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xC0C9;</Start>
+        <End>&#xC0C9;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xC0DD;</Start>
         <End>&#xC0DD;</End>
       </CharacterRegion>
@@ -1020,6 +1048,10 @@
       <CharacterRegion>
         <Start>&#xC218;</Start>
         <End>&#xC218;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xC220;</Start>
+        <End>&#xC220;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xC274;</Start>
@@ -1162,6 +1194,10 @@
         <End>&#xC5EC;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xC5F0;</Start>
+        <End>&#xC5F0;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xC5FD;</Start>
         <End>&#xC5FD;</End>
       </CharacterRegion>
@@ -1298,6 +1334,10 @@
         <End>&#xC7AC;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xC7C1;</Start>
+        <End>&#xC7C1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xC801;</Start>
         <End>&#xC801;</End>
       </CharacterRegion>
@@ -1406,6 +1446,10 @@
         <End>&#xCCB4;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xCCD0;</Start>
+        <End>&#xCCD0;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xCD08;</Start>
         <End>&#xCD08;</End>
       </CharacterRegion>
@@ -1442,6 +1486,10 @@
         <End>&#xCE68;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xCE74;</Start>
+        <End>&#xCE74;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xCEE4;</Start>
         <End>&#xCEE4;</End>
       </CharacterRegion>
@@ -1456,6 +1504,10 @@
       <CharacterRegion>
         <Start>&#xCEF4;</Start>
         <End>&#xCEF4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xCF00;</Start>
+        <End>&#xCF00;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xCF13;</Start>
@@ -1494,12 +1546,20 @@
         <End>&#xD0C8;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xD0D0;</Start>
+        <End>&#xD0D0;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xD0DD;</Start>
         <End>&#xD0DD;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xD0ED;</Start>
         <End>&#xD0ED;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xD0F1;</Start>
+        <End>&#xD0F1;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xD130;</Start>
@@ -1546,6 +1606,10 @@
         <End>&#xD2F1;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xD305;</Start>
+        <End>&#xD305;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xD30C;</Start>
         <End>&#xD30C;</End>
       </CharacterRegion>
@@ -1560,6 +1624,10 @@
       <CharacterRegion>
         <Start>&#xD398;</Start>
         <End>&#xD398;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xD3BC;</Start>
+        <End>&#xD3BC;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xD3EC;</Start>

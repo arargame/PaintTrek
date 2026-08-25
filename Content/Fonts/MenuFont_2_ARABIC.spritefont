@@ -6,7 +6,7 @@
 
   Varyant : _ARABIC  (ar, ur, fa)
   Kaynak  : NotoNaskhArabic-Merged.ttf
-  Karakter: 130 (ASCII 0x20-0x7E haric)
+  Karakter: 139 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -22,12 +22,20 @@
         <End>&#x7E;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x5D6;</Start>
+        <End>&#x5D6;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x60C;</Start>
         <End>&#x60C;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x61F;</Start>
         <End>&#x61F;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x640;</Start>
+        <End>&#x640;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x64B;</Start>
@@ -90,12 +98,12 @@
         <End>&#x6D4;</End>
       </CharacterRegion>
       <CharacterRegion>
-        <Start>&#x200B;</Start>
-        <End>&#x200B;</End>
-      </CharacterRegion>
-      <CharacterRegion>
         <Start>&#x200C;</Start>
         <End>&#x200C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFE80;</Start>
@@ -108,6 +116,10 @@
       <CharacterRegion>
         <Start>&#xFE83;</Start>
         <End>&#xFE83;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFE84;</Start>
+        <End>&#xFE84;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFE85;</Start>
@@ -186,6 +198,10 @@
         <End>&#xFE99;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xFE9A;</Start>
+        <End>&#xFE9A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xFE9B;</Start>
         <End>&#xFE9B;</End>
       </CharacterRegion>
@@ -228,6 +244,10 @@
       <CharacterRegion>
         <Start>&#xFEA5;</Start>
         <End>&#xFEA5;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEA6;</Start>
+        <End>&#xFEA6;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFEA7;</Start>
@@ -334,6 +354,10 @@
         <End>&#xFEC0;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xFEC1;</Start>
+        <End>&#xFEC1;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xFEC2;</Start>
         <End>&#xFEC2;</End>
       </CharacterRegion>
@@ -344,6 +368,10 @@
       <CharacterRegion>
         <Start>&#xFEC4;</Start>
         <End>&#xFEC4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEC5;</Start>
+        <End>&#xFEC5;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFEC6;</Start>
@@ -502,6 +530,10 @@
         <End>&#xFEEE;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xFEEF;</Start>
+        <End>&#xFEEF;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xFEF0;</Start>
         <End>&#xFEF0;</End>
       </CharacterRegion>
@@ -528,6 +560,10 @@
       <CharacterRegion>
         <Start>&#xFEF7;</Start>
         <End>&#xFEF7;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xFEF8;</Start>
+        <End>&#xFEF8;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xFEF9;</Start>

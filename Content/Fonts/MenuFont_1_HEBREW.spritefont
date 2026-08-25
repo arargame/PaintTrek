@@ -6,7 +6,7 @@
 
   Varyant : _HEBREW  (he)
   Kaynak  : NotoSansHebrew-Merged.ttf
-  Karakter: 37 (ASCII 0x20-0x7E haric)
+  Karakter: 38 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -168,6 +168,10 @@
       <CharacterRegion>
         <Start>&#x200E;</Start>
         <End>&#x200E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

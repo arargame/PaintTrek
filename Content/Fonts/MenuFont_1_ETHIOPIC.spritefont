@@ -6,7 +6,7 @@
 
   Varyant : _ETHIOPIC  (am)
   Kaynak  : NotoSansEthiopic-Merged.ttf
-  Karakter: 152 (ASCII 0x20-0x7E haric)
+  Karakter: 154 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -208,6 +208,10 @@
       <CharacterRegion>
         <Start>&#x1246;</Start>
         <End>&#x1246;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x124B;</Start>
+        <End>&#x124B;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x1260;</Start>
@@ -628,6 +632,10 @@
       <CharacterRegion>
         <Start>&#x1367;</Start>
         <End>&#x1367;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

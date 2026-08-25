@@ -22,6 +22,7 @@ namespace PaintTrek
         public bool AutoAttack { get; set; }
         public bool IsFullScreen { get; set; }
         public string SelectedLanguage { get; set; }
+        public int InitSplashLaunchCount { get; set; }
         
         private static string GetDefaultSystemLanguage()
         {
@@ -53,6 +54,7 @@ namespace PaintTrek
             AutoAttack = false;
             IsFullScreen = true;
             SelectedLanguage = GetDefaultSystemLanguage();
+            InitSplashLaunchCount = 0;
             // DeveloperMode is not persisted
         }
         
@@ -155,8 +157,13 @@ namespace PaintTrek
                     {
                         SelectedLanguage = GetDefaultSystemLanguage();
                     }
+
+                    if (stream.Position < stream.Length)
+                        InitSplashLaunchCount = reader.ReadInt32();
+                    else
+                        InitSplashLaunchCount = 0;
                 }
-                catch { SelectedLanguage = GetDefaultSystemLanguage(); }
+                catch { SelectedLanguage = GetDefaultSystemLanguage(); InitSplashLaunchCount = 0; }
 
                 // If still empty after migration attempt, generate new one
                 if (PlayerId == Guid.Empty)
@@ -217,6 +224,7 @@ namespace PaintTrek
                 if (PlayerId == Guid.Empty) PlayerId = Guid.NewGuid();
                 writer.Write(PlayerId.ToString());
                 writer.Write(SelectedLanguage ?? "en");
+                writer.Write(InitSplashLaunchCount);
                 
                 isDirty = false;
                 sw.Stop();
@@ -269,6 +277,7 @@ namespace PaintTrek
             MaxLevel = 1;
             MaxScore = 0;
             SelectedLanguage = "en";
+            InitSplashLaunchCount = 0;
             
             for (int i = 0; i < 10; i++)
                 LevelScores[i] = 0;

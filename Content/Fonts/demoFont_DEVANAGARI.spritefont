@@ -6,7 +6,7 @@
 
   Varyant : _DEVANAGARI  (mr, hi)
   Kaynak  : NotoSansDevanagari-Shaped.ttf
-  Karakter: 402 (ASCII 0x20-0x7E haric)
+  Karakter: 413 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -64,6 +64,10 @@
       <CharacterRegion>
         <Start>&#x94D;</Start>
         <End>&#x94D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE000;</Start>
@@ -182,6 +186,10 @@
         <End>&#xE026;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xE027;</Start>
+        <End>&#xE027;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xE02C;</Start>
         <End>&#xE02C;</End>
       </CharacterRegion>
@@ -216,6 +224,10 @@
       <CharacterRegion>
         <Start>&#xE03E;</Start>
         <End>&#xE03E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE03F;</Start>
+        <End>&#xE03F;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE040;</Start>
@@ -278,8 +290,16 @@
         <End>&#xE05B;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xE05D;</Start>
+        <End>&#xE05D;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xE05E;</Start>
         <End>&#xE05E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE05F;</Start>
+        <End>&#xE05F;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE062;</Start>
@@ -500,6 +520,10 @@
       <CharacterRegion>
         <Start>&#xE0B4;</Start>
         <End>&#xE0B4;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE0B5;</Start>
+        <End>&#xE0B5;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE0B7;</Start>
@@ -930,12 +954,20 @@
         <End>&#xE169;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xE16C;</Start>
+        <End>&#xE16C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xE16F;</Start>
         <End>&#xE16F;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE171;</Start>
         <End>&#xE171;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE172;</Start>
+        <End>&#xE172;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE175;</Start>
@@ -1008,6 +1040,10 @@
       <CharacterRegion>
         <Start>&#xE1A3;</Start>
         <End>&#xE1A3;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1A4;</Start>
+        <End>&#xE1A4;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE1A7;</Start>
@@ -1224,6 +1260,10 @@
       <CharacterRegion>
         <Start>&#xE1F6;</Start>
         <End>&#xE1F6;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE1F7;</Start>
+        <End>&#xE1F7;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE1F9;</Start>
@@ -1456,6 +1496,10 @@
       <CharacterRegion>
         <Start>&#xE25E;</Start>
         <End>&#xE25E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE25F;</Start>
+        <End>&#xE25F;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE260;</Start>

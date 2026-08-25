@@ -6,7 +6,7 @@
 
   Varyant : _GEORGIAN  (ka)
   Kaynak  : NotoSansGeorgian-Merged.ttf
-  Karakter: 32 (ASCII 0x20-0x7E haric)
+  Karakter: 33 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -148,6 +148,10 @@
       <CharacterRegion>
         <Start>&#x10EF;</Start>
         <End>&#x10EF;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

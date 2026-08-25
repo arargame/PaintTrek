@@ -143,6 +143,13 @@ def make_extended_font(source, destination):
         if cp in cmap:
             return cmap[cp]
         char = chr(cp)
+        # Dotless i does not decompose in Unicode. It must be handled before
+        # the generic "no decomposition" fallback below, otherwise it is
+        # incorrectly drawn with the fallback e glyph (Çıkış -> Çekeş).
+        if cp == 0x0131:
+            pen = TTGlyphPen(glyph_set)
+            draw_dotless_i(glyph_set, pen)
+            return put(cp, pen, cmap[ord("i")])
         if char in special:
             pen = TTGlyphPen(glyph_set)
             sources = [ensure(ord(part)) if ord(part) > 127 else cmap[ord(part)] for part in special[char]]
@@ -160,10 +167,7 @@ def make_extended_font(source, destination):
             return put(cp, pen, fallback)
         base_name = ensure(ord(base)) if ord(base) > 127 else cmap[ord(base)]
         pen = TTGlyphPen(glyph_set)
-        if cp == 0x0131:
-            draw_dotless_i(glyph_set, pen)
-        else:
-            draw(glyph_set, base_name, pen)
+        draw(glyph_set, base_name, pen)
         for mark in decomposition[1:]:
             place_mark(pen, base_name, marks[mark])
         return put(cp, pen, base_name)

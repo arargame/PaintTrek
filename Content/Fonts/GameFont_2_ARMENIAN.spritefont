@@ -6,7 +6,7 @@
 
   Varyant : _ARMENIAN  (hy)
   Kaynak  : NotoSansArmenian-Merged.ttf
-  Karakter: 78 (ASCII 0x20-0x7E haric)
+  Karakter: 82 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -20,6 +20,14 @@
       <CharacterRegion>
         <Start>&#x20;</Start>
         <End>&#x7E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xAB;</Start>
+        <End>&#xAB;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xBB;</Start>
+        <End>&#xBB;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x531;</Start>
@@ -332,6 +340,14 @@
       <CharacterRegion>
         <Start>&#x589;</Start>
         <End>&#x589;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x200B;</Start>
+        <End>&#x200B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

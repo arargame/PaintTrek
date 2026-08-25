@@ -6,7 +6,7 @@
 
   Varyant : _GURMUKHI  (pa)
   Kaynak  : NotoSansGurmukhi-Shaped.ttf
-  Karakter: 270 (ASCII 0x20-0x7E haric)
+  Karakter: 272 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -64,6 +64,10 @@
       <CharacterRegion>
         <Start>&#x2019;</Start>
         <End>&#x2019;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE000;</Start>
@@ -728,6 +732,10 @@
       <CharacterRegion>
         <Start>&#xE101;</Start>
         <End>&#xE101;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE104;</Start>
+        <End>&#xE104;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE105;</Start>

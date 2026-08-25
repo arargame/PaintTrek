@@ -6,7 +6,7 @@
 
   Varyant : _TELUGU  (te)
   Kaynak  : NotoSansTelugu-Shaped.ttf
-  Karakter: 363 (ASCII 0x20-0x7E haric)
+  Karakter: 366 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -64,6 +64,10 @@
       <CharacterRegion>
         <Start>&#x200C;</Start>
         <End>&#x200C;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE000;</Start>
@@ -1182,6 +1186,10 @@
         <End>&#xE1FF;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#xE200;</Start>
+        <End>&#xE200;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#xE202;</Start>
         <End>&#xE202;</End>
       </CharacterRegion>
@@ -1200,6 +1208,10 @@
       <CharacterRegion>
         <Start>&#xE207;</Start>
         <End>&#xE207;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#xE208;</Start>
+        <End>&#xE208;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#xE209;</Start>

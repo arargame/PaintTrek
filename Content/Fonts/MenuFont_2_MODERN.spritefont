@@ -6,7 +6,7 @@
 
   Varyant : _MODERN  (tr, et, fr, de, es, es-419, pt-BR, pt-PT, it, fi, sv, da, nl, no, is, cs, hu, ro, sk, sl, sq, hr, bs, ca, lt, lv, pl, az, uz, ku, el)
   Kaynak  : Lato.ttf
-  Karakter: 199 (ASCII 0x20-0x7E haric)
+  Karakter: 208 (ASCII 0x20-0x7E haric)
 -->
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
   <Asset Type="Graphics:FontDescription">
@@ -276,6 +276,10 @@
       <CharacterRegion>
         <Start>&#x105;</Start>
         <End>&#x105;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x106;</Start>
+        <End>&#x106;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x107;</Start>
@@ -794,8 +798,36 @@
         <End>&#x3CE;</End>
       </CharacterRegion>
       <CharacterRegion>
+        <Start>&#x62A;</Start>
+        <End>&#x62A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x633;</Start>
+        <End>&#x633;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x634;</Start>
+        <End>&#x634;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x643;</Start>
+        <End>&#x643;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x646;</Start>
+        <End>&#x646;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x64A;</Start>
+        <End>&#x64A;</End>
+      </CharacterRegion>
+      <CharacterRegion>
         <Start>&#x200B;</Start>
         <End>&#x200B;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2014;</Start>
+        <End>&#x2014;</End>
       </CharacterRegion>
       <CharacterRegion>
         <Start>&#x2018;</Start>
@@ -816,6 +848,10 @@
       <CharacterRegion>
         <Start>&#x201E;</Start>
         <End>&#x201E;</End>
+      </CharacterRegion>
+      <CharacterRegion>
+        <Start>&#x2022;</Start>
+        <End>&#x2022;</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>
