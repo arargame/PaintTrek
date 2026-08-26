@@ -32,11 +32,14 @@ namespace PaintTrek
 
         public override void Draw()
         {
-            DrawAbilityGlow();
             base.Draw();
         }
 
-        private void DrawAbilityGlow()
+        /// <summary>
+        /// Diamond glow belongs only to the player's basic Laser projectile.
+        /// Special projectiles deliberately do not call this method.
+        /// </summary>
+        protected void DrawAbilityGlow()
         {
             Player playerOwner = owner as Player;
             if (playerOwner == null || !alive || !visible || texture == null || texture.IsDisposed)

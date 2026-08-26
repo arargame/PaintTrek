@@ -34,6 +34,7 @@ namespace PaintTrek
         }
         public override void Draw()
         {
+            DrawAbilityGlow();
             base.Draw();
         }
 
