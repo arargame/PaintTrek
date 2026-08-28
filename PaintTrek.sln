@@ -5,7 +5,7 @@ VisualStudioVersion = 18.0.11123.170
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaintTrek", "PaintTrek.csproj", "{91907652-E7B4-9731-1937-7F72DEA1E865}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "WapProjectForPaintTrekDesktop", "..\WapProjectForPaintTrekDesktop\WapProjectForPaintTrekDesktop.wapproj", "{E12BE474-C0FB-4FF1-B7E1-ADCEF7B73FB2}"
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "WapProjectForPaintTrekDesktop", "WapProjectForPaintTrekDesktop\WapProjectForPaintTrekDesktop.wapproj", "{E12BE474-C0FB-4FF1-B7E1-ADCEF7B73FB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaintTrek.Xbox", "..\PaintTrek.Xbox\PaintTrek.Xbox.csproj", "{DEB93FEC-C3FF-7E91-F033-EC738BBE408A}"
 EndProject
