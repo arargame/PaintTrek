@@ -54,14 +54,7 @@ namespace PaintTrek
                 
                 string targetUrl = link.Url;
                 btn.Click += (s, e) => {
-                    try
-                    {
-                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(targetUrl) { UseShellExecute = true });
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Failed to open URL: {ex.Message}");
-                    }
+                    ExternalUriLauncher.Open(targetUrl, "Credits");
                 };
 
                 socialButtons.Add(btn);

@@ -176,14 +176,7 @@ namespace PaintTrek
 
         private void OpenStorePage()
         {
-            try
-            {
-                Process.Start(new ProcessStartInfo(promotion.StoreUrl) { UseShellExecute = true });
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine($"[HousePromotion] Could not open store page: {exception.Message}");
-            }
+            ExternalUriLauncher.Open(promotion.StoreUrl, "HousePromotion");
         }
 
         private void DrawCountdown()

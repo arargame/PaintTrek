@@ -33,4 +33,14 @@
     </application>
   </compatibility>
 
+  <!-- Windows App Certification Kit reads the executable manifest, not the
+       MSBuild ApplicationHighDpiMode property. PerMonitorV2 keeps MonoGame's
+       window sharp when a player moves it between monitors with different
+       scale factors. -->
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">
+      <dpiAwareness>PerMonitorV2</dpiAwareness>
+    </windowsSettings>
+  </application>
+
 </assembly>
