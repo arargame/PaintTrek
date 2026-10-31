@@ -29,12 +29,19 @@ namespace PaintTrek
         }
         public void AddSong(string songName, bool IsLooped, string artist, string title) 
         {
-            songList.Add(Globals.Content.Load<Song>(songName));
-            Loop(IsLooped);
-            this.artist = artist;
-            this.title = title;
-            songCount = songList.Count;
-            info.Add(new string[]{artist,title});
+            try
+            {
+                songList.Add(Globals.Content.Load<Song>(songName));
+                Loop(IsLooped);
+                this.artist = artist;
+                this.title = title;
+                songCount = songList.Count;
+                info.Add(new string[]{artist,title});
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[MediaPlayerSystem] Failed to load song '{songName}': {ex.Message}");
+            }
         }
 
         public void Play()
@@ -42,12 +49,19 @@ namespace PaintTrek
             // MediaPlayerSystem is for music, check MusicsEnabled
             if (Globals.MusicsEnabled && MediaPlayer.GameHasControl)
             {
-                MediaPlayer.Volume = 0.85f; // User Request: Lower music volume by 15% (to 0.85) on Desktop
-
-                for (int i = 0; i < songList.Count; i++)
+                try
                 {
-                    if (i == activeSongIndex)
-                        MediaPlayer.Play(songList[i]);
+                    MediaPlayer.Volume = 0.85f; // User Request: Lower music volume by 15% (to 0.85) on Desktop
+
+                    for (int i = 0; i < songList.Count; i++)
+                    {
+                        if (i == activeSongIndex && songList[i] != null)
+                            MediaPlayer.Play(songList[i]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[MediaPlayerSystem] Failed to play song: {ex.Message}");
                 }
             }
         }

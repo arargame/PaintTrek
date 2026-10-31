@@ -101,8 +101,10 @@
     <Content Remove="C:\Users\ararg\source\repos\2025\PaintTrek.Android\Content\**\*.*" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.*" />
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
+    <!-- PINNED ON PURPOSE: MonoGame 3.8.6 introduced a regression in WindowsDX MediaFoundation (SharpDXException E_NOINTERFACE on Song load).
+         Keeping pinned to 3.8.4.1 in lockstep with dotnet-mgcb and PaintTrek.Android. -->
+    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.4.1" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.4.1" />
   </ItemGroup>
 
   <!-- Shared Statistics Project -->
