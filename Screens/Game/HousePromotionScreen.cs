@@ -47,19 +47,34 @@ namespace PaintTrek
         public HousePromotionScreen(GameBoard gameBoard)
         {
             this.gameBoard = gameBoard;
-            promotion = (Globals.Random ?? new Random()).Next(2) == 0
-                ? new Promotion(
-                    Loc.T(LocKeys.Promo.TitlePanzer),
-                    Loc.T(LocKeys.Promo.DescPanzer),
-                    "SelfAds/BlockedIcon",
-                    "https://play.google.com/store/apps/details?id=com.arargames.blocked",
-                    new Color(250, 153, 38))
-                : new Promotion(
-                    Loc.T(LocKeys.Promo.TitlePaintTrek),
-                    Loc.T(LocKeys.Promo.DescPaintTrek),
-                    "SelfAds/PaintTrekIcon",
-                    "https://play.google.com/store/apps/details?id=com.arargame.PaintTrek.Android",
-                    new Color(61, 156, 255));
+            int choice = (Globals.Random ?? new Random()).Next(3);
+            switch (choice)
+            {
+                case 0:
+                    promotion = new Promotion(
+                        Loc.T(LocKeys.Promo.TitlePanzer),
+                        Loc.T(LocKeys.Promo.DescPanzer),
+                        "SelfAds/BlockedIcon",
+                        "https://play.google.com/store/apps/details?id=com.arargames.blocked",
+                        new Color(250, 153, 38));
+                    break;
+                case 1:
+                    promotion = new Promotion(
+                        Loc.T(LocKeys.Promo.TitleSpaceDodger),
+                        Loc.T(LocKeys.Promo.DescSpaceDodger),
+                        "SelfAds/SpaceDodgerIcon",
+                        "https://play.google.com/store/apps/details?id=com.arargames.spacedodger",
+                        new Color(175, 82, 222));
+                    break;
+                default:
+                    promotion = new Promotion(
+                        Loc.T(LocKeys.Promo.TitlePaintTrek),
+                        Loc.T(LocKeys.Promo.DescPaintTrek),
+                        "SelfAds/PaintTrekIcon",
+                        "https://play.google.com/store/apps/details?id=com.arargame.PaintTrek.Android",
+                        new Color(61, 156, 255));
+                    break;
+            }
 
             Initialize();
         }

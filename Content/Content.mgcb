@@ -1,4 +1,4 @@
-
+﻿
 #----------------------------- Global Properties ----------------------------#
 
 /outputDir:bin/$(Platform)
@@ -73,6 +73,11 @@
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:SelfAds/PaintTrekIcon.png
+
+#begin SelfAds/SpaceDodgerIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:SelfAds/SpaceDodgerIcon.png
 
 #begin Backgrounds/bgLayer5(1280,800).png
 /importer:TextureImporter
