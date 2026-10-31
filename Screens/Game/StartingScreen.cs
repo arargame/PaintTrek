@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +28,7 @@ namespace PaintTrek
                 return 1.0;
 #else
                 int launchCount = Math.Max(1, GameSettings.Instance.InitSplashLaunchCount);
-                return Math.Max(1.0, 5.0 - (launchCount - 1));
+                return Math.Max(1.0, 4.0 - (launchCount - 1));
 #endif
             }
         }
