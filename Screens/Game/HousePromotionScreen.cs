@@ -44,6 +44,12 @@ namespace PaintTrek
             public Color Accent { get; }
         }
 
+        private static string GetLocalizedPromoText(string key, string fallback)
+        {
+            string val = Loc.T(key);
+            return string.IsNullOrWhiteSpace(val) || val == key ? fallback : val;
+        }
+
         public HousePromotionScreen(GameBoard gameBoard)
         {
             this.gameBoard = gameBoard;
@@ -52,24 +58,24 @@ namespace PaintTrek
             {
                 case 0:
                     promotion = new Promotion(
-                        Loc.T(LocKeys.Promo.TitlePanzer),
-                        Loc.T(LocKeys.Promo.DescPanzer),
+                        GetLocalizedPromoText(LocKeys.Promo.TitlePanzer, "BLOCKED: PIXEL PANZER"),
+                        GetLocalizedPromoText(LocKeys.Promo.DescPanzer, "Defend your tank, upgrade abilities, and fight waves of enemies in this retro arcade shooter!"),
                         "SelfAds/BlockedIcon",
                         "https://play.google.com/store/apps/details?id=com.arargames.blocked",
                         new Color(250, 153, 38));
                     break;
                 case 1:
                     promotion = new Promotion(
-                        Loc.T(LocKeys.Promo.TitleSpaceDodger),
-                        Loc.T(LocKeys.Promo.DescSpaceDodger),
+                        GetLocalizedPromoText(LocKeys.Promo.TitleSpaceDodger, "SPACE DODGER"),
+                        GetLocalizedPromoText(LocKeys.Promo.DescSpaceDodger, "Dodge cosmic hazards, survive deep space, and chase high scores in this fast-paced arcade shooter!"),
                         "SelfAds/SpaceDodgerIcon",
                         "https://play.google.com/store/apps/details?id=com.arargames.spacedodger",
                         new Color(175, 82, 222));
                     break;
                 default:
                     promotion = new Promotion(
-                        Loc.T(LocKeys.Promo.TitlePaintTrek),
-                        Loc.T(LocKeys.Promo.DescPaintTrek),
+                        GetLocalizedPromoText(LocKeys.Promo.TitlePaintTrek, "PAINT TREK"),
+                        GetLocalizedPromoText(LocKeys.Promo.DescPaintTrek, "A colorful arcade shooter with hand-drawn worlds, bosses, and fast score chasing."),
                         "SelfAds/PaintTrekIcon",
                         "https://play.google.com/store/apps/details?id=com.arargame.PaintTrek.Android",
                         new Color(61, 156, 255));
