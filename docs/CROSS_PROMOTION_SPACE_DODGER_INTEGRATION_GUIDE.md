@@ -73,7 +73,7 @@ Anahtarlar:
 
 ## 4. Varlıklar ve Pipeline (MGCB)
 
-* **Görsel:** `SpaceDodgerIcon.png` (512x512 yüksek çözünürlüklü şeffaf alfa PNG).
+* **Görsel:** `SpaceDodgerIcon.png` (256x256 GPU & VRAM optimize şeffaf alfa PNG; diskte ~116 KB, VRAM'de yalnızca 256 KB).
 * **MGCB Yapılandırması:**
   * `Blocked.Desktop/Content/Content.mgcb`
   * `Blocked.Android/Content/Content.mgcb`
