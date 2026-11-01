@@ -9,7 +9,7 @@
   <Identity
     Name="38864ArarGame.PaintTrek"
     Publisher="CN=BC2ED016-B1B9-4EB4-9889-CDF371B3E4E9"
-    Version="1.0.44.0" />
+    Version="1.0.46.0" />
 
   <Properties>
     <DisplayName>Paint Trek</DisplayName>
